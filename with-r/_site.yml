@@ -1,0 +1,8 @@
+name: "statistics with R"
+navbar:
+  title: "Statistics theorem"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
