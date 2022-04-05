@@ -1,6 +1,6 @@
 name: "statistics with R"
 navbar:
-  title: "Statistics theorem"
+  title: "통계학"
   left:
     - text: "Home"
       href: index.html

@@ -1,9 +1,18 @@
 ---
-title: "Statistics theorem"
+title: "통계학 개론"
 ---
 
-Hello, Website!
+### R-markdown 장점
+1. 문서 작업과 테스트가 하나의 문서에서 정리될 수 있다.
+2. 수식에 대한 LaTex 문법도 지원한다.
+3. R 프로그래밍 언어는 통계학 개론적 테스트가 쉽다.  
+  수학 공식을 테스트도 문제없음.
 
-For more information about simple R Markdown websites, please read the documentation at https://bookdown.org/yihui/rmarkdown/rmarkdown-site.html.
-
-Please also note that simple R Markdown sites are _not_ based on **blogdown**. They are probably good for websites with only a few Rmd documents. For larger-scale and more sophisticated websites (such as blogs), you may want to use **blogdown** instead: https://github.com/rstudio/blogdown.
+### 정리리스트 (목차중 일부 참고)
+#### 1. [데이터 요약](data_summary.Rmd)
+#### 2. 확률과 확률변수
+#### 3. 확률분포와 표본분포
+#### 4. 추정
+#### 5. 가설검정
+#### 6. 통계적 비교
+#### 7. 회귀모형
