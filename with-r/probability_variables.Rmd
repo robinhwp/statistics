@@ -1,0 +1,85 @@
+---
+  title: "확률과 확률변수"
+---
+
+### 확률의 계산
+
+-   순열(permutation)과 조합(conbination)함수는 factorial 함수를 이용해서 간단하게 만들 수 있다.
+
+> **순열 $nP_r=\frac{n!}{(n-r)!}$**\
+```{r}
+# permutation
+n=5
+r=3
+
+(factorial(n)/factorial(n-r))
+
+```
+
+> **조합 $nC_r=\frac{n!}{r!(n-r)!}$**\
+```{r}
+# combination
+n=5
+r=3
+# 팩토리얼을 이용한 combination 처리
+(factorial(n)/(factorial(r)*factorial(n-r)))
+# choose 함수를 이용한 combination 처리
+(choose(n,r))
+```
+
+> **확률의 덧셈법칙**\
+$$P(A\cup B)=P(A)+P(B)-P(A\cap B)$$ 만일 $A\cap B=\emptyset$이면 $P(A\cup B) = P(A) + P(B)$이고,  
+사건 $A,B$를 서로 **배반사건**(mutally exclusive events) 이라고 한다.
+
+> **조건부 확률(conditional probability)**\
+$$P(A|B)=\frac{P(A\cap B)}{P(B)} (단, P(B)>0)$$
+
+> **확률의 곱셈법칙**\
+$P(A)>0, P(B)>0$이면, 다음과 같은 식이 성립한다. $$P(A\cap B)=P(A)P(B|A) =P(B)P(A|B)$$ 만일  
+$P(B|A)=P(B)$이면 사건 A와 B를 서로 독립사건(independent event)이라고 한다. 이때는 다음이 성립한다. 
+$$P(A\cap B) = P(A)P(B)$$
+
+> **여사건을 이용한 확률계산**\
+$A^c$를 사건 A의 여사건(나머지사건)이라할때 다음과 같은 식이 성립한다. $$P(A^c)=1-P(A)$$
+
+### 확률변수(random variable)
+표본공간의 각 원소에 하나의 실숫값을 대응시켜주는 함수  
+- 이산형(discrete)  
+- 연속형(continuous)
+
+> **확률분포함수(probability distribution function)**\
+확률분포표를 정리해 놓은것으로 보면 된다.
+이산형확률분포함수는 확률 $P(X=x)$를 구하는 함수이고 연속형확률분포 함수는 특정값에서는 0으로 간주한다. 연속형의 경우 모든 확률을 더하면 1($P(-\infty < X < \infty)=\int_{-\infty}^\infty f(x)dx=1$)이 되고 확률변수 X가 $[a,b]$에 있을 확률은 $P(a < X < b)=\int_{a}^b f(x)dx$가 된다.
+
+> **누적확률분포함수(cumulative distribution function)**\
+확률분포표를 누적하여 정리해 놓은 것으로 보면 된다.   
+누적확률 $P(X\le x)$를 구하는 함수로 $P(X\le x_n) = \sum_{i=1}^n P(x_i)$이다.  
+
+> **확률변수의 X의 기대값**\
+확률변수 X를 확률분포함수 $f(x)$라고 하자, 이때 X의 평균 또는 기대값은 $E(X)$로 나타낸다 \
+이산형 : $E(X)=\sum_{i}x_i f(x_i)$\
+연속형 : $E(X)=\int_{-\infty}^\infty xf(x)dx$
+
+> **함수 $g(X)$의 기대값**\
+- 이산형 : $E(g(X)=\sum_{i}g(x_i) f(x_i)$ \
+- 연속형 : $E(g(X)=\int_{-\infty}^\infty g(x)f(x)dx$\
+
+> **확률변수 X의 분**\
+$$Var(X)=E[(X-\mu)^2]= 
+\begin{cases}
+\sum_{i} (x_i-\mu)^2f(x_i) : 이산형 확률변수 일때 \\
+\int_{-\infty}^\infty (x-\mu)^2f(x)dx : 연속형확률일때
+\end{cases}$$
+
+> **$X$의 분산**\
+$$Var(X)=E[(X-\mu)^2] = E(X^2) -\mu^2$$
+
+> **확률변수 $aX+b$의 기대값과 분산**\
+$$E(aX+b)=aE(X)+b  
+Var(aX+b)=a^2Var(X)$$
+
+> **표준화된 확률변수**\
+평균이 $\mu$, 표준편차 $\sigma$, 확률변수 $X$가 있을때, 변환  
+$$Z=\frac{X - \mu}{\sigma}$$를 표준화된 확률변수라고 한다. 
+$Z$는 평균이 0, 분산이 1인 확률변수이다.  
+
