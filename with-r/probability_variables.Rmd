@@ -87,9 +87,18 @@ $Z$는 평균이 0, 분산이 1인 확률변수이다.
 
 ```{r}
 
-cn<-c(5,8,10,12,18,14,10, 9,8,4,2)
-names(cn)<-c("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
-barplot(cn, xlab="결석일수", ylab="근로자수", main="결석일수에 따른 근로자 분포표", col=rainbow(11))
+(cat<-c("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
+(val<-c(5,8,10,12,18,14,10, 9,8,4,2))
+(cum<-rep(0,length(cat))
+
+for i in 1:length(cat)
+{
+
+}
+
+barplot(val, names.arg = cat, col=rainbow(length(df$cat)), xlab="결근횟수"
+        , ylab="인원수", main="결근일 횟수 분포")
+
 
 mean(cn)
 var(cn)
