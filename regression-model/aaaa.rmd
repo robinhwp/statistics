@@ -1,0 +1,45 @@
+---
+title: "regression model"
+---
+
+## 회귀모형
+
+**산점도(scatterplot)**\
+한 변수를 x축으로 놓고, 다른 한 변수를 y축으로 그린 그림으로서 두 연속인 변수들 간의 관계를 밝히고자 할 때 가장 널리 이용되는 그래프.
+$Y=\beta_0 + \beta_1X + \epsilon$
+
+```{r}
+market = read.table("./data/market-1.txt", header = T)
+head(market)
+plot(market$X, market$Y, xlab="광고료", ylab="총판매액", pch=19, main="광고료와 판매액의 산점도")
+
+```
+plot(X, Y, ....) 같은 방식으로 사용하려면 attach(market)을 해주면 된다.
+
+**단순회귀모형**\
+$Y_i=\beta_0 + \beta_1X_i + \epsilon_i$
+(1) 반응변수 $Y_i$는 상수항 $\beta_0 + \beta_1X_i$ 와 오차항 $\epsilon_i$로 이루어져 있으면 따라서 $Y_i$는 확률변수임
+
+**최소제곱법**\
+
+```{r}
+attach(market)
+market.lm = lm(Y ~ X, data=market)
+summary(market.lm)
+```
+```{r}
+# 회귀직선을 구하고, 산점도위에 회귀직선을 그려보아라.
+
+market = read.table("./data/market-1.txt", header = T)
+head(market)
+plot(market$X, market$Y, xlab="광고료", ylab="총판매액", pch=19, main="광고료와 판매액의 산점도")
+abline(market.lm)
+identify(market$X, market$Y)
+```
+
+**잔차**\
+```{r}
+names(market.lm)
+
+```
+

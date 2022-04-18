@@ -1,0 +1,106 @@
+---
+title: "중회귀모형(mutiple linear regression models)"
+output: html_document
+---
+
+### 중회귀모형
+중선형회귀모형(multiple linear regression models)를 간단히 중회귀모형(multiple regression models)이라고도 함.\
+독립변수의 수가 k개인 중회귀모형\
+$$Y_i = \beta_0 + \beta_1X_{i1} + \beta_2X_{i2} + ... + \beta_kX_{ik} + \epsilon_i$$ 
+$\beta_0, \beta_1, ..., \beta_k$ : 회귀계수\
+$\epsilon_i \sim N(0, \sigma^2)$이고 서로 독립, \
+$i = 1, 2, ..., n$\
+여기서 $\beta_0, \beta_1, ..., \beta_k$는 모집단의 회귀계수이고,\ $\epsilon_i$는 반응변수 $Y_i$를 측정할 때 발생하는 오차.
+
+
+### 행렬을 이용한 중회귀 모형
+**중회귀모형에서 독립변수가 2개인 경우**\
+$Y_i = \beta_0 + \beta_1X_{i1} + \beta_2X_{i2} + \epsilon_i, \ \ i = 1, 2, ..., n$\
+$n$개의 오차 $\epsilon_1, \epsilon_2, ..., \epsilon_n$은 서로 독립이고, 각각 $N(0, \sigma^2)$의 분포를 따른다고 가정
+**벡터표현**\
+$Y_i=\beta_0 + \beta_1X_{i1} + \beta_2X_{i2} + \epsilon_i = (1, X_{i1}, X+{i2}) \begin {bmatrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{bmatrix} + \epsilon_i$
+
+
+**중회귀모형의 행렬 표현**\
+$Y=X\beta + \epsilon, \ \epsilon \sim N(0, I\sigma^2)$\
+$\begin{matrix}Y\\n\times 1\end{matrix} = \begin{pmatrix} Y_1 \\ Y_2 \\ \vdots \\ Y_n \end{pmatrix},\ \ \begin{matrix}X\\n\times 3\end{matrix} = \begin{pmatrix} 1 & X_{11} & X_{12} \\ 2 & X_{21} & X_{22} \\ \vdots & \vdots & \vdots \\ 1 & X_{n1} & X_{n2}\end{pmatrix},\ \ \begin{matrix}\beta \\3\times 1\end{matrix} = \begin{pmatrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{pmatrix},\ \ \begin{matrix} \epsilon \\ n\times1 \end{matrix} = \begin{pmatrix} \epsilon_1 \\ \epsilon_2 \\ \vdots \\ \epsilon_n \end{pmatrix}$ 
+\ 여기서 \
+$E(\epsilon)=0$\
+$\begin{matrix}
+Var(\ensilon) &=& E[(\epsilon - E(\epsilon))(\epsilon - E(\epsilon))']\\
+ &=&E[\epsilon \epsilon']\\
+ &=&    \begin{pmatrix} 
+          \sigma^2 & 0 & \cdots & 0 \\
+          0 & \sigma^2 & \cdots & 0 \\
+          \vdots & \vdots & \vdots & \vdots \\
+          0 & 0 & \cdots & \sigma^2 
+        \end{pmatrix} = I\sigma^2
+\end{matrix}$
+
+### R을 이용한 행렬연산
+
+```{r}
+# 파일에서 데이터 읽어오기
+market2 = read.table("./data/market-2.txt", header = T); head(market2, 3)
+# 2번째와 3번째열을 X로 잡아준다.
+X = market2[,c(2:3)]
+# 첫번째 행을 1번째로 한다.
+X = cbind(1, X)
+# Y는 파일에서 4번째 열을 가져온다.
+Y = market2[,4]
+# X와 Y를 행렬로 만들어준다.
+X = as.matrix(X)
+Y = as.matrix(Y)
+# X' = t(X)  동일
+(XTX = t(X) %*% X)
+# 인버스를 구하는 함수는 solve
+XTXI = solve(XTX)
+(XTY = t(X) %*%Y)
+# XTXI와 XTY를 행렬곱하고, 소숫점 3자리까지 반올림해서 나타냄
+(beta = round(XTXI %*% XTY, 3))
+```
+$\hat{B}=(X'X)^{-1}X'Y = \begin{pmatrix} 0.850 \\ 1.558 \\ 0.427\end{pmatrix}$ \
+적합된 선형회귀식\
+$\begin{matrix} \hat{Y} &=&  \hat{\beta_0} + \hat{\beta_1}X_1 + \hat{\beta_2}X_2 \\ &=& 0.850 + 1.558X_1 + 0.427X_2 \end{matrix}$
+
+**적합된 회귀식의 검정**\
+```{r}
+market2 = read.table("./data/market-2.txt", header = T); head(market2, 3)
+market2.lm = lm(Y~X1+X2, data = market2)
+summary(market2.lm)
+```
+적합된 회귀식: $\hat{Y}=0.85041+1.55811X_1+0.42736X_2$\
+결정계수: $R^2 = 0.9799$\
+F-통계량=2.292.5이고, 유의확율 $p-값=06.567\times 10^{-11}$로서 적합된 중회귀모형이 이 데이터를 설명하는데 유의함.
+(이는 귀무가설 $H_0:\beta_1=\beta_2=0$이 기각되므로 $\beta_1$과 $\beta_2$가 동시에 영이되지 않을 것이라는 의미임)
+
+
+**분산분석표**\
+```{r}
+anova(market2.lm)
+```
+중회귀모형의 분산분석 결과 해석\
+$SS(X1)=485.57$\
+$SS(X2|X1)=22.30$\ 
+여기서 $SS(X2|X1)$는 변수 $X1$이 적합된 후, 변수 $X2$가 추가되었을 때의 추가제곱합을 의미, 회귀제곱합 $SS(X1, X2)=SS(X1) + SS(X2|X1)$\
+
+\
+**분산분석표**\
+
+| 요인 | 자유도 | 제곱합 | 평균제곱 | $F_0$ | $Pr(>F)$ |
+| :---: | :---: |  :---: |  :---: | :---: |  :---: |
+| 회귀 | 2 | 507.87 | 253.94 | 292 | 6.597e-11 |
+| 잔차 | 12 | 10.42 | 0.87 |   |   |
+| 계 | 14 | 518.29 |   |   |   |
+
+
+```{r}
+names(market2.lm)
+yhat=market2.lm$fitted.values
+cor(market2$Y, yhat)^2
+```
+
+```{r}
+
+```
+
