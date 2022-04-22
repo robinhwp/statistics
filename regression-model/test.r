@@ -66,12 +66,14 @@ plot(super$price, super.lm$residuals, pch=19)
 abline(h=0, lty=2)
 
 #신뢰대 그리기
-p.x=data.frame(price=c(1,145))
-pc = predict(super.lm, int="c", newdata=p.x)
+(p.x=data.frame(price=c(1,145)))
+(pc = predict(super.lm, int="c", newdata=p.x))
 pred.x = p.x$price
 plot(super$price, super$time, ylim = range(super$time, pc), pch=19)
 matlines(pred.x, pc, lty=c(1,2,2), col="BLUE")
 
+
+super
 
 
 # 4장 중회귀모형(1) - multiple linear regression model
@@ -95,3 +97,73 @@ XTXI = solve(XTX)
 # XTXI와 XTY를 행렬곱하고, 소숫점 3자리까지 반올림해서 나타냄
 (beta = round(XTXI %*% XTY, 3))
 
+
+
+
+rm(list=ls())
+
+market = read.table("./data/market-1.txt", header = T)
+head(market)
+market.lm = lm(Y~X, data=market)
+summary(market.lm)
+
+plot(market$X, market$Y, xlab = "광고료료", ylab = "총판매액", main = "광고료와 판매액의 산점도")
+abline(market.lm)
+text(locator(2),"Y-hat=0.328 + 2.14*X")
+points(mean(market$X), mean(market$Y), pch=17, cex=2.0, col="RED")
+
+anova(market.lm)
+summary(market.lm)
+
+
+
+
+
+alpha = 0.05; n = length(market$Y)
+n-2
+(mse = round(market.anova$`Mean Sq`[2], 2))
+1-alpha/2
+(q.val = qt(1-alpha/2, n-2))
+round(sqrt(mse), 3)
+2.1497 - q.val * sqrt(mse)
+c(market.lm$coefficients[2]-q.interval, market.lm$coefficients[2]+q.interval)
+summary(market.lm)
+market.lm$coefficients
+names(market.lm)
+market.lm$residuals
+market.lm$effects
+market.lm$coefficients
+market.lm$fitted.values
+market.lm$call
+names(market.lm$coefficients)
+market.anova
+mean(market.lm$fitted.values)
+sm = summary(market.lm)
+sm
+names(market.summary)
+market.summary$coefficients[2,2]
+names(market.summary)
+market.summary$adj.r.squared
+
+
+
+
+super = read.table("./data/supermarket.txt", header = T)
+head(super, 3)
+attach(super)
+# scatterplot
+plot(price,time,pch=19)
+
+super.lm = lm(time ~ price, data=super)
+(super.summary = summary(super.lm))
+
+- 단순회귀방정식:
+- 기울기 검정 : 귀무가설 기각
+
+(super.anova = anova(super.lm))
+
+
+plot(super$price, super.lm$residuals, pch=19)
+abline(h=0, lty=2)
+
+# predict : interval confidence 신뢰대를 구한다. : preidct는 새로운 

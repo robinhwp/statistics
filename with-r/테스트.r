@@ -91,3 +91,35 @@ dpois(40, 2.5)
 
 
 n = 15;m=3;s=1;a=0.05
+
+
+
+pbinom(7, 100, 0.5) - pbinom(3, 100, 0.5)
+
+pnorm(7, 5, sqrt(4.75)) - pnorm(2, 5, sqrt(4.75))
+
+pnorm(0.918) - pnorm(-0.918)
+
+x = c(88, 83, 83, 85, 94, 88, 91, 96, 
+      89, 83, 81, 80, 84, 89, 83, 79)
+mean(x)
+sd(x)
+x.var = (x-mean(x))^2
+v = sum(x.var)
+v
+/16
+sqrt(v/16)
+sqrt(v/15)
+
+qt(0.05/2, 15, lower.tail = FALSE)
+qt(0.05/2, 25, lower.tail = FALSE)
+
+alpha = 0.05
+x = c( 8, 1, 10, 15, 15, 10, 5, 19, 20, 9, 10)
+(x.mean = mean(x))
+(x.sd = sd(x))
+(x.estimate = qt(alpha/2, length(x)-1, lower.tail = FALSE))
+(x.low = x.mean - x.estimate * x.sd / sqrt(length(x)))
+(x.high = x.mean + x.estimate * x.sd / sqrt(length(x)))
+
+

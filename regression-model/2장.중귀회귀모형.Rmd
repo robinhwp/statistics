@@ -104,3 +104,18 @@ cor(market2$Y, yhat)^2
 
 ```
 
+
+
+
+
+## 잔차의 검토
+잔차 산점도의 형태를 보고 어떻게 할지 판단.
+
+1) 자료파일 읽기
+```{r}
+library(xlsx)
+chemical = read.xlsx("./data/chemical.xlsx", 1)
+head(chemical) # tail(chemical) <- 끝에서 5개를 출력
+
+```
+

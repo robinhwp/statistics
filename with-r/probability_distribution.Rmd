@@ -16,6 +16,8 @@ title: "확률분포"
   - 포아송분포 - dpois, qpois, ppois, rpois
   - 카이제곱분포 - dchisq, qchisq, pchisq, rchisq
   - 정규분포 - dnorm, qnorm, pnorm, rnorm
+  - F분포 - df, qf, pf, rf
+  
 
 #### 이항분포
 
@@ -216,7 +218,7 @@ for (i in 1:5)
 (dat = table(mat))
 # 상대도수
 (dat.prop = prop.table(dat))
-# 누작상대도수
+# 누적적상대도수
 (dat.cumprop = cumsum(dat.prop))
 
 plot(dat, main="표본평균분포", xlab="평균", ylab="도수")
