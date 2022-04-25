@@ -167,3 +167,48 @@ plot(super$price, super.lm$residuals, pch=19)
 abline(h=0, lty=2)
 
 # predict : interval confidence 신뢰대를 구한다. : preidct는 새로운 
+
+
+
+
+USArrests[USArrests$UrbanPop >70,]
+
+
+
+x=seq(10, 100, by=10)
+y = 1:10
+z = data.frame(x, y)
+z[z$x>50,]
+
+
+
+
+# NOT RUN {
+## A function to use identify to select points, and overplot the
+## points with another symbol as they are selected
+identifyPch <- function(x, y = NULL, n = length(x), plot = FALSE, pch = 19, ...)
+{
+  xy <- xy.coords(x, y); x <- xy$x; y <- xy$y
+  sel <- rep(FALSE, length(x))
+  while(sum(sel) < n) {
+    ans <- identify(x[!sel], y[!sel], labels = which(!sel), n = 1, plot = plot, ...)
+    if(!length(ans)) break
+    ans <- which(!sel)[ans]
+    points(x[ans], y[ans], pch = pch)
+    sel[ans] <- TRUE
+  }
+  ## return indices of selected points
+  which(sel)
+}
+
+if(dev.interactive()) { ## use it
+  x <- rnorm(50); y <- rnorm(50)
+  plot(x,y); identifyPch(x,y) # how fast to get all?
+}
+
+# }
+
+
+
+plot(climate$EVAP, climate.lm$resid)
+identify(climate$EVAP, climate.lm$resid, labels = seq_along(climate.lm$resid), plot=TRUE)

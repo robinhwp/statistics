@@ -1,0 +1,119 @@
+---
+title: "04월23일 회귀모형 출석수업 과제물"
+output:
+  word_document: default
+  pdf_document: default
+  html_document: default
+---
+
+## 1번.연습문제 6장 4번 (p. 187) 교회 자료를 이용하여 교재 1.7 분석사례와 같이 분석하고, 설명하시오
+(단, 둘레를 독립변수로, 면적의 제곱근을 반응변수로 하기 바람)
+
+```{r}
+# 데이터 로드
+churches = read.csv("./data/p187.csv", header = T)
+head(churches, 3)
+
+# 오브젝트의 변수를 바로 사용하기 위해 오브젝트 등록
+attach(churches)
+# 산점도를 그린다.
+plot(area, size, pch=19, main="영국 중세기 교회의 면적과 둘레 산점도", xlab="면적", ylab="둘레")
+# 회귀모형 적합
+churches.lm = lm(area~size, data = churches)
+summary(churches.lm)
+
+```
+회귀적합 결과에서 회귀계수의 추정값은 절편 $b_0 = -674.5399$이고 기울기 $b_1=12.0877$의 단순회귀방정식은 $\hat{area}=-674.5399 + 12.0877 \times size$ 가 된다. 기울기 $t-값=24.434$이고 $p-값=2\times10^{-16}$이 매우 작으므로 $H_0:\beta_1=0$이라는 귀무가서을 기각한다.\
+결정계수 $R^2=0.9629$로서 총변동 중에서 $96.29$%가 회귀방정식으로 설명되는 회귀변동이 차지하고 있다는 것을 나타낸다. $F-값=597$이고, 이에 대한 $P-값=2.2\times10^{-16}$으로서 적합된 회귀직선이 유의하다는 것을 알 수 있다.\
+
+```{r}
+# 분산분석표 구하기
+anova(churches.lm)
+```
+분산분석표에서 보면 검정통계량 $F_0=597.04$이고 이에 대한 $p-값=2.2\times10^{-16}$이 매우 작으므로 적합된 회귀선이 유의하다는 것을 알 수 있다.
+```{r}
+# 잔차 및 추정값 보기
+# 회귀모형 적합 결과(churches.lm)의 변수 확인
+names(churches.lm)
+# churches와 잔차와 추정값을 합쳐서 보기
+cbind(churches, churches.lm$resid, churches.lm$fitted)
+
+# 잔차를 독립변수 size에 대해 산점도를 그려본다.
+plot(size, churches.lm$resid, pch=19, main="잔차와 둘레 산점도", xlab="둘레", ylab="잔차")
+
+# 잔차가 0인 라인 타입 2번 선을 그린다.
+abline(h=0, lty=2)
+
+```
+잔차는 0을 중심으로 일정한 범위 내에 있으므로 회귀에 대한 기본 가정을 만족한다고 할 수 있으나, X가 증가함에 따라 곡선 관계를 보여주고 있다. 따라서 2차곡선회귀식 $\hat{Y}=b_0+b_1X+b_2X^2$을 구해보는 것도 의미가 있으리라고 생각된다.
+```{r}
+# 추정값의 신뢰대 그리기
+churches.frame = data.frame(size=range(churches$size))
+pc = predict(churches.lm, int="c", newdata=churches.frame)
+pp = predict(churches.lm, int="p", newdata=churches.frame)
+plot(churches$size, churches$area, ylim = range(churches$area, pc), main="추정값의 신뢰대", xlab="면적", ylab="둘레")
+matlines(churches.frame$size, pc, lty=c(1,2,2), col="BLUE")
+matlines(churches.frame$size, pp, lty=c(1,3,3), col="RED")
+
+```
+
+## 2번. 연습문제 3장 1번(p. 114) 자료를 이용하여 교재 2.8 분석사례와 같이 분석하고, 설명하시오
+(변수 EVAP를 반응변수로, 나머지 변수를 독립변수로 하기 바람)\
+
+MAXST: 토양 내 최고온도\
+MINST: 토양 내 최저온도\
+AVST: 토양 내 평균온도\
+MAXAT: 최고기온\
+MINAT: 최저기온\
+AVAT: 평균기온\
+EVAP: 증발되는 수분의 양\
+\
+
+```{r}
+# 데이터 로드
+climate = read.csv("./data/p114.csv", header = T)
+head(climate, 3)
+# 첫번째 열인 날짜를 제외하고 각 변수들의 기술통계량을 본다.
+summary(climate[,-1])
+# 첫번째 열인 날짜를 제외하고 각 변수들의 상관계수를 살펴 본다.
+cor(climate[,-1])
+
+```
+종속변수 '증발되는 수분의 양'은 `최고온도`와 `토양 내 최고온도`와 `평균온도` 독립변수 들과 상관 계수가 높다는 것도 알 수 있다.
+
+```{r}
+# 회귀모형 적합하기
+climate.lm = lm (EVAP~MAXST+MINST+AVST+MAXAT+MINAT+AVAT, data = climate)
+summary(climate.lm)
+
+```
+추정된 회귀방정식은 $\hat{Y}=-164.86+3.14\times MAXST-1.47\times MINST-4.1\times AVST+0.41\times MAXAT+0.70\times MINAT + 0.09\times AVAT$이고, 이 모형에 대한 결정계수 $R^2=0.839$로서 중회귀모형이 종속변수 EVAP의 총변동을 83.9% 정도 설명하고 있다는 것을 나타낸다. 또한 추정값의 표준오차 $\sqrt{MSE}=6.523$로서 $\sigma$의 추정치가 $6.523$임을 알 수 있다.
+
+```{r}
+# 추가 변수 그림
+library(car)
+avPlots(climate.lm)
+```
+
+```{r}
+# 분산분석표
+anova(climate.lm)
+```
+
+**분산분석표에 의한 F-검정**\
+
+| 요인 | 자유도 | 제곱합 | 평균제곱 | $F_0$ |
+| :---: | :---: |  :---: |  :---: | :---: |
+| 회귀 | 6 | 3993.05 | 665.51 | 15.64 |
+| 잔차 | 18 | 766.0 | 42.56 |   |
+| 계 | 24 | 4759.04 |   |   |
+
+여기서 $회귀제곱합=3797.7+40.5+6.8+61.3+81.9+4.9+766.0=4759.04$이다. $F-값=15.64$에 대한 유의 확률이 0.00000292로 매우 작아서 중회귀모형이 매우 유의함을 알 수 있다. 또한 오차분산 $\sigma^2$의 추정치 $MSE=42.6$임을 알 수 있다.
+```{r}
+plot(climate$EVAP, climate.lm$resid)
+identify(climate$EVAP, climate.lm$resid, labels = seq_along(climate.lm$resid), n=1, plot=TRUE)
+```
+
+
+
+

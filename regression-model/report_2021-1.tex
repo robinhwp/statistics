@@ -1,0 +1,1075 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={04월23일 회귀모형 출석수업 과제물},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{04월23일 회귀모형 출석수업 과제물}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\hypertarget{uxbc88.uxc5f0uxc2b5uxbb38uxc81c-6uxc7a5-4uxbc88-p.-187-uxad50uxd68c-uxc790uxb8ccuxb97c-uxc774uxc6a9uxd558uxc5ec-uxad50uxc7ac-1.7-uxbd84uxc11duxc0acuxb840uxc640-uxac19uxc774-uxbd84uxc11duxd558uxace0-uxc124uxba85uxd558uxc2dcuxc624}{%
+\subsection{1번.연습문제 6장 4번 (p.~187) 교회 자료를 이용하여 교재 1.7
+분석사례와 같이 분석하고,
+설명하시오}\label{uxbc88.uxc5f0uxc2b5uxbb38uxc81c-6uxc7a5-4uxbc88-p.-187-uxad50uxd68c-uxc790uxb8ccuxb97c-uxc774uxc6a9uxd558uxc5ec-uxad50uxc7ac-1.7-uxbd84uxc11duxc0acuxb840uxc640-uxac19uxc774-uxbd84uxc11duxd558uxace0-uxc124uxba85uxd558uxc2dcuxc624}}
+
+(단, 둘레를 독립변수로, 면적의 제곱근을 반응변수로 하기 바람)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 데이터 로드}
+\NormalTok{churches }\OtherTok{=} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"./data/p187.csv"}\NormalTok{, }\AttributeTok{header =}\NormalTok{ T)}
+\FunctionTok{head}\NormalTok{(churches, }\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   no size area
+## 1  1  348 3883
+## 2  2  369 4392
+## 3  3  143  914
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 오브젝트의 변수를 바로 사용하기 위해 오브젝트 등록}
+\FunctionTok{attach}\NormalTok{(churches)}
+\CommentTok{\# 산점도를 그린다.}
+\FunctionTok{plot}\NormalTok{(area, size, }\AttributeTok{pch=}\DecValTok{19}\NormalTok{, }\AttributeTok{main=}\StringTok{"영국 중세기 교회의 면적과 둘레 산점도"}\NormalTok{, }\AttributeTok{xlab=}\StringTok{"면적"}\NormalTok{, }\AttributeTok{ylab=}\StringTok{"둘레"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <a4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <91>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <b8>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <b8>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <90>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <ed>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <9a>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <8c>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <9d>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <a9>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <b3>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <bc>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <91>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <88>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <82>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <90>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <8f>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '硫댁쟻' in 'mbcsToSbcs': dot
+## substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '硫댁쟻' in 'mbcsToSbcs': dot
+## substituted for <a9>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '硫댁쟻' in 'mbcsToSbcs': dot
+## substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '硫댁쟻' in 'mbcsToSbcs': dot
+## substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '硫댁쟻' in 'mbcsToSbcs': dot
+## substituted for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '硫댁쟻' in 'mbcsToSbcs': dot
+## substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�섎젅' in 'mbcsToSbcs': dot
+## substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�섎젅' in 'mbcsToSbcs': dot
+## substituted for <91>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�섎젅' in 'mbcsToSbcs': dot
+## substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�섎젅' in 'mbcsToSbcs': dot
+## substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�섎젅' in 'mbcsToSbcs': dot
+## substituted for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�섎젅' in 'mbcsToSbcs': dot
+## substituted for <88>
+\end{verbatim}
+
+\includegraphics{report_2021-1_files/figure-latex/unnamed-chunk-1-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 회귀모형 적합}
+\NormalTok{churches.lm }\OtherTok{=} \FunctionTok{lm}\NormalTok{(area}\SpecialCharTok{\textasciitilde{}}\NormalTok{size, }\AttributeTok{data =}\NormalTok{ churches)}
+\FunctionTok{summary}\NormalTok{(churches.lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = area ~ size, data = churches)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -524.19 -139.99   15.64  165.37  606.19 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -674.5399   115.4252  -5.844  5.9e-06 ***
+## size          12.0877     0.4947  24.434  < 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 307.8 on 23 degrees of freedom
+## Multiple R-squared:  0.9629, Adjusted R-squared:  0.9613 
+## F-statistic:   597 on 1 and 23 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+회귀적합 결과에서 회귀계수의 추정값은 절편 \(b_0 = -674.5399\)이고
+기울기 \(b_1=12.0877\)의 단순회귀방정식은
+\(\hat{area}=-674.5399 + 12.0877 \times size\) 가 된다. 기울기
+\(t-값=24.434\)이고 \(p-값=2\times10^{-16}\)이 매우 작으므로
+\(H_0:\beta_1=0\)이라는 귀무가서을 기각한다.\\
+결정계수 \(R^2=0.9629\)로서 총변동 중에서 \(96.29\)\%가 회귀방정식으로
+설명되는 회귀변동이 차지하고 있다는 것을 나타낸다. \(F-값=597\)이고,
+이에 대한 \(P-값=2.2\times10^{-16}\)으로서 적합된 회귀직선이 유의하다는
+것을 알 수 있다.\\
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 분산분석표 구하기}
+\FunctionTok{anova}\NormalTok{(churches.lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: area
+##           Df   Sum Sq  Mean Sq F value    Pr(>F)    
+## size       1 56578697 56578697  597.04 < 2.2e-16 ***
+## Residuals 23  2179607    94766                      
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+분산분석표에서 보면 검정통계량 \(F_0=597.04\)이고 이에 대한
+\(p-값=2.2\times10^{-16}\)이 매우 작으므로 적합된 회귀선이 유의하다는
+것을 알 수 있다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 잔차 및 추정값 보기}
+\CommentTok{\# 회귀모형 적합 결과(churches.lm)의 변수 확인}
+\FunctionTok{names}\NormalTok{(churches.lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "coefficients"  "residuals"     "effects"       "rank"         
+##  [5] "fitted.values" "assign"        "qr"            "df.residual"  
+##  [9] "xlevels"       "call"          "terms"         "model"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# churches와 잔차와 추정값을 합쳐서 보기}
+\FunctionTok{cbind}\NormalTok{(churches, churches.lm}\SpecialCharTok{$}\NormalTok{resid, churches.lm}\SpecialCharTok{$}\NormalTok{fitted)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    no size area churches.lm$resid churches.lm$fitted
+## 1   1  348 3883         351.03544         3531.96456
+## 2   2  369 4392         606.19466         3785.80534
+## 3   3  143  914        -139.99500         1053.99500
+## 4   4  205 1666        -137.42969         1803.42969
+## 5   5  305 3616         603.80467         3012.19533
+## 6   6  419 3866        -524.18816         4390.18816
+## 7   7  243 1774        -488.76064         2262.76064
+## 8   8  240 1946        -280.49767         2226.49767
+## 9   9  272 2300        -313.30267         2613.30267
+## 10 10  299 2975          35.33061         2939.66939
+## 11 11  478 5119          15.64011         5103.35989
+## 12 12  133  660        -273.11844          933.11844
+## 13 13  167  904        -440.09875         1344.09875
+## 14 14  314 3427         306.01576         3120.98424
+## 15 15  204 1761         -30.34204         1791.34204
+## 16 16  177 1337        -127.97532         1464.97532
+## 17 17   59  204         165.36814           38.63186
+## 18 18   69  222          62.49157          159.50843
+## 19 19   50  146         216.15704          -70.15704
+## 20 20   69  192          32.49157          159.50843
+## 21 21   63  186          99.01751           86.98249
+## 22 22   58  169         142.45579           26.54421
+## 23 23   86  331         -33.99859          364.99859
+## 24 24   41  113         291.94595         -178.94595
+## 25 25  123  674        -138.24187          812.24187
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 잔차를 독립변수 size에 대해 산점도를 그려본다.}
+\FunctionTok{plot}\NormalTok{(churches.lm}\SpecialCharTok{$}\NormalTok{resid, size, }\AttributeTok{pch=}\DecValTok{19}\NormalTok{, }\AttributeTok{main=}\StringTok{"잔차와 둘레 산점도"}\NormalTok{, }\AttributeTok{xlab=}\StringTok{"잔차"}\NormalTok{, }\AttributeTok{ylab=}\StringTok{"둘레"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감� �섎젅 �곗젏��' in
+## 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감� �섎젅 �곗젏��' in
+## 'mbcsToSbcs': dot substituted for <9e>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감� �섎젅 �곗젏��' in
+## 'mbcsToSbcs': dot substituted for <94>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감� �섎젅 �곗젏��' in
+## 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감� �섎젅 �곗젏��' in
+## 'mbcsToSbcs': dot substituted for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감� �섎젅 �곗젏��' in
+## 'mbcsToSbcs': dot substituted for <a8>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감� �섎젅 �곗젏��' in
+## 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감� �섎젅 �곗젏��' in
+## 'mbcsToSbcs': dot substituted for <99>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감� �섎젅 �곗젏��' in
+## 'mbcsToSbcs': dot substituted for <80>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감� �섎젅 �곗젏��' in
+## 'mbcsToSbcs': dot substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감� �섎젅 �곗젏��' in
+## 'mbcsToSbcs': dot substituted for <91>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감� �섎젅 �곗젏��' in
+## 'mbcsToSbcs': dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감� �섎젅 �곗젏��' in
+## 'mbcsToSbcs': dot substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감� �섎젅 �곗젏��' in
+## 'mbcsToSbcs': dot substituted for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감� �섎젅 �곗젏��' in
+## 'mbcsToSbcs': dot substituted for <88>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감� �섎젅 �곗젏��' in
+## 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감� �섎젅 �곗젏��' in
+## 'mbcsToSbcs': dot substituted for <82>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감� �섎젅 �곗젏��' in
+## 'mbcsToSbcs': dot substituted for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감� �섎젅 �곗젏��' in
+## 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감� �섎젅 �곗젏��' in
+## 'mbcsToSbcs': dot substituted for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감� �섎젅 �곗젏��' in
+## 'mbcsToSbcs': dot substituted for <90>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감� �섎젅 �곗젏��' in
+## 'mbcsToSbcs': dot substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감� �섎젅 �곗젏��' in
+## 'mbcsToSbcs': dot substituted for <8f>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감� �섎젅 �곗젏��' in
+## 'mbcsToSbcs': dot substituted for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감' in 'mbcsToSbcs': dot
+## substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감' in 'mbcsToSbcs': dot
+## substituted for <9e>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감' in 'mbcsToSbcs': dot
+## substituted for <94>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감' in 'mbcsToSbcs': dot
+## substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감' in 'mbcsToSbcs': dot
+## substituted for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�붿감' in 'mbcsToSbcs': dot
+## substituted for <a8>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�섎젅' in 'mbcsToSbcs': dot
+## substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�섎젅' in 'mbcsToSbcs': dot
+## substituted for <91>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�섎젅' in 'mbcsToSbcs': dot
+## substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�섎젅' in 'mbcsToSbcs': dot
+## substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�섎젅' in 'mbcsToSbcs': dot
+## substituted for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�섎젅' in 'mbcsToSbcs': dot
+## substituted for <88>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 잔차가 0인 라인 타입 2번 선을 그린다.}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h=}\DecValTok{0}\NormalTok{,}\AttributeTok{lty=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{report_2021-1_files/figure-latex/unnamed-chunk-3-1.pdf}
+잔차는 0을 중심으로 일정한 범위 내에 있으므로 회귀에 대한 기본 가정을
+만족한다고 할 수 있으나, X가 증가함에 따라 곡선 관계를 보여주고 있다.
+따라서 2차곡선회귀식 \(\hat{Y}=b_0+b_1X+b_2X^2\)을 구해보는 것도 의미가
+있으리라고 생각된다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 추정값의 신뢰대 그리기}
+\NormalTok{churches.frame }\OtherTok{=} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{size=}\FunctionTok{range}\NormalTok{(churches}\SpecialCharTok{$}\NormalTok{size))}
+\NormalTok{pc }\OtherTok{=} \FunctionTok{predict}\NormalTok{(churches.lm, }\AttributeTok{int=}\StringTok{"c"}\NormalTok{, }\AttributeTok{newdata=}\NormalTok{churches.frame)}
+\NormalTok{pp }\OtherTok{=} \FunctionTok{predict}\NormalTok{(churches.lm, }\AttributeTok{int=}\StringTok{"p"}\NormalTok{, }\AttributeTok{newdata=}\NormalTok{churches.frame)}
+\FunctionTok{plot}\NormalTok{(churches}\SpecialCharTok{$}\NormalTok{size, churches}\SpecialCharTok{$}\NormalTok{area, }\AttributeTok{ylim =} \FunctionTok{range}\NormalTok{(churches}\SpecialCharTok{$}\NormalTok{area, pc), }\AttributeTok{main=}\StringTok{"영국 중세기 교회의 면적과 둘레 산점도"}\NormalTok{, }\AttributeTok{xlab=}\StringTok{"면적"}\NormalTok{, }\AttributeTok{ylab=}\StringTok{"둘레"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <ad>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <a4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <91>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <b8>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <b8>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <90>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <ed>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <9a>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <8c>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <9d>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <a9>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <b3>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <bc>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <91>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <88>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <82>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <90>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <8f>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�곴뎅 以묒꽭湲� 援먰쉶�� 硫댁
+## 쟻怨� �섎젅 �곗젏��' in 'mbcsToSbcs': dot substituted for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '硫댁쟻' in 'mbcsToSbcs': dot
+## substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '硫댁쟻' in 'mbcsToSbcs': dot
+## substituted for <a9>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '硫댁쟻' in 'mbcsToSbcs': dot
+## substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '硫댁쟻' in 'mbcsToSbcs': dot
+## substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '硫댁쟻' in 'mbcsToSbcs': dot
+## substituted for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '硫댁쟻' in 'mbcsToSbcs': dot
+## substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�섎젅' in 'mbcsToSbcs': dot
+## substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�섎젅' in 'mbcsToSbcs': dot
+## substituted for <91>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�섎젅' in 'mbcsToSbcs': dot
+## substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�섎젅' in 'mbcsToSbcs': dot
+## substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�섎젅' in 'mbcsToSbcs': dot
+## substituted for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '�섎젅' in 'mbcsToSbcs': dot
+## substituted for <88>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{matlines}\NormalTok{(churches.frame}\SpecialCharTok{$}\NormalTok{size, pc, }\AttributeTok{lty=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{), }\AttributeTok{col=}\StringTok{"BLUE"}\NormalTok{)}
+\FunctionTok{matlines}\NormalTok{(churches.frame}\SpecialCharTok{$}\NormalTok{size, pp, }\AttributeTok{lty=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{), }\AttributeTok{col=}\StringTok{"RED"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{report_2021-1_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\end{document}
