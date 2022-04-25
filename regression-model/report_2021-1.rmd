@@ -111,7 +111,11 @@ anova(climate.lm)
 여기서 $회귀제곱합=3797.7+40.5+6.8+61.3+81.9+4.9+766.0=4759.04$이다. $F-값=15.64$에 대한 유의 확률이 0.00000292로 매우 작아서 중회귀모형이 매우 유의함을 알 수 있다. 또한 오차분산 $\sigma^2$의 추정치 $MSE=42.6$임을 알 수 있다.
 ```{r}
 plot(climate$EVAP, climate.lm$resid)
-identify(climate$EVAP, climate.lm$resid, labels = seq_along(climate.lm$resid), n=1, plot=TRUE)
+for (i in 1:length(climate$EVAP))
+{
+  text(climate$EVAP[i], climate.lm$resid[i]-1, as.character(i))  
+}
+
 ```
 
 
