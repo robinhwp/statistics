@@ -110,14 +110,72 @@ anova(climate.lm)
 
 여기서 $회귀제곱합=3797.7+40.5+6.8+61.3+81.9+4.9+766.0=4759.04$이다. $F-값=15.64$에 대한 유의 확률이 0.00000292로 매우 작아서 중회귀모형이 매우 유의함을 알 수 있다. 또한 오차분산 $\sigma^2$의 추정치 $MSE=42.6$임을 알 수 있다.
 ```{r}
-plot(climate$EVAP, climate.lm$resid)
+plot(climate$EVAP, climate.lm$resid, main="증발되는 수분의 양과 잔차의 산점도", xlab="증발되는 수분의 양", ylab="잔차")
 for (i in 1:length(climate$EVAP))
 {
-  text(climate$EVAP[i], climate.lm$resid[i]-1, as.character(i))  
+  if ( i == 7 )
+    text(climate$EVAP[i]+1.5, climate.lm$resid[i], as.character(i))  
+  else if (i == 15)
+    text(climate$EVAP[i]+1.5, climate.lm$resid[i], as.character(i))  
+  else if ( i == 17)
+    text(climate$EVAP[i], climate.lm$resid[i]+1.5, as.character(i))  
+  else if (i == 21)
+    text(climate$EVAP[i]+1.5, climate.lm$resid[i], as.character(i))  
+  else
+    text(climate$EVAP[i], climate.lm$resid[i]-1.5, as.character(i))  
 }
 
 ```
+```{r}
+plot(climate$MAXST, climate.lm$resid, main="토양 내 최고온도와 잔차의 산점도", xlab="토양 내 최고온도", ylab="잔차")
+for (i in 1:length(climate$MAXST))
+{
+  if (i==2)
+    text(climate$MAXST[i]-0.5, climate.lm$resid[i], as.character(i))  
+  else 
+    text(climate$MAXST[i]+0.5, climate.lm$resid[i], as.character(i))  
+}
+```
+```{r}
+plot(climate$MINST, climate.lm$resid, main="토양 내 최저온도와 잔차의 산점도", xlab="토양 내 최저온도", ylab="잔차")
+for (i in 1:length(climate$MINST))
+{
+  if (i == 12 || i == 25 || i == 10 || i == 4 | i == 22) 
+    text(climate$MINST[i]-0.3, climate.lm$resid[i], as.character(i))    
+  else
+    text(climate$MINST[i]+0.3, climate.lm$resid[i], as.character(i))  
+  
+}
+```
+```{r}
+plot(climate$MAXAT, climate.lm$resid, main="최고기온과 잔차의 산점도", xlab="최고기온", ylab="잔차")
+for (i in 1:length(climate$MAXAT))
+{
+  if (i == 12 || i == 13 || i == 23 || i == 4 ) 
+    text(climate$MAXAT[i]-0.4, climate.lm$resid[i], as.character(i))  
+  else
+    text(climate$MAXAT[i]+0.5, climate.lm$resid[i], as.character(i))  
+}
+```
+
+```{r}
+plot(climate$MINAT, climate.lm$resid, main="최저기온과 잔차의 산점도", xlab="최저기온", ylab="잔차")
+for (i in 1:length(climate$MINAT))
+{
+   if (i == 12 || i == 11 || i == 4 ) 
+     text(climate$MINAT[i]+0.5, climate.lm$resid[i], as.character(i))  
+  else
+     text(climate$MINAT[i]+0.5, climate.lm$resid[i], as.character(i))  
+}
+```
 
 
-
+```{r}
+plot(climate$AVAT, climate.lm$resid, main="평균기온과 잔차의 산점도", xlab="평균기온", ylab="잔차")
+for (i in 1:length(climate$AVAT))
+{
+  
+  text(climate$AVAT[i]+0.3, climate.lm$resid[i], as.character(i))  
+}
+```
 
