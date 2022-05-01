@@ -126,46 +126,56 @@ for (i in 1:length(climate$EVAP))
 }
 
 ```
+증발되는 수분의 양과 잔차의 산점도는 등분산성 모양으로 잔차들이 고르게 분포되어 있는것 같다.
+
 ```{r}
 plot(climate$MAXST, climate.lm$resid, main="토양 내 최고온도와 잔차의 산점도", xlab="토양 내 최고온도", ylab="잔차")
 for (i in 1:length(climate$MAXST))
 {
-  if (i==2)
+  if (i==2 || i == 24 || i == 25)
     text(climate$MAXST[i]-0.5, climate.lm$resid[i], as.character(i))  
   else 
     text(climate$MAXST[i]+0.5, climate.lm$resid[i], as.character(i))  
 }
 ```
+토양 내 최고온도와 잔차의 산점도는 등분산성 모양으로 잔차들이 고르게 분포되어 있는것 같다.
+
 ```{r}
 plot(climate$MINST, climate.lm$resid, main="토양 내 최저온도와 잔차의 산점도", xlab="토양 내 최저온도", ylab="잔차")
 for (i in 1:length(climate$MINST))
 {
-  if (i == 12 || i == 25 || i == 10 || i == 4 | i == 22) 
-    text(climate$MINST[i]-0.3, climate.lm$resid[i], as.character(i))    
+  if (i == 12 || i == 25 || i == 10 || i == 4 || i == 22) 
+    text(climate$MINST[i]-0.5, climate.lm$resid[i], as.character(i))    
   else
-    text(climate$MINST[i]+0.3, climate.lm$resid[i], as.character(i))  
+    text(climate$MINST[i]+0.5, climate.lm$resid[i], as.character(i))  
   
 }
 ```
+토양 내 최저온도와 잔차의 산점도는 등분산성 모양으로 잔차들이 고르게 분포되어 있는것 같다.
+
 ```{r}
 plot(climate$MAXAT, climate.lm$resid, main="최고기온과 잔차의 산점도", xlab="최고기온", ylab="잔차")
 for (i in 1:length(climate$MAXAT))
 {
   if (i == 12 || i == 13 || i == 23 || i == 4 ) 
-    text(climate$MAXAT[i]-0.4, climate.lm$resid[i], as.character(i))  
+    text(climate$MAXAT[i]-0.5, climate.lm$resid[i], as.character(i))  
   else
     text(climate$MAXAT[i]+0.5, climate.lm$resid[i], as.character(i))  
 }
 ```
+최고기온과 잔차의 산점도는 3번과 15번케이스를 제외하면 잔차들의 분포가 이분산성 모양으로 볼수도 있겠지만 등분산성 모양에 더 가깝다고 볼수 있다.
+
 
 ```{r}
 plot(climate$MINAT, climate.lm$resid, main="최저기온과 잔차의 산점도", xlab="최저기온", ylab="잔차")
 for (i in 1:length(climate$MINAT))
 {
-   if (i == 12 || i == 11 || i == 4 ) 
-     text(climate$MINAT[i]+0.5, climate.lm$resid[i], as.character(i))  
+  if (i == 12 || i == 11 || i == 4 )
+    text(climate$MINAT[i]-0.5, climate.lm$resid[i], as.character(i))    else if(i==10)
+      text(climate$MINAT[i], climate.lm$resid[i]-1.0,as.character(i))
   else
-     text(climate$MINAT[i]+0.5, climate.lm$resid[i], as.character(i))  
+    text(climate$MINAT[i]+0.5, climate.lm$resid[i],as.character(i))
+  
 }
 ```
 
@@ -174,8 +184,27 @@ for (i in 1:length(climate$MINAT))
 plot(climate$AVAT, climate.lm$resid, main="평균기온과 잔차의 산점도", xlab="평균기온", ylab="잔차")
 for (i in 1:length(climate$AVAT))
 {
-  
-  text(climate$AVAT[i]+0.3, climate.lm$resid[i], as.character(i))  
+  if (i == 12 ) 
+    text(climate$AVAT[i], climate.lm$resid[i]+2.0, as.character(i))
+  else if(i==13)
+    text(climate$AVAT[i], climate.lm$resid[i]-2.0, as.character(i))
+  else
+    text(climate$AVAT[i]+2.0, climate.lm$resid[i], as.character(i))
 }
 ```
+평균기온과 잔차의 산점도는 3번과 15번케이스를 제외하면 등분산성 모양으로 잔차들이 고르게 분포되어 있는것 같다.
 
+```{r}
+plot(climate.lm$fitted, climate.lm$resid, main="추정값과 잔차의 산점도", xlab="추정값", ylab="잔차")
+
+for (i in 1:length(climate.lm$resid))
+{
+  if (i == 120 ) 
+    text(climate.lm$fitted[i], climate.lm$resid[i], as.character(i))
+  else if(i==130)
+    text(climate.lm$fitted[i], climate.lm$resid[i], as.character(i))
+  else
+    text(climate.lm$fitted[i]+1.0, climate.lm$resid[i], as.character(i))
+}
+```
+추정값과 잔차의 산점도를 보면 3번과 15번 케이스를 제외하면 어떤 뚜련한 현상은 나타나고 않고 있다. 따라서 3번과 15번 케이스에 대한 면밀한 조사를 거쳐 특이점으로 판명되면 이 두 케이스를 제외하고 다시 분석에 들어가는 것이 좋을수도 있다는 생각이 든다.

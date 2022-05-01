@@ -1,0 +1,22 @@
+---
+title: "출석수업과제물"
+output: word_document
+---
+
+## 출석수업과제물
+
+1.	COVID-19 관련 데이터 시각화의 국내외 사례 3개를 찾고 비교하여 정리하시오. (반드시 2022년 데이터가 포 함된 사례를 사용할 것. 이미지를 캡처하여 한글이나 워드 파일에 첨부할 것. 이미지를 별도의 파일로 제출하 지 말 것) (6점) 
+
+2.	한스 로즈링의 TED 강의(아래의 URL 이용)를 보고 데이터 시각화의 역할 등 느낀 점을 1페이지 이내로 정리 하시오.(6점) https://www.ted.com/talks/hans_rosling_let_my_dataset_change_your_mindset (오른쪽 아래 메뉴에서 한글 자막 설정 가능) 
+
+
+3.	R의 datarium 패키지에 내장된 marketing 데이터셋은 광고 미디어에 사용한 비용과 판매액의 데이터이다. facebook 컬럼은 facebook 광고비로 사용한 금액이고, sales 컬럼은 판매액이다. facebook을 x축, sales를 y 축으로 하는 산점도를 그리시오. facebook을 독립변수(설명변수), sales를 종속변수(반응변수, 결과변수)로 하 는 회귀직선을 산점도 위에 그리시오. 산점도의 제목으로 본인의 학번을 출력하시오. (9점) (힌트: datarium 패 키지를 설치, 로드한 후 콘솔에 dat<-marketing을 입력하면 marketing 데이터셋이 dat에 저장된다) 
+```{r}
+# install.packages("datarium")
+library(datarium)
+dat<-marketing
+plot(dat$facebook, dat$sales, xlab="facebook 광고비", ylab="판매액",main="202135-368864")
+obj<-lm(sales~facebook, data=dat)
+abline(obj)
+```
+
