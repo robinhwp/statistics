@@ -20,3 +20,9 @@ obj<-lm(sales~facebook, data=dat)
 abline(obj)
 ```
 
+4.	한국, 미국, 프랑스, 일본의 COVID-19 신규 확진자 수의 시간에 따른 추이를 데이터 시각화로 비교하고 향후 추이에 대해 의견 기술하라(데이터는 과제 작성일까지 올라와 있는 것을 이용하면 되며 학생별로 동일할 필요 는 없음).(9점) *데이터 소스: https://ourworldindata.org/covid-deaths 에서 “Our work belongs to everyone“이라 쓰여있 는 네모 안의 .csv(아래 그림에서 빨간 네모)를 클릭하여 데이터를 다운로드 받아서 사용할 것. *변수이름: iso_code가 각 국가를 나타낸다. (한국: KOR, 미국:USA, 프랑스: FRA, 일본: JPN) new_cases가 신규 확진자 수를 나타낸다.
+```{r}
+dat0 = read.csv("./data/owid-covid-data.csv", header = T)
+
+```
+
