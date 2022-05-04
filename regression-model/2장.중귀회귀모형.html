@@ -424,20 +424,23 @@ market2 = read.table(&quot;./data/market-2.txt&quot;, header = T); head(market2,
 ## 3  3 9.3 15.0 22.8</code></pre>
 <pre class="r"><code># 2번째와 3번째열을 X로 잡아준다.
 X = market2[,c(2:3)]
-# 첫번째 행을 1번째로 한다.
+# 첫번째 행을 절편으로 사용하기 위한 1로된 행을 추가한다.
 X = cbind(1, X)
 # Y는 파일에서 4번째 열을 가져온다.
 Y = market2[,4]
 # X와 Y를 행렬로 만들어준다.
 X = as.matrix(X)
 Y = as.matrix(Y)
-# X&#39; = t(X)  동일
+# X&#39; = t(X) 
+# t(x)는 X의 행과열을 바꿔서 행렬을 만든다. 15x3 행렬 -&gt; 3x15행렬로 변환
+# X&#39;X
 (XTX = t(X) %*% X)</code></pre>
 <pre><code>##        1      X1      X2
 ## 1   15.0  132.80  165.50
 ## X1 132.8 1280.80 1610.68
 ## X2 165.5 1610.68 2149.49</code></pre>
 <pre class="r"><code># 인버스를 구하는 함수는 solve
+# XTX^(-1)
 XTXI = solve(XTX)
 (XTY = t(X) %*%Y)</code></pre>
 <pre><code>##       [,1]
@@ -487,7 +490,7 @@ summary(market2.lm)</code></pre>
 <p>적합된 회귀식: <span class="math inline">\(\hat{Y}=0.85041+1.55811X_1+0.42736X_2\)</span><br />
 결정계수: <span class="math inline">\(R^2 = 0.9799\)</span><br />
 F-통계량=2.292.5이고, 유의확율 <span class="math inline">\(p-값=06.567\times 10^{-11}\)</span>로서 적합된
-중회귀모형이 이 데이터를 설명하는데 유의함. (이는 귀무가설 <span class="math inline">\(H_0:\beta_1=\beta_2=0\)</span>이 기각되므로 <span class="math inline">\(\beta_1\)</span>과 <span class="math inline">\(\beta_2\)</span>가 동시에 영이되지 않을 것이라는
+중회귀모형이 이 데이터를 설명하는데 유의함. (이는 귀무가설 <span class="math inline">\(H_0:\beta_1=\beta_2=0\)</span>이 기각되므로 <span class="math inline">\(\beta_1\)</span>과 <span class="math inline">\(\beta_2\)</span>가 동시에 0이되지 않을 것이라는
 의미임)</p>
 <p><strong>분산분석표</strong><br />
 </p>
@@ -507,7 +510,8 @@ F-통계량=2.292.5이고, 유의확율 <span class="math inline">\(p-값=06.567
 회귀제곱합 <span class="math inline">\(SS(X1, X2)=SS(X1) +
 SS(X2|X1)\)</span><br />
 </p>
-<p><strong>분산분석표</strong><br />
+<p><br />
+<strong>분산분석표</strong><br />
 </p>
 <table>
 <thead>
@@ -547,6 +551,33 @@ SS(X2|X1)\)</span><br />
 </tr>
 </tbody>
 </table>
+<p>평균제곱 = 제곱합 / 자유도 = 507.87 / 2 = 253.94<br />
+</p>
+<pre class="r"><code>names(market2.lm)</code></pre>
+<pre><code>##  [1] &quot;coefficients&quot;  &quot;residuals&quot;     &quot;effects&quot;       &quot;rank&quot;         
+##  [5] &quot;fitted.values&quot; &quot;assign&quot;        &quot;qr&quot;            &quot;df.residual&quot;  
+##  [9] &quot;xlevels&quot;       &quot;call&quot;          &quot;terms&quot;         &quot;model&quot;</code></pre>
+<pre class="r"><code>yhat=market2.lm$fitted.values
+cor(market2$Y, yhat)^2</code></pre>
+<pre><code>## [1] 0.9798986</code></pre>
+</div>
+<div id="잔차의-검토" class="section level2">
+<h2>잔차의 검토</h2>
+<p>잔차 산점도의 형태를 보고 어떻게 할지 판단.</p>
+<ol style="list-style-type: decimal">
+<li>자료파일 읽기</li>
+</ol>
+<pre class="r"><code>library(xlsx)</code></pre>
+<pre><code>## Warning: 패키지 &#39;xlsx&#39;는 R 버전 4.1.3에서 작성되었습니다</code></pre>
+<pre class="r"><code>chemical = read.xlsx(&quot;./data/chemical.xlsx&quot;, 1)
+head(chemical) # tail(chemical) &lt;- 끝에서 5개를 출력</code></pre>
+<pre><code>##   id speed temp loss
+## 1  1    70   20   15
+## 2  2    80   27   42
+## 3  3    75   25   37
+## 4  4    62   24   28
+## 5  5    65   23   20
+## 6  6    58   18   14</code></pre>
 </div>
 
 
