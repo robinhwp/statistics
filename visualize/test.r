@@ -51,6 +51,7 @@ dat1 = dat0 %>% filter(iso_code == "KOR" |
                          iso_code == "FRA") %>%
   mutate(date = as.Date(date))
 
-ggplot(dat=dat1, aes(x=date, y=new_cases/1000, color=iso_code)) +
-  labs(x="날짜", y="신규감염자(단위:1000명)") +
+ggplot(dat=dat1, aes(x=date, y=new_cases/100, color=iso_code)) +
+  labs(x="날짜", y="신규감염자(단위:1/100명)") +
   geom_line() + geom_smooth(span=0.2) + facet_wrap(~iso_code)
+
