@@ -261,17 +261,58 @@ w.lm  = lm(y~x, weights=w)
 ```
 ## 분석사례
 ```{r}
+# 자료 읽기
 super = read.table("./data/supermarket.txt", header = T)
 head(super, 3)
+# 객체의 변수를 객체없이 접근하기 위해서 attach
 attach(super)
-plot(price,time,pch=19)
- 
+# 산점도를 그린다.
+plot(price,time,pch=19, xlab="금액", ylab="소요시간", main="마켓 산점도")
+
+# 회귀모형 적합
+super.lm = lm(time~price, data=super)
+(super.summary = summary(super.lm))
+
+```
+- 단순회귀방정식 : $\hat{time}=0.3965 + 0.1160 \times price$\
+- 기울기검정: price의 t-값은 12.92이고 p-값은 1.22e-06=0.0000122 값이 매우 작으므로 $H_0:\beta_1=0$이라는 귀무가설을 기각.\
+- 결정계수 $R^2=0.9542$로서, 총변동 중에서 95.42%가 회귀방정식으로 설명되는 회귀변동이 차지하고 있다는 것을 나타냄\
+- F-값:166.9이고, 이에대한 p-값=1.221e-06으로서 적합된 회귀직선이 유의하다는 것을 알수있다.\
+
+*분산분석표*\
+```{r}
+(super.anova=anova(super.lm))
+```
+분산분석표에서 보면 검전통계량 $F_0=166.85$이고, 이에대한 p-값=1.221e-06으로서 적합된 회귀직선이 유의하다는 것을 알수있다.\
+*잔차 및 추정값보기*\
+```{r}
+names(super.lm)
+cbind(super, super.lm$resid, super.lm$fitted)
+```
+*잔차 그림 그리기*\
+```{r}
+plot(super$price, super.lm$resid, pch=19)
+abline(h=0, lty=2)
+```
+*추정값의 신뢰대 그리기*\
+```{r}
+p.x = data.frame(price=c(1,45))
+pc = predict(super.lm, int="c", newdata = p.x)
+plot(super$price, super$time, ylim=range(super$time, pc), pch=19)
+matlines(p.x$price, pc, lty=c(1,2,2), col="BLUE")
 ```
 
 
+
+
 ### 회귀모형 정리
-**결정계수**\
-summary(lm) 결과에서 \
-*Multiple R-squared:* 값에 해당 market에서는 Multiple R-squared:  0.9369\
+```{r}
+# market-1.txt 파일을 읽어서 
+# 파일 읽기 및 linear model 값
+market = read.table("./data/market-1.txt", header = T)
+market.lm = lm(Y~X, data=market)
+summary(market.lm)
+```
+
 
 
