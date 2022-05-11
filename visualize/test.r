@@ -52,6 +52,46 @@ dat1 = dat0 %>% filter(iso_code == "KOR" |
   mutate(date = as.Date(date))
 
 ggplot(dat=dat1, aes(x=date, y=new_cases/100, color=iso_code)) +
-  labs(x="날짜", y="신규감염자(단위:1/100명)") +
+  labs(x="날짜", y="신규감염자(단위:1/100)") +
   geom_line() + geom_smooth(span=0.2) + facet_wrap(~iso_code)
 
+ggplot(dat=dat1, aes(x=date, y=new_deaths, color=iso_code)) +
+  labs(x="날짜", y="신규사망자") +
+  geom_line() + geom_smooth(span=0.2) + facet_wrap(~iso_code)
+
+ggplot(dat=dat1, aes(x=date, y=new_cases_per_million, color=iso_code)) +
+  labs(x="날짜", y="100만명당신규감염자") +
+  geom_line() + geom_smooth(span=0.2) + facet_wrap(~iso_code)
+
+ggplot(dat=dat1, aes(x=date, y=new_deaths_per_million, color=iso_code)) +
+  labs(x="날짜", y="100만명당신규사망자") +
+  geom_line() + geom_smooth(span=0.2) + facet_wrap(~iso_code)
+
+
+
+library(ggplot2)
+library(dplyr)
+dat0 = read.csv("./data/owid-covid-data.csv", header = T)
+head(dat0)
+kor = dat0 %>% filter(iso_code == "KOR") %>%  mutate(date = as.Date(date))
+jpn = dat0 %>% filter(iso_code == "JPN") %>%  mutate(date = as.Date(date))
+usa = dat0 %>% filter(iso_code == "USA") %>%  mutate(date = as.Date(date))
+fra = dat0 %>% filter(iso_code == "FRA") %>%  mutate(date = as.Date(date))
+
+ggplot(dat=kor, aes(x=date, y=new_cases, color=iso_code)) +
+  labs(x="날짜", y="한국 신규감염자") +
+  geom_line() + geom_smooth(span=0.2) + facet_wrap(~iso_code)
+
+ggplot(dat=jpn, aes(x=date, y=new_cases, color=iso_code)) +
+  labs(x="날짜", y="일본 신규감염자") +
+  geom_line() + geom_smooth(span=0.2) + facet_wrap(~iso_code)
+
+ggplot(dat=usa, aes(x=date, y=new_cases, color=iso_code)) +
+  labs(x="날짜", y="미국 신규감염자") +
+  geom_line() + geom_smooth(span=0.2) + facet_wrap(~iso_code)
+
+ggplot(dat=fra, aes(x=date, y=new_cases, color=iso_code)) +
+  labs(x="날짜", y="프랑스 신규감염자") +
+  geom_line() + geom_smooth(span=0.2) + facet_wrap(~iso_code)
+
+str(dat0)
