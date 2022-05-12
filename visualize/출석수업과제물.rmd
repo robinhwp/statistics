@@ -20,10 +20,15 @@ coronaboard.kr 사이트의 글로벌 차트에서 대한민국의 일별 코로
 3.	R의 datarium 패키지에 내장된 marketing 데이터셋은 광고 미디어에 사용한 비용과 판매액의 데이터이다. facebook 컬럼은 facebook 광고비로 사용한 금액이고, sales 컬럼은 판매액이다. facebook을 x축, sales를 y 축으로 하는 산점도를 그리시오. facebook을 독립변수(설명변수), sales를 종속변수(반응변수, 결과변수)로 하 는 회귀직선을 산점도 위에 그리시오. 산점도의 제목으로 본인의 학번을 출력하시오. (9점) (힌트: datarium 패 키지를 설치, 로드한 후 콘솔에 dat<-marketing을 입력하면 marketing 데이터셋이 dat에 저장된다) 
 ```{r}
 # install.packages("datarium")
+# datarium 라이브러리 로드
 library(datarium)
+# marketing 데이터를 이용하여 dat 객체 생성
 dat<-marketing
+# facebook과 sales 컬럼을 이용하여 산점도를 그린다.
 plot(dat$facebook, dat$sales, xlab="facebook 광고비", ylab="판매액",main="202135-368864")
+# Linear Model을 obj에 저장한다.
 obj<-lm(sales~facebook, data=dat)
+# 회귀직선을 그린다.
 abline(obj)
 ```
 
@@ -33,16 +38,25 @@ abline(obj)
 library(ggplot2)
 library(dplyr)
 dat0 = read.csv("./data/owid-covid-data.csv", header = T)
-head(dat0)
 dat1 = dat0 %>% filter(iso_code == "KOR" |
                          iso_code == "JPN" |
                          iso_code == "USA" |
                          iso_code == "FRA") %>%
   mutate(date = as.Date(date))
 
-ggplot(dat=dat1, aes(x=date, y=new_cases/1000, color=iso_code)) +
-  labs(x="날짜", y="신규감염자(단위:1/1000명)") +
+ggplot(dat=dat1, aes(x=date, y=new_cases/100, color=iso_code)) +
+  labs(x="날짜", y="신규감염자(단위:1/100)") +
   geom_line() + geom_smooth(span=0.2) + facet_wrap(~iso_code)
+
+ggplot(dat=dat1, aes(x=date, y=new_cases_per_million, color=iso_code)) +
+  labs(x="날짜", y="100만명당신규감염자") +
+  geom_line() + geom_smooth(span=0.2) + facet_wrap(~iso_code)
+
+
+ggplot(dat=dat1, aes(x=date, y=new_deaths_per_million, color=iso_code)) +
+  labs(x="날짜", y="100만명당신규사망자") +
+  geom_line() + geom_smooth(span=0.2) + facet_wrap(~iso_code)
+
 
 ```
 

@@ -44,7 +44,6 @@ for(i in 1:5)
 library(ggplot2)
 library(dplyr)
 dat0 = read.csv("./data/owid-covid-data.csv", header = T)
-head(dat0)
 dat1 = dat0 %>% filter(iso_code == "KOR" |
                          iso_code == "JPN" |
                          iso_code == "USA" |
@@ -54,6 +53,11 @@ dat1 = dat0 %>% filter(iso_code == "KOR" |
 ggplot(dat=dat1, aes(x=date, y=new_cases/100, color=iso_code)) +
   labs(x="날짜", y="신규감염자(단위:1/100)") +
   geom_line() + geom_smooth(span=0.2) + facet_wrap(~iso_code)
+
+ggplot(dat=dat1, aes(x=date, y=new_cases_per_million, color=iso_code)) +
+  labs(x="날짜", y="100만명당신규감염자") +
+  geom_line() + geom_smooth(span=0.2) + facet_wrap(~iso_code)
+
 
 ggplot(dat=dat1, aes(x=date, y=new_deaths, color=iso_code)) +
   labs(x="날짜", y="신규사망자") +
