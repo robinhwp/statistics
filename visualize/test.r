@@ -99,3 +99,18 @@ ggplot(dat=fra, aes(x=date, y=new_cases, color=iso_code)) +
   geom_line() + geom_smooth(span=0.2) + facet_wrap(~iso_code)
 
 str(dat0)
+
+
+# R 패키지 “vcd”에 내장된 “Arthritis” 데이터셋은 류마티스 관절염 환자를 대상으로 한 임상시험 결과 데이터이다. 각 행은 각 환자를 나타내며, 
+# 변수 Treatment는 그룹 (Treated = 새로운 치료제를 투약한 그룹, Placebo = 위약을 받은 그룹)을 나타낸다. 
+# 변수 Sex는 성별을, Improved는 치료 결과(None = 차도 없음, Some = 약간 좋아짐, Marked = 매우 좋아짐)를 나타낸다. 
+# 새로운 치료제 투약 여부가 치료 결과와 연관이 있는지, 성별과 치료 결과 간에 연관이 있는지를 데이터 시각화를 통해서 탐구하시오. (18점)
+library(vcd)
+str(Arthritis)
+
+data("Arthritis")
+art <- xtabs(~ Treatment + Improved, data = Arthritis, subset = Sex == "Female")
+art
+
+mosaic(art, gp = shading_Friendly)
+mosaic(art, gp = shading_max)
