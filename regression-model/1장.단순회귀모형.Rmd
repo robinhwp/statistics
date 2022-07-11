@@ -10,25 +10,31 @@ output: html_document
 ## 단순회귀모형(simple regression models)
 모형이 회귀계수로 볼 때도 선형(linear in the regression coefficient)이고, 독립변수(설명변수)로 볼 때도 선형(linear in the independent variable)이며, 독립변수가 하나뿐이므로 단순회귀모형이라고 한다.
 $$Y_i=\beta_0 + \beta_1X_i + \epsilon_i$$
-1. $Y_i$는 확률변수\
+$Y_i$는 상수항($\beta_0 + \beta_1X_i$)과 오차항($\epsilon_i$)으로 구성되어 있다.\
+
+1. $Y_i$는 i번째 측정된 Y값으로 확률변수이다.\
 2. 오차항의 평균 $E(\epsilon_i)=0$이므로, \
-$E(Y_i)=E(\beta_0+\beta_1X_i+\epsilon_i) = \beta_0+\beta_iXi + E(\epsilon_i) = \beta_0+\beta_1X_i$이다. \
+$E(Y_i)=E(\beta_0+\beta_1X_i+\epsilon_i) = \beta_0+\beta_iXi + E(\epsilon_i) = \beta_0+\beta_1X_i$이다.\
+$\beta_0+\beta_1X_i$은 상수항이기 때문에 $E(\beta_0+\beta_1X_i)=\beta_0+\beta_1X_i$가 된다.\
 주어진 $X$에서 $Y$의 기대값을 $\mu_{Y.X}=\beta_0+\beta_1X$라고하면 $Y=\mu_{Y.X}+\epsilon$으로 표현한다.\
 3. 오차항$\epsilon_i$의 분산은 등분산(homoscedastic)$\sigma^2$으로 가정한다. 따라서 반응변수 $Y_i$의 분산은 $Var(Yi)=Var(\beta_0+\beta_1X_i+\epsilon_i) = Var(\epsilon_i)=\sigma^2$ 이므로, 반응변수 $Y_i$도 등분산 $\sigma^2$을 갖는다.\
 4. 반응변수 $Y$의 오차항들은 서로 독립이라고 가정한다. 두 변수 간의 공분산(covariance) $Cov(\epsilon_i, \epsilon_j)=0, i \neq j$이 성립되는 가정이다. 오차항 $\epsilon_i$와 $\epsilon_j$가 서로 독립이므로, 반응변수 $Y_i$와 $Y_j$도 서로 독립이다.
 
 **단순회귀모형의 대체모형(alternative model)**\
 $$\begin{matrix}
-Y_i&=&\beta_0+\beta_1X_i+\epsilon_i \\
+Y_i&=&\beta_0+\beta_1X_i+\epsilon_i\\
 &=&(\beta_0 + \beta_1\bar{X})+\beta_1(X_i-\bar{X}) + \epsilon_i\\
 &=&\beta_0^*+\beta_1(X_i-\bar{X})+\epsilon_i
 \end{matrix}$$
-여기서 $beta_0^*$는 $\beta_0+\beta_1\bar{X}$를 대체한 것이다. 이 모형은 설명변수로서 $X_i$대신에 ($X_i-\bar{X}$를 사용하는 경우이다.)
+$\beta_1\bar{X}$를 더하고 빼줘서 계산하고 $\beta_0^*$는 $\beta_0+\beta_1\bar{X}$를 대체하여 상수항으로 대체체한것이다.\
+이 모형은 설명변수로서 $X_i$대신에 ($X_i-\bar{X}$)를 사용하는 경우이다.
+
 
 ## 회귀선의 추정
 
 **최소제곱법(method of least squares)**\
-표본자료(sample data)로부터 추정하여 얻은 직선을 $\hat{Y}=b_0+b_1X$라고 하자. 이와같은 직선을 추정된 회귀직선, 또는 간단히 회귀선이라고 한다.\
+표본자료(sample data) $(X_1,Y_1), (X_2,Y_2), ..., (X_n, Y_n)$ 로부터 추정하여 얻은 직선을 $\hat{Y}=b_0+b_1X$라고 하자. \
+이와같은 직선을 추정된 회귀직선, 또는 간단히 **회귀선**이라고 한다.\
 최소제곱법은 $Y_i=\beta_0+\beta_1X_i+\epsilon_i$에서 오차제곱들의 합$[S=\sum_{i=1}^n(Y_i=\beta_0-\beta_1X_i)^2]$을  최소로하는 $\beta_0$와 $\beta_1$의 값들을 이들의 추정값 $b_0$와 $b_1$으로 하는 방법이다. 이를 구하기 위해서는 오차제곱합 S를 $\beta_0$와 $\beta_1$으로 각각 편미분하여 이를 0으로 하여 구하면 된다.\
 \
 간단 표현식\
@@ -40,17 +46,24 @@ $b_1 = \frac{S_{XY}}{S_{XX}}=\frac{\sum(X_i-\bar{X})(Y_i-\bar{Y})}{\sum(X_i-\bar
 b_0 = \bar{Y} - b_1\bar{X}$\
 \
 \
-이와같이 얻어진 $\beta_0$와 $\beta_1$의 추정량 $b_0$와 $b_1$을 최소제공추정량(least squares estimator)이라고 부른다.
-$\hat{Y} - \bar{Y} = b_1(X_i-\bar{X})$로 표현할 수 있다.
+이와같이 얻어진 $\beta_0$와 $\beta_1$의 추정량 $b_0$와 $b_1$을 최소제공추정량(least squares estimator)이라고 부른다.\
+$\hat{Y} - \bar{Y} = b_1(X_i-\bar{X})$로 표현할 수 있다.\
 
+
+**분산분석표를 이용한 추정된 회귀식 구하기**
 ```{r}
 market = read.table("./data/market-1.txt", header = T)
+head(market)
+# Y를 반응변수로 X를 설명변수로 놓고 선형모델을 구한다(linear model)
 market.lm = lm(Y~X, data=market)
 summary(market.lm)
 ```
 
-추정된 회귀식은 $\hat{Y}=0.3282 + 2.1497X$
-Coefficients:Estimate 절편(Intercept)값과 X값으로 만들어 진다.
+추정된 회귀식은 $\hat{Y}=0.3282 + 2.1497X$\
+절편(Intercept) $b_0$는 Coefficients:Estimate의 Intercept 값이고, \
+기울기(Slope) $b_1$는 Coefficients:Estimate의 X값이다.\
+
+
 
 **산점도(scatterplot)와 회귀직선 그리기**\
 ```{r}

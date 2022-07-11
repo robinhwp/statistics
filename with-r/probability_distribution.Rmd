@@ -476,3 +476,23 @@ pnorm(315, exp, sqrt(var))-pnorm(285, exp, sqrt(var))
 
 ```
 
+
+
+
+DATA data5_2;
+	INPUT 국가분류 $ 주가 @@;
+DATALINES;
+F 120 K 135 K 170 F 139 K 114 F 163
+K 165 K 161 F 147 F 150 F 175 K 145
+K 147 K 102 F 235 F 157 K 129 K 129
+F 144 K 165 F 161 K 173 F 111 K 145
+RUN;
+
+/* 줄기-잎 그림을 그리기위해 그래픽 옵션을 끈다. 예전 방식으로 출력하기위해 */
+ODS LISTING;
+ODS GRAPHICS OFF;
+
+PROC UNIVARIATE DATA=data5_2 PLOT;
+	VAR 주가;
+	CLASS 국가분류;
+RUN;	

@@ -1,0 +1,152 @@
+---
+title: "통계적 비교"
+author: "robin"
+date: '2022-06-01'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## 독립표본의 경우 두 모집단의 비교
+
+1. \
+$H_0: \mu_1 - \mu_2 = \delta_0$ \
+$H_1: \mu_1 - \mu_2 > \delta_0$\
+\
+2. \
+$H_0: \mu_1 - \mu_2 = \delta_0$ \
+$H_1: \mu_1 - \mu_2 < \delta_0$ \
+\
+3. \
+$H_0: \mu_1 - \mu_2 = \delta_0$ \
+$H_1: \mu_1 - \mu_2 \ne \delta_0$ \
+\
+두 모평균이 서로 차이가 나는지 여부에 초점을 맞추면 $\delta_0 = 0$으로 놓을 수 있다.\
+독립 표본일 경우 모평균의 차 $\mu_1 - \mu_2$의 추정량은 표본평균의 차 $\bar{X_1} - \bar{X_2}$이며, 이 표본평균 차의 분포는 표본이 충분히 클 때와 표본이 작을 때로 나누어 생각해 볼 수 있다.\
+
+### 표본수가 충분히 큰경우($n_1\ge 30, n_2\ge 30$)
+모집단의 분포와 관계없이 다음과 같은 검정통계량을 산출하고 *표준정규분포*를 이용하여 검정한다.\
+$$Z=\frac{(\bar{X_1} - \bar{X_2}) - \delta_0}{\sqrt{\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}}}$$
+1. \
+$H_0: \mu_1 - \mu_2 = \delta_0$ \
+$H_1: \mu_1 - \mu_2 > \delta_0$\
+$$\frac{(\bar{X_1} - \bar{X_2}) - \delta_0}{\sqrt{\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}}}> t_{n_1 + n_2 - 2, \alpha}$$
+2. \
+$H_0: \mu_1 - \mu_2 = \delta_0$ \
+$H_1: \mu_1 - \mu_2 < \delta_0$ \
+\
+$$\frac{(\bar{X_1} - \bar{X_2}) - \delta_0}{\sqrt{\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}}} < t_{n_1 + n_2 - 2, \alpha}$$
+3. \
+$H_0: \mu_1 - \mu_2 = \delta_0$ \
+$H_1: \mu_1 - \mu_2 \ne \delta_0$ \
+$$\frac{(\bar{X_1} - \bar{X_2}) - \delta_0}{\sqrt{\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}}} \ne t_{n_1 + n_2 - 2, \alpha / 2}$$
+
+### 표본수가 작은 경우
+정규분포를 따르고 *두 집단의 모분산이 서로 같다면*, \
+다음 검정 통계량을 산출하고 t분포를 이용하여 검정
+$$T=\frac{(\bar{X_1} - \bar{X_2}) - \delta_0}{\sqrt{\frac{S_p^2}{n_1} + \frac{S_p^2}{n_2}}} = \frac{(\bar{X_1} - \bar{X_2}) - \delta_0}{S_p\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}, \ \ S_p = \frac{(n_1-1)S_1^2 + (n_2-1)S_2^2}{n_1+n_2-2}$$
+
+정규분포를 따르고 *두 집단의 모분산이 서로 같다면*, \
+에는 t분포의 자유도 $\phi$로 수정[새터스웨스트(Satterthwaite) 근사]\
+$$\phi=\frac{(\frac{S_1^2}{n_1}+\frac{S_2^2}{n_2})^2}
+{\frac{(\frac{S_1^2}{n_1})^2}{n_1-1}+\frac{(\frac{S_2^2}{n_2})^2}{n_2-1}}, 
+\\ \frac{(\bar{X_1} - \bar{X_2}) - \delta_0}{\sqrt{\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}}} \ne t_{\phi, \alpha/2}$$
+
+### 두 모평균에 대한 비교(예제 7-3)
+```{r}
+pre = c(72, 80, 83, 63, 66, 76, 82)
+post = c(78, 82, 82, 68, 70, 75, 88)
+exam1 = data.frame(pre, post)
+#두 모평균의 비교
+t.test(exam1$pre, exam1$post, mu=0, alternative="less", paired=T)
+
+```
+$H_0 : \mu_1 - \mu_2 = 0$ 성적에 차이가 없다. \
+$H_1 : \mu_1 - \mu_2 < 0$ 성적이 향상됐다고 볼 수 있다.
+
+**손풀기**\
+```{r}
+pre = c(72, 80, 83, 63, 66, 76, 82)
+post = c(78, 82, 82, 68, 70, 75, 88)
+D_bar = mean(pre-post)
+S_d = sd(pre-post)
+cnt = length(pre)
+Tv = D_bar / (S_d/sqrt(cnt))
+td=qt(0.05, cnt-1, lower.tail = FALSE  )
+ret = Tv < -td 
+
+paste( round(Tv, 4), "<", round(-td, 4), "is", ret, ifelse(ret, "귀무가설을 기각한다.", "귀무가설을 기각하지 못한다.")  )
+```
+
+### 일원배치법 분산분석(예제 7-5)
+```{r}
+x = c(84, 83, 82, 85, 89, 86, 93, 94, 96, 89, 89, 87)
+A = c(rep(1,3), rep(2, 3), rep(3, 3),rep(4, 3))
+A = factor(A)
+aovdat1 = data.frame(x, A)
+aovmodel1 = aov(x~A, data=aovdat1)
+summary(aovmodel1)
+
+```
+
+
+
+### 이원배치법 분산분석(예제 7-6)
+```{r}
+y = c(97.8, 97.5, 96.9, 98.5, 98.8, 97.1, 99.2, 98.4, 98.1, 98.2, 97.5, 96.8)
+surface = c(rep(1,3), rep(2, 3), rep(3, 3),rep(4, 3))
+manu = c(rep(1:3, 4))
+surface = factor(surface)
+manu = factor(manu)
+aovdat2 = data.frame(surface, manu)
+aovmodel2=aov(y ~ surface+manu, data=aovdat2)
+summary(aovmodel2)
+```
+
+### 범주형 데이터에 대한 독립성 검정(예제 7-10)
+
+```{r}
+dept = c(rep("Stat", 50), rep("DS", 25))
+regi = c(rep("Y", 20), rep("N", 30), rep("Y", 13), rep("N", 12))
+deptregi= data.frame(dept, regi)
+(rtable = xtabs(~dept+regi, data=deptregi))
+(ctest = chisq.test(rtable, correct = F))
+
+```
+
+### 적합도 검정(예제7-12)
+
+```{r}
+catnum = 0:3
+obs <- c(33, 15, 9, 3)
+m = sum(catnum*obs) / sum(obs)
+(pprob = round(dpois(catnum, m), 3))
+pprob[4] = 1-sum(pprob[1:3]); pprob
+pprob*60
+
+# 기대도수 5미만 범주를 병합하여 재분석
+obs1 <- c(33, 15, 12)
+pprob1 = pprob[1:3]
+pprob1[3] = 1-sum(pprob1[1:2]); pprob1
+ctest1 = chisq.test(obs1, p=pprob1)
+# 
+ctest1$statistic > qchisq(0.05, 1, lower.tail = FALSE)
+paste(round(ctest1$statistic,4), ">", round(qchisq(0.05, 1, lower.tail = FALSE),4), "is", ctest1$statistic > qchisq(0.05, 1, lower.tail = FALSE))
+```
+
+
+matrix(c(rep(rep(1, 3), 1:3), ncol=2, byrow=FALSE)
+
+
+y = c(97.8, 97.5, 96.9, 98.5, 98.8, 97.1, 99.2, 98.4, 98.1, 98.2, 97.5, 96.8)
+surface = c(rep(1,3), rep(2, 3), rep(3, 3),rep(4, 3))
+manu = c(rep(1:3, 4))
+surface = factor(surface)
+manu = factor(manu)
+aovdat2 = data.frame(surface, manu)
+aovmodel2=aov(y ~ surface+manu, data=aovdat2)
+summary(aovmodel2)
+
