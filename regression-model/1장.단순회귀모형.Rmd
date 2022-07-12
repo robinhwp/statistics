@@ -35,18 +35,72 @@ $\beta_1\bar{X}$를 더하고 빼줘서 계산하고 $\beta_0^*$는 $\beta_0+\be
 **최소제곱법(method of least squares)**\
 표본자료(sample data) $(X_1,Y_1), (X_2,Y_2), ..., (X_n, Y_n)$ 로부터 추정하여 얻은 직선을 $\hat{Y}=b_0+b_1X$라고 하자. \
 이와같은 직선을 추정된 회귀직선, 또는 간단히 **회귀선**이라고 한다.\
-최소제곱법은 $Y_i=\beta_0+\beta_1X_i+\epsilon_i$에서 오차제곱들의 합$[S=\sum_{i=1}^n(Y_i=\beta_0-\beta_1X_i)^2]$을  최소로하는 $\beta_0$와 $\beta_1$의 값들을 이들의 추정값 $b_0$와 $b_1$으로 하는 방법이다. 이를 구하기 위해서는 오차제곱합 S를 $\beta_0$와 $\beta_1$으로 각각 편미분하여 이를 0으로 하여 구하면 된다.\
+최소제곱법은 $Y_i=\beta_0+\beta_1X_i+\epsilon_i$에서 오차제곱들의 합$[S=\sum_{i=1}^n(Y_i-\beta_0-\beta_1X_i)^2]$을  최소로하는 $\beta_0$와 $\beta_1$의 값들을 이들의 추정값 $b_0$와 $b_1$으로 하는 방법이다. 이를 구하기 위해서는 오차제곱합 S를 $\beta_0$와 $\beta_1$으로 각각 편미분하여 이를 0으로 하여 구하면 된다.\
+**$\beta_0$로 편미분하는 방법** \
+$S=\sum_{i=1}^n(Y_i-\beta_0-\beta_1X_i)^2$ 전체를 미분하여
+$\sum_{i=1}^n2(Y_i=\beta_0-\beta_1X_i)$에 다시 $Y_i-\beta_0-\beta_1X_i$를 $\beta_0$로 미분하여 곱한다.\
+$Y_i-\beta_0-\beta_1X_i$를 $\beta_0$로 미분하면 $-1$이 된다.\
+따라서 $\sum_{i=1}^n2(Y_i-\beta_0-\beta_1X_i)(-1) = -2\sum_{i=1}^n(Y_i-\beta_0-\beta_1X_i)$
+
+**$\beta_1$도 같은 방법으로 편미분 한다.** \
+$S=\sum_{i=1}^n(Y_i-\beta_0-\beta_1X_i)^2$ 전체를 미분하여
+$\sum_{i=1}^n2(Y_i-\beta_0-\beta_1X_i)$에 다시 $Y_i-\beta_0-\beta_1X_i$를 $\beta_1$로 미분하여 곱한다.\
+$Y_i-\beta_0-\beta_1X_i$를 $\beta_1$로 미분하면 $-X_i$가 된다.\
+따라서 $\sum_{i=1}^n2(Y_i-\beta_0-\beta_1X_i)(-X_i) = -2\sum_{i=1}^nX_i(Y_i-\beta_0-\beta_1X_i)$\
+두 수식의 $\beta_0$과 $\beta_1$을 $b_0$와 $b_1$으로 대체하여 수식을 정리하면 \
+$\sum Y_i = nb_0 + \sum b_1X_i$\
+$\sum X_iY_i = b_0\sum X_i + b_1 \sum X_i^2$\
 \
+\
+
+첫번째 수식을 $b_0$로 정리하면 \ \
+$b_0 = \bar{Y} - b_1\bar{X}$가 된다.
+
+
+**정리방법** \
+$n b_0 = \sum Y_i - b_1 \sum X_i$ \ \
+$b_0 = \frac{\sum Y_i}{n} - b_1\frac{\sum X_i}{n}$ \
+여기서, $\frac{\sum Y_i}{n} = \bar{Y}$, $\frac{\sum X_i}{n} = \bar{X}$이므로 \ \ 
+$b_0 = \bar{Y} - b_1\bar{X}$\
+\
+\
+
+$b_0$을 두번째 수식에 대입하여 $b_1$로 정리하면\ \
+$b_1=\frac{\sum(X_i-\bar{X})(Y_i-\bar{Y})}{\sum(X_i-\bar{X})^2}$가 된다.\
+\
+
+**정리방법** \
+$\sum X_iY_i = (\bar{Y} \sum X_i - b_1\bar{X} \sum X_i) + b_1 \sum X_i^2$\ 
+\
+$b_1 \sum X_i(X_i - \bar{X})= \sum X_i(Y_i - \bar{Y})$\
+\
+$b_1 = \frac{\sum X_i(Y_i - \bar{Y})}{\sum X_i(X_i - \bar{X})}$\
+\
+분자에 $\bar{X}\sum (Y_i - \bar{Y})$를 더해주고 정리를 하면 
+$\sum (X_i-\bar{X})(Y_i - \bar{Y})$가되고\
+\
+분모에 $\bar{X}\sum (X_i - \bar{X})$를 더해주고 정리를 하면 
+$\sum (X_i-\bar{X})^2$가된다.\
+\
+각각 더해준 $\bar{X}\sum (Y_i - \bar{Y})$와 $\bar{X}\sum (X_i - \bar{X})$는 모두 0이다.\
+
+$\sum (Y_i - \bar{Y}) = \sum Y_i - n\times \bar{Y} = 0$, 총합 - 평균 * n = 0
+
+
+
+
+
+
 간단 표현식\
 $S_{XX}=\sum(X_i-\bar{X})^2,\\ S_{YY}=\sum(Y_i-\bar{Y})^2,\\ S_{XY}=\sum(X_i-\bar{X})(Y_i-\bar{Y})$
 \
 \
 절편 $b_0$와 기울기 $b_1$의 추정식\
-$b_1 = \frac{S_{XY}}{S_{XX}}=\frac{\sum(X_i-\bar{X})(Y_i-\bar{Y})}{\sum(X_i-\bar{X})^2} \\
-b_0 = \bar{Y} - b_1\bar{X}$\
+$b_1 = \frac{S_{XY}}{S_{XX}}=\frac{\sum(X_i-\bar{X})(Y_i-\bar{Y})}{\sum(X_i-\bar{X})^2}$\
 \
+$b_0 = \bar{Y} - b_1\bar{X}$
 \
-이와같이 얻어진 $\beta_0$와 $\beta_1$의 추정량 $b_0$와 $b_1$을 최소제공추정량(least squares estimator)이라고 부른다.\
+이와같이 얻어진 $\beta_0$와 $\beta_1$의 추정량 $b_0$와 $b_1$을 **최소제공추정량(least squares estimator)**이라고 부른다.\
 $\hat{Y} - \bar{Y} = b_1(X_i-\bar{X})$로 표현할 수 있다.\
 
 

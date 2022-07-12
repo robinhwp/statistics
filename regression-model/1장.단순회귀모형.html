@@ -428,25 +428,90 @@ Y_i&amp;=&amp;\beta_0+\beta_1X_i+\epsilon_i\\
 이와같은 직선을 추정된 회귀직선, 또는 간단히
 <strong>회귀선</strong>이라고 한다.<br />
 최소제곱법은 <span class="math inline">\(Y_i=\beta_0+\beta_1X_i+\epsilon_i\)</span>에서
-오차제곱들의 합<span class="math inline">\([S=\sum_{i=1}^n(Y_i=\beta_0-\beta_1X_i)^2]\)</span>을
+오차제곱들의 합<span class="math inline">\([S=\sum_{i=1}^n(Y_i-\beta_0-\beta_1X_i)^2]\)</span>을
 최소로하는 <span class="math inline">\(\beta_0\)</span>와 <span class="math inline">\(\beta_1\)</span>의 값들을 이들의 추정값 <span class="math inline">\(b_0\)</span>와 <span class="math inline">\(b_1\)</span>으로 하는 방법이다. 이를 구하기
 위해서는 오차제곱합 S를 <span class="math inline">\(\beta_0\)</span>와
 <span class="math inline">\(\beta_1\)</span>으로 각각 편미분하여 이를
 0으로 하여 구하면 된다.<br />
+<strong><span class="math inline">\(\beta_0\)</span>로 편미분하는
+방법</strong><br />
+<span class="math inline">\(S=\sum_{i=1}^n(Y_i-\beta_0-\beta_1X_i)^2\)</span>
+전체를 미분하여 <span class="math inline">\(\sum_{i=1}^n2(Y_i=\beta_0-\beta_1X_i)\)</span>에
+다시 <span class="math inline">\(Y_i-\beta_0-\beta_1X_i\)</span>를 <span class="math inline">\(\beta_0\)</span>로 미분하여 곱한다.<br />
+<span class="math inline">\(Y_i-\beta_0-\beta_1X_i\)</span>를 <span class="math inline">\(\beta_0\)</span>로 미분하면 <span class="math inline">\(-1\)</span>이 된다.<br />
+따라서 <span class="math inline">\(\sum_{i=1}^n2(Y_i-\beta_0-\beta_1X_i)(-1) =
+-2\sum_{i=1}^n(Y_i-\beta_0-\beta_1X_i)\)</span></p>
+<p><strong><span class="math inline">\(\beta_1\)</span>도 같은 방법으로
+편미분 한다.</strong><br />
+<span class="math inline">\(S=\sum_{i=1}^n(Y_i-\beta_0-\beta_1X_i)^2\)</span>
+전체를 미분하여 <span class="math inline">\(\sum_{i=1}^n2(Y_i-\beta_0-\beta_1X_i)\)</span>에
+다시 <span class="math inline">\(Y_i-\beta_0-\beta_1X_i\)</span>를 <span class="math inline">\(\beta_1\)</span>로 미분하여 곱한다.<br />
+<span class="math inline">\(Y_i-\beta_0-\beta_1X_i\)</span>를 <span class="math inline">\(\beta_1\)</span>로 미분하면 <span class="math inline">\(-X_i\)</span>가 된다.<br />
+따라서 <span class="math inline">\(\sum_{i=1}^n2(Y_i-\beta_0-\beta_1X_i)(-X_i) =
+-2\sum_{i=1}^nX_i(Y_i-\beta_0-\beta_1X_i)\)</span><br />
+두 수식의 <span class="math inline">\(\beta_0\)</span>과 <span class="math inline">\(\beta_1\)</span>을 <span class="math inline">\(b_0\)</span>와 <span class="math inline">\(b_1\)</span>으로 대체하여 수식을 정리하면<br />
+<span class="math inline">\(\sum Y_i = nb_0 + \sum b_1X_i\)</span><br />
+<span class="math inline">\(\sum X_iY_i = b_0\sum X_i + b_1 \sum
+X_i^2\)</span><br />
 <br />
-간단 표현식<br />
+<br />
+</p>
+<p>첫번째 수식을 <span class="math inline">\(b_0\)</span>로 정리하면
+ <br />
+<span class="math inline">\(b_0 = \bar{Y} - b_1\bar{X}\)</span>가
+된다.</p>
+<p><strong>정리방법</strong><br />
+<span class="math inline">\(n b_0 = \sum Y_i - b_1 \sum X_i\)</span>
+ <br />
+<span class="math inline">\(b_0 = \frac{\sum Y_i}{n} - b_1\frac{\sum
+X_i}{n}\)</span><br />
+여기서, <span class="math inline">\(\frac{\sum Y_i}{n} =
+\bar{Y}\)</span>, <span class="math inline">\(\frac{\sum X_i}{n} =
+\bar{X}\)</span>이므로    <span class="math inline">\(b_0 = \bar{Y} -
+b_1\bar{X}\)</span><br />
+<br />
+<br />
+</p>
+<p><span class="math inline">\(b_0\)</span>을 두번째 수식에 대입하여
+<span class="math inline">\(b_1\)</span>로 정리하면 <br />
+<span class="math inline">\(b_1=\frac{\sum(X_i-\bar{X})(Y_i-\bar{Y})}{\sum(X_i-\bar{X})^2}\)</span>가
+된다.<br />
+<br />
+</p>
+<p><strong>정리방법</strong><br />
+<span class="math inline">\(\sum X_iY_i = (\bar{Y} \sum X_i - b_1\bar{X}
+\sum X_i) + b_1 \sum X_i^2\)</span> <br />
+<span class="math inline">\(b_1 \sum X_i(X_i - \bar{X})= \sum X_i(Y_i -
+\bar{Y})\)</span><br />
+<br />
+<span class="math inline">\(b_1 = \frac{\sum X_i(Y_i - \bar{Y})}{\sum
+X_i(X_i - \bar{X})}\)</span><br />
+<br />
+분자에 <span class="math inline">\(\bar{X}\sum (Y_i -
+\bar{Y})\)</span>를 더해주고 정리를 하면 <span class="math inline">\(\sum (X_i-\bar{X})(Y_i -
+\bar{Y})\)</span>가되고<br />
+<br />
+분모에 <span class="math inline">\(\bar{X}\sum (X_i -
+\bar{X})\)</span>를 더해주고 정리를 하면 <span class="math inline">\(\sum (X_i-\bar{X})^2\)</span>가된다.<br />
+<br />
+각각 더해준 <span class="math inline">\(\bar{X}\sum (Y_i -
+\bar{Y})\)</span>와 <span class="math inline">\(\bar{X}\sum (X_i -
+\bar{X})\)</span>는 모두 0이다.<br />
+</p>
+<p><span class="math inline">\(\sum (Y_i - \bar{Y}) = \sum Y_i - n\times
+\bar{Y} = 0\)</span>, 총합 - 평균 * n = 0</p>
+<p>간단 표현식<br />
 <span class="math inline">\(S_{XX}=\sum(X_i-\bar{X})^2,\\
 S_{YY}=\sum(Y_i-\bar{Y})^2,\\
 S_{XY}=\sum(X_i-\bar{X})(Y_i-\bar{Y})\)</span><br />
 <br />
 절편 <span class="math inline">\(b_0\)</span>와 기울기 <span class="math inline">\(b_1\)</span>의 추정식<br />
 <span class="math inline">\(b_1 =
-\frac{S_{XY}}{S_{XX}}=\frac{\sum(X_i-\bar{X})(Y_i-\bar{Y})}{\sum(X_i-\bar{X})^2}
-\\ b_0 = \bar{Y} - b_1\bar{X}\)</span><br />
+\frac{S_{XY}}{S_{XX}}=\frac{\sum(X_i-\bar{X})(Y_i-\bar{Y})}{\sum(X_i-\bar{X})^2}\)</span><br />
 <br />
-<br />
-이와같이 얻어진 <span class="math inline">\(\beta_0\)</span>와 <span class="math inline">\(\beta_1\)</span>의 추정량 <span class="math inline">\(b_0\)</span>와 <span class="math inline">\(b_1\)</span>을 최소제공추정량(least squares
-estimator)이라고 부른다.<br />
+<span class="math inline">\(b_0 = \bar{Y} - b_1\bar{X}\)</span><br />
+이와같이 얻어진 <span class="math inline">\(\beta_0\)</span>와 <span class="math inline">\(\beta_1\)</span>의 추정량 <span class="math inline">\(b_0\)</span>와 <span class="math inline">\(b_1\)</span>을 <strong>최소제공추정량(least
+squares estimator)</strong>이라고 부른다.<br />
 <span class="math inline">\(\hat{Y} - \bar{Y} =
 b_1(X_i-\bar{X})\)</span>로 표현할 수 있다.<br />
 </p>
