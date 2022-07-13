@@ -1,0 +1,136 @@
+---
+title: "7장-예제"
+author: "robinhwp"
+date: '2022-06-05'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 예제> 7-1
+작년 1년 동안의 A 지역과 B 지역 간 편의점의 일평균 매출을 비교하자고 한다.\
+단순랜덤 추출된 A 지역의 편의점 15개에 대해서 각 편의점의 일평균 700,000, \
+표준편차는 22,000원이었고, B 지역 편의점 14개에 대해서 매출의 일평균 705,000원,\
+표준편차는 31,000원이었다. A 지역과 B 지역 편의점의 일평균 매출 간에 차이가 있는가?\
+5%의 유의 수준으로 검정하라.\
+
+- 두 모집단은 정규분포를 따름
+- 표본수가 적은 경우(각 표본의 수가 30이상이 아닌 경우)
+- 모분산이 동일하다고 가정
+$$ \begin{vmatrix} \frac{(\bar{X_1} - \bar{X_2}) - \delta_0}{\sqrt{{S_p^2}/{n_1} + {S_p^2}/{n_2}}} \end{vmatrix} > t_{n_1+n_2-2, \alpha/2},
+\\ S_p^2 = \frac{(n_1-1)S_1^2 + (n2-1)S_2^2}{n_1+n_2-2}$$
+
+  - $H_0: \mu_1 - \mu_2 = \delta_0$
+  - $H_1: \mu_1 - \mu_2 \ne \delta_0$
+  
+```{r}
+# 두 모집단은 정규분포를 따름
+# 표본수가 적은 경우(각 표본의 수가 30이상이 아닌 경우)
+# 모분산이 동일하다고 가정
+m1=700000; m2=705000; s1=22000; s2=31000;n1 = 15; n2=14
+( sp=sqrt(( (n1-1)*s1^2 + (n2-1)*s2^2 )/(n1+n2-2)))
+(obs=((m1-m2)-0)/sqrt(sp^2/n1+sp^2/n2))
+(td=qt(0.05/2, n1+n2-2, lower.tail = FALSE))
+msg = ""
+if( abs(round(obs, 3))> round(td, 3))
+{
+ msg = "이 참 이므로 귀무가설을 기각한다." 
+}
+{
+  msg = "이 참이 아니므로 귀무가설을 기각하지 못한다."
+}
+paste(abs(round(obs, 3)), ">", round(td, 3), msg)
+```
+## 예제> 7-2
+<예제 7-2>에서 두 모분산이 서로 다를 경우 검정결과는 어떻게 되는가?\
+$$ \phi= \frac{(\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2})^2}{\frac{(\frac{S_1^2}{n_1})^2}{n_1-1}+\frac{(\frac{S_2^2}{n_2})^2}{n_2-1}} $$
+
+$$t=\left| \frac{(\bar{X_1} - \bar{X_2}) - \delta_0}{\sqrt{{S_1^2}/{n_1} + {S_2^2}/{n_2}}}  \right| > t_{\phi,\alpha}$$
+
+```{r}
+t72=abs((m1-m2)/sqrt(s1^2/n1+s2^2/n2))
+phi=(s1^2/n1+s2^2/n2)^2/((s1^2/n1)^2/(n1-1)+(s2^2/n2)^2/(n2-1))
+td2=qt(0.025, round(phi), lower.tail = FALSE)
+msg = ""
+if( abs(round(t72, 3))> round(td2, 3))
+{
+ msg = "이 참 이므로 귀무가설을 기각한다." 
+}
+{
+  msg = "이 참이 아니므로 귀무가설을 기각하지 못한다."
+}
+paste(abs(round(t72, 3)), ">", round(td2, 3), msg)
+
+```
+
+## 예제> 7-3
+어느 학교에서 학생들의 특정 과목 성취도를 향상시키기 위해 일정 기간 방과 \
+후 학습을 실시했다고 한다. 방과 후 학습 전후의 성취도 점수는 다음과 같다. \
+학생들의 성취도를 향상시켰다고 할 수 있는지 5% 유의 수준으로 검정하라.
+  - $H_0: \mu_1 - \mu_2 = \delta_0$
+  - $H_1: \mu_1 - \mu_2 < \delta_0$
+
+
+$\frac{\bar{D}-D}{S_D/\sqrt{n}} < - t_{n-1,0.05}(= qt(0.05, 6, lower.tail = FALSE))$ 
+
+```{r}
+## 대응표본의 차에관한 검정통계량 T
+before <- c(72,80,83,63,66,76,82)
+after <- c(78,82,82,68,70,75,88)
+(D_bar = mean(before - after))
+(SD=sd(before - after))
+(OBS = D_bar/(SD/sqrt(7)))
+
+paste(round(OBS,3), "<",round(-qt(0.05, 6, lower.tail = FALSE),3), "이므로 귀무가설을 기각한다.")
+
+# t.test 함수 이용
+ttest = t.test(before, after, mu=0, alternative = "less",paired=T)
+# t = -2.5981, df = 6, p-value = 0.02038
+paste("p-value=",round(ttest$p.value,3), "<",0.05, "이므로 귀무가설을 기각한다.")
+```
+
+## 예제> 7-4
+<예제 7-1>에서 A, B 두 지역 편의점의 일평균 매출의 분산이 같은지 다른지를 유의수준 5%로 검정하라.\
+$F=\frac{S_1^2}{S_2^2}>F_{n_1-1, n_2-1, \alpha/2}, or \frac{S_1^2}{S_2^2}<F_{n_1-1, n_2-1, 1-\alpha/2} 이면 \ H_0를 기각$
+  - $H_0: \sigma_1^2 = \sigma_2^2$
+  - $H_1: \sigma_1^2 \ne \sigma_2^2$
+```{r}
+(fv1=s1^2/s2^2)
+(fd1=qf(0.05/2, 14, 13, lower.tail = FALSE))
+
+if( fv1>fd1)
+{
+ msg = "이 참 이므로 귀무가설을 기각한다." 
+}
+{
+  msg = "이 참이 아니므로 귀무가설을 기각하지 못한다."
+}
+paste(round(fv1,3), ">", round(fd1,3), msg)
+```
+
+## 예제> 7-5
+
+```{r}
+
+# 예제 7-5
+(mat = matrix(c(84, 83, 82,85,89,86,93,94,96,89,89,87), nrow=3,))
+(tm = matrix(rep(0,8), ncol=4))
+(mat2 = rbind(mat, tm))
+
+dimnames(mat2)=list(c("1", "2", "3","합계", "평균"),c("A1","A2","A3","A4"))
+for (i in 1:4)
+{
+  mat2[4,i]=round(sum(mat2[1:3,i]), 2)
+  mat2[5,i]=round(mean(mat2[1:3,i]), 2)
+}
+
+(T = mat2[4, 1:4])
+(xi_bar = round(mat2[5,1:4],2))
+(xi_barbar=round(mean(mat2[5,1:4]),2))
+(S_T=round(sum((mat-xi_barbar)^2),2))
+(S_A=round(sum((xi_bar-xi_barbar)^2)*3,2))
+(S_E=S_T-S_A)
+
+```

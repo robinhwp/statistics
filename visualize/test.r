@@ -206,3 +206,12 @@ pairs(~Ozone+Solar.R+Wind+Temp
 
 ?pairs
 str(airquality)
+
+
+d7_5 = c(84, 83, 82,85,89,86,93,94,96,89,89,87)
+m1 = mean(d7_5)
+(d7_5_m = d7_5 - m1)
+sum(d7_5_m)
+d7_5_ms = d7_5_m^2
+sum(d7_5_ms)
+ 
