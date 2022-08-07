@@ -1,0 +1,136 @@
+---
+title: "chapter 1"
+author: "robin"
+date: "2022-08-05"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 제1장 R 데이터 처리
+
+### R 데이터 처리
+- dplyr 패키지 설치 및 readxl 패키지 설치
+  - install.packages("tidyverse")
+  - install.packages("readxl")
+
+```{r}
+library(readxl)
+library(tidyverse)
+
+dat1<-read_excel("./data/patients_2sheets.xlsx", sheet = "whole")
+
+dat.base1<-dat1
+colnames(dat1)
+colnames(dat.base1)[4]<-"TX"
+colnames(dat.base1)[5]<-"CA19.9"
+
+
+```
+
+dat.dplyr1 <- dat1 %>% rename(TX=treatment, CA19.9='CA19-9')
+
+dat.base1[, c(2:5,7)]
+dat.dplyr1 %>% select(2:5, 7)
+dat.dplyr1 %>% select(2:7, -6)
+dat.dplyr1 %>% select(2:5, Stage)
+dat.dplyr1 %>% filter(Stage==3 & age > 40)
+
+dat.dplyr1 %>% filter(CA19.9=="<1.0")
+replace(dat.dplyr1$CA19.9, dat.dplyr1$CA19.9=="<1.0", "1")
+mutate(dat.dplyr1$CA19.9=replace(dat.dplyr1$CA19.9, dat.dplyr1$CA19.9=="<1.0", "1"))
+
+dat.dplyr2 = dat.dplyr1 %>% mutate(CA19.9=replace(CA19.9,CA19.9=="<1.0","1"))
+dat.dplyr1 %>% mutate(CA19.9=replace(CA19.9,CA19.9=="<1.0","1"))
+dat.dplyr1 %>% filter(CA19.9=="<1.0")
+dat.dplyr1$CA19.9 %>% replace( CA19.9=="<1.0","1")
+cut(dat.dplyr1$age, breaks=c(0, 50, 60, 70, Inf), labels=c(1, 2, 3, 4))
+summary(dat.dplyr1)
+
+### 연습문제
+
+#### 문제.1
+```{r}
+# 1. 프레임구조객체에 저장
+ex1.1 = data.frame(ID=1:8, 
+                   Carat=c(0.7, 0.7, 0.43, 0.7, 0.59, 0.52, 1.18, 9), 
+                   Cut=c("Premium", "Very Good", "Ideal", "Good", "Ideal", "Very Good", "Premium", "Good"),
+                   Price=c(2348, 2332, 760, 2498, 2294, 1423, NA, 3660))
+
+# 2. 8번 다이아몬드의 중량을 9를 0.9로 변경
+ex1.1$Carat[8] = 0.9
+
+# 3. 각 등급별 다이아몬드 갯수
+table(ex1.1$Cut)
+
+# 4. 중량이 0.6 이상인 다이아몬드의 평균 가격
+mean(ex1.1$Price[ex1.1$Carat>=0.6], na.rm = T)
+
+write.csv(ex1.1, "./exercise/ex1_1.csv")
+
+```
+
+
+#### 문제.2
+```{r}
+
+# 1 패키지 설치, dat.head 객체 생성 및 변수 이름 출력
+# install.packages("datarium")
+library(datarium)
+dat.head = headache
+colnames(dat.head)
+
+# 2. risks 변수를 risk_category로 이름을 변경
+colnames(dat.head)[3]='risk_category'
+
+# 3. pain_score 값 80 이상이면 1, 미만이면 0 값을 가지는 변수 생성
+dat.head$pain_score.grp = ifelse(dat.head$pain_score>=80, 1, 0)
+
+# 4. gender가 "female"이면서 pain_score가 80 이상은 사람을 구한다
+nrow(dat.head[dat.head$gender=="female"&dat.head$pain_score>=80,])
+
+# 5. 남성이면서 risk_category가 high인 사람의 pain_score의 평균
+mean(dat.head[dat.head$gender=="male"&dat.head$risk_category=="high",]$pain_score)
+
+# 6. id, gender, pain_score로 구성된 새로운 객체 생성
+dat.new1 = data.frame(id=dat.head$id, gender = dat.head$gender, pain_score = dat.head$pain_score)
+
+```
+
+#### 문제.3
+```{r}
+
+# 0. 데이터를 읽어온다.
+library(readxl)
+#library(tidyverse)
+
+exdat3<-read_excel("./data/patients_2sheets.xlsx", sheet = "whole")
+
+# 1. CA19-9 를 로그변환한 새 변수를 만드시오
+exdat3$CA19.log = log(as.double(replace(exdat3$`CA19-9`, exdat3$`CA19-9`=="<1.0","1")))
+
+# 2. Stage가 4 또는 5이면 "High"값을 가지고 Stage가 1, 2, 3이면 "Low"값을 가지는 변수를 만든다.
+exdat3$Stage.group = ifelse(exdat3$Stage==4|exdat3$Stage==5, "High", "Low")
+# cbind(exdat3$Stage, exdat3$Stage.group)를 실행해서 확인.
+
+# 3. 성별로 CA19-9 값의 평균을 구하시오.
+tapply((as.double(replace(exdat3$`CA19-9`, exdat3$`CA19-9`=="<1.0","1"))),exdat3$sex, mean)
+
+# 4. 각 Stage별로 몇 명의 환자가 있는지 구하시오.
+table(exdat3$Stage)
+
+
+
+```
+
+
+#### 문제.4
+R의 datasets 패키지 내에 있는 mtcars 데이터는 32종의 자동차의 사양을 담고있다.  
+다음을 수행하시오.
+```{r}
+
+
+```
+
