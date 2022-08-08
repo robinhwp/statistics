@@ -16,6 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
   - install.packages("tidyverse")
   - install.packages("readxl")
 
+#### 테스트코드 1
 ```{r}
 library(readxl)
 library(tidyverse)
@@ -30,6 +31,8 @@ colnames(dat.base1)[5]<-"CA19.9"
 
 ```
 
+#### 테스트코드 2
+```{r}
 dat.dplyr1 <- dat1 %>% rename(TX=treatment, CA19.9='CA19-9')
 
 dat.base1[, c(2:5,7)]
@@ -48,6 +51,9 @@ dat.dplyr1 %>% filter(CA19.9=="<1.0")
 dat.dplyr1$CA19.9 %>% replace( CA19.9=="<1.0","1")
 cut(dat.dplyr1$age, breaks=c(0, 50, 60, 70, Inf), labels=c(1, 2, 3, 4))
 summary(dat.dplyr1)
+
+```
+
 
 ### 연습문제
 
@@ -130,7 +136,46 @@ table(exdat3$Stage)
 R의 datasets 패키지 내에 있는 mtcars 데이터는 32종의 자동차의 사양을 담고있다.  
 다음을 수행하시오.
 ```{r}
+# 1. datasets 패키지를 로드하고 mtcars 변수 이름을 출력하시오.
+library(datasets)
+colnames(mtcars)
 
+# 2. mtcars 데이터 변수 cyl은 실린더의 갯수이다. 실린더가 8개인 자동차들의 평균 연비(mpg, miles per gallon)를 구하시오.
+mean(mtcars[mtcars$cyl==8,]$mpg)
+
+# 3. 연비(mpg)가 20 이상이면 "High", 15이상 20 미만이면 "Mid", 15미만이면 "Low"값을 가지는 factor형 변수를 만드시오.
+exdat4 = mtcars
+exdat4$mpg.group = cut(mtcars$mpg, breaks = c(0,15,20,Inf),right = FALSE, labels=c("Low", "Mid", "High"))
+
+# 4. (3)에서 만든 변수의 값이 "High"이면서 엔진 모양이 V 모양인(변수 vs 값이 0인) 자동차가 몇대인지 구하시고.
+exdat4[exdat4$mpg.group=='High'&exdat4$vs==0,]
+
+# 5. 연비가 15 이상인 자동차들로만 구성된 새로운 데이터 프레임을 만드시오.
+exdat4.1 <- exdat4 %>% filter(mpg>=15)
+exdat4.2 = exdat4[exdat4$mpg>=15,]
+
+# 6. 5에서 만든 데이터 프레임을 .RData 파일로 저장하시오.
+save(exdat4.1, file = "./data/mtcars_out.Rdata")
+
+```
+
+
+#### 문제 5
+R의 datasets 패키지내에있는 trees 데이터를 처리한 R 프로그램이다.  
+아래와 같은 데이터 처리결과를 얻을 수 있는 프로그램을 dplyr 패키지를 이용하여 작성하시오.
+```{r}
+# 예시
+library(datasets)
+dat0 <- trees
+dat0$Height.grp <- as.factor(ifelse(dat0$Height>75,1,0))
+dat1<-dat0[dat0$Volume>=20,]
+
+library(dplyr)
+dat00 <- trees %>% 
+  mutate(Height.grp=ifelse(Height>75,1,0)) 
+
+dat11 <- dat00 %>% filter(Volume>=20)
+  
 
 ```
 

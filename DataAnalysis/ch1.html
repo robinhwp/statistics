@@ -473,14 +473,41 @@ exdat3&lt;-read_excel(&quot;./data/patients_2sheets.xlsx&quot;, sheet = &quot;wh
 exdat3$CA19.log = log(as.double(replace(exdat3$`CA19-9`, exdat3$`CA19-9`==&quot;&lt;1.0&quot;,&quot;1&quot;)))
 
 # 2. Stage가 4 또는 5이면 &quot;High&quot;값을 가지고 Stage가 1, 2, 3이면 &quot;Low&quot;값을 가지는 변수를 만든다.
+exdat3$Stage.group = ifelse(exdat3$Stage==4|exdat3$Stage==5, &quot;High&quot;, &quot;Low&quot;)
+# cbind(exdat3$Stage, exdat3$Stage.group)를 실행해서 확인.
+
 # 3. 성별로 CA19-9 값의 평균을 구하시오.
-# 4. 각 Stage별로 몇 명의 환자가 있는지 구하시오.</code></pre>
+tapply((as.double(replace(exdat3$`CA19-9`, exdat3$`CA19-9`==&quot;&lt;1.0&quot;,&quot;1&quot;))),exdat3$sex, mean)</code></pre>
+<pre><code>##         0         1 
+##  168.6167 1682.7059</code></pre>
+<pre class="r"><code># 4. 각 Stage별로 몇 명의 환자가 있는지 구하시오.
+table(exdat3$Stage)</code></pre>
+<pre><code>## 
+##  1  2  3  4  5 
+##  2  6 13 25  6</code></pre>
 </div>
 <div id="문제.4" class="section level4">
 <h4>문제.4</h4>
 <p>R의 datasets 패키지 내에 있는 mtcars 데이터는 32종의 자동차의 사양을
 담고있다.<br />
 다음을 수행하시오.</p>
+</div>
+<div id="문제-5" class="section level4">
+<h4>문제 5</h4>
+<p>R의 datasets 패키지내에있는 trees 데이터를 처리한 R 프로그램이다
+아래와 같은 데이터 처리결과를 얻을 수 있는 프로그램을 dplyr 패키지를
+이용하여 작성하시오.</p>
+<pre class="r"><code># 예시
+library(datasets)
+dat0 &lt;- trees
+dat0$Height.grp &lt;- as.factor(ifelse(dat0$Height&gt;75,1,0))
+dat1&lt;-dat0[dat0$Volume&gt;=20,]
+
+library(dplyr)
+dat00 &lt;- trees %&gt;% 
+  mutate(Height.grp=ifelse(Height&gt;75,1,0)) 
+
+dat11 &lt;- dat00 %&gt;% filter(Volume&gt;=20)</code></pre>
 </div>
 </div>
 </div>
