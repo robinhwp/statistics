@@ -1,17 +1,16 @@
-
 # 3강 선형회귀분석(2)
 # 회귀직선을 구하고, 산점도위에 회귀직선을 그려보아라.
 market = read.table("./data/market-1.txt", header = T)
 head(market)
 # 산점도를 그린다.
 plot(market$X, market$Y, xlab="광고료", ylab="총판매액", pch=19, main="광고료와 판매액의 산점도")
+# 회귀식을 구한다. ( lm : linear model)
+market.lm = lm(Y~X, data=market)
 # 회귀직선을 그린다.
 abline(market.lm)
 # 아우스 클릭 후 finish를 눌러서 종료
 identify(market$X, market$Y)
-
-# 회귀식을 구한다. ( lm : linear model)
-market.lm = lm(Y~X, data=market)
+# 회귀식을 표시한다.
 summary(market.lm)
 # 자유도가 13이고 신뢰구간 95%인 t분포값
 (q.val = qt(1-(1-0.95)/2, 13))
@@ -21,7 +20,9 @@ xbar = mean(market$X)
 ybar = mean(market$Y)
 # 포인트를 찍는데 문자는 17이고 크기는 2.0이고 빨간색으로 찍는다.
 points(xbar, ybar, pch=17, cex=2.0, col="red")
-text(xbar, ybar, "(8.85, 19.36)")
+# text(xbar, ybar, "(8.85, 19.36)")
+text(xbar+1, ybar, paste(round(xbar,2), round(ybar, 2)))
+
 fx="Y-hat=0.328+2.14*X"
 text(locator(1), fx)
 
@@ -36,7 +37,7 @@ pred.X = pred.frame$X; pred.X
 plot(market$X, market$Y, ylim=range(market$Y, pp))
 matlines(pred.X, pc, lty=c(1,2,2), col="BLUE")
 matlines(pred.X, pp, lty = c(1,3,3), col="RED")
-
+1
 # lm : fit linear models : 선형모델적합 함수
 # 가중회귀직선()
 x = c(1,2,3,4,5)
