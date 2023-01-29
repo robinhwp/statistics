@@ -2,6 +2,16 @@
 # 데이터 입력
 score = c( 88, 83, 83, 85, 94, 88, 91, 96, 
            89, 83, 81, 80, 84, 89, 83, 79)
+
+diff = score - 86
+
+score.sqare = diff ^ 2
+score.sqare
+(score.sqare.total = sum(score.sqare))
+
+366/15
+  
+
 # 표본평균과 표본표준편차
 bar_x = mean(score)
 s = sd(score)

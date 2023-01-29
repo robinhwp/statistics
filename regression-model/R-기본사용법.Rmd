@@ -1,0 +1,84 @@
+---
+title: "R 사용법"
+author: "robinhwp"
+date: "2023-01-17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### 산점도 그리기
+
+```{r}
+x=2:10
+y=3*x+5
+plot(x,y,pch=18)
+```
+
+### 작업 디렉토리 설정
+
+```{r}
+getwd() # shows the working directory
+setwd(choose.dir()) # select the working directory interactively
+# 절대경로 상대경로 모두 사용 가능
+setwd("D:/statistics/regression-model") 
+setwd("..") # D:/statistics
+setwd("regression-model") # D:/statistics/regression-model
+
+```
+
+RStudio를 사용하면 특별히 사용할 일은 없고 위치 확인 용으로 getwd()를 사용하면 됨
+
+### 평균과 표준편차
+```{r}
+weight <- c(60, 72, 57, 90, 95, 72)
+height <- c(1.75, 1.80, 1.65, 1.90, 1.74, 1.91)
+
+# 평균과 표준편차 (수식)
+(xbar <- sum(weight)/length(weight))
+(s<-sqrt(sum((weight - xbar)^2)/(length(weight) - 1)))
+# 평균과 표준편차 (함수)
+mean(weight)
+sd(weight)
+
+t.test(bmi) # 가설검정을 위한 통계량?
+bmi > 25
+```
+### 가설검정 
+$H_0: \mu = 22.5$
+$H_1: \mu \ne 22.5$
+```{r}
+weight <- c(60, 72, 57, 90, 95, 72)
+height <- c(1.75, 1.80, 1.65, 1.90, 1.74, 1.91)
+
+bmi <- weight/height^2
+t.test(bmi)
+```
+
+### 문자열연결 
+```{r}
+a<-cat(c("char", "to", "string")) # a에는 아무것도 저장되지 않는다. NULL
+cat(c("char", "to", "string","\n")) # \n을 넣어야 다음 라인체 출력된다.
+(a<-paste(c("char", "to", "string")))
+(a<-paste(c("char", "to", "string"), collapse = ", ")) # collapse를 지정해줘야 문자열 벡터가 문자열로 합쳐진다. 
+# ? paste 를 실행해서 sample run으로 결과물 확인해서 사용하는게 가장 확실함.
+# 특수한 문자를 넣을땐 \를 포함한다.
+cat("What is the \"R\"")
+```
+```{r}
+valid <- FALSE
+val <- pi
+paste("The value is", val[valid], "-- not so good!")
+paste("The value is", val[valid], "-- good: empty!", recycle0=TRUE) # -> character(0)
+## When  'collapse = <string>',  the result is a length-1 string :
+paste("foo", {}, "bar", collapse="|")                  # |-->  "foo  bar"
+paste("foo", {}, "bar", collapse="|", recycle0 = TRUE) # |-->  ""
+## all empty args
+paste(	  collapse="|")                  # |-->  ""  as do all these:
+paste(	  collapse="|", recycle0 = TRUE)
+paste({}, collapse="|")
+paste({}, collapse="|", recycle0 = TRUE)
+```
+

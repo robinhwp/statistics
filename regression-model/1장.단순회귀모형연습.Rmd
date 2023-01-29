@@ -1,0 +1,67 @@
+---
+title: "simple regression model test"
+author: "robinhwp"
+date: "2023-01-28"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 단순회귀모형 테스트
+
+### 1. 데이터 로드
+
+```{r}
+# 데이터 로드 data/market-1.txt
+market=read.table("./data/market-1.txt", header = TRUE)
+```
+
+### 2. 산점도
+
+```{r}
+# 산점도
+plot(market$X, market$Y, xlab = "광고료", ylab = "매출", main="광고료와 판매액의 산점도도", pch=10)
+#회귀직선을 그리려면 선형회귀모형을 구해야한다.
+market.lm=lm(Y~X, data = market)
+abline(market.lm)
+```
+
+### 3. summary 및 분산분석
+
+```{r}
+# summary
+summary(market.lm)
+
+```
+
+### 4. 신뢰구간
+
+```{r}
+
+# use result of summary
+
+alpha=0.05
+# t(n-2;\alpha/2)
+qval=qt(1-alpha/2, market.lm$df.residual)
+paste("alpha:", alpha, "df:",market.lm$df.residual, ">  qt:",qval)  
+# \beta_1
+(b_1 = summary(market.lm)["coefficients"]$coefficients[2,1])
+# \sqrt{\hat{var(b_1)}} # b_1에 대한 분산 추정값값
+( serr_1 = summary(market.lm)["coefficients"]$coefficients[2,2])
+paste("\beta_1 interval : lower:", round(b_1-(qval*serr_1),6), ", upper:", round(b_1+(qval*serr_1),6))
+
+# \beta_0
+(b_0 = summary(market.lm)["coefficients"]$coefficients[1,1])
+# \sqrt{\hat{var(b_1)}} # b_1에 대한 분산 추정값값
+( serr_0 = summary(market.lm)["coefficients"]$coefficients[1,2])
+paste("\beta_0 interval : lower:", round(b_0-(qval*serr_0),6), ", upper:", round(b_0+(qval*serr_0),6))
+      
+```
+
+```{r}
+anova(market.lm)
+```
+
+### 
