@@ -8,7 +8,7 @@ editor_options:
 
 ## 
 
-`독립변수`(independent variable, 설명변수:explanatory variable)들과 \
+`독립변수`(independent variable, 설명변수:explanatory variable)들과\
 `종속변수`(dependent variable, 반응변수:response variable)간의
 함수관계를 규명하는 통계적인 분석방법
 
@@ -53,11 +53,11 @@ $\beta_0+\beta_1\bar{X}$를 대체하여 상수항으로 대체체한것이다.\
 추정하여 얻은 직선을\
 $\hat{Y}=b_0+b_1X$라고 하자.\
 이와같은 직선을 추정된 회귀직선, 또는 간단히 **회귀선**이라고 한다.\
-최소제곱법은 $Y_i=\beta_0+\beta_1X_i+\epsilon_i$에서 \
-오차제곱들의 합$[S=\sum_{i=1}^n(Y_i-\beta_0-\beta_1X_i)^2]$을 최소로하는
-\
+최소제곱법은 $Y_i=\beta_0+\beta_1X_i+\epsilon_i$에서\
+오차제곱들의 합$[S=\sum_{i=1}^n(Y_i-\beta_0-\beta_1X_i)^2]$을
+최소로하는\
 $\beta_0$와 $\beta_1$의 값들을 이들의 추정값 $b_0$와 $b_1$으로 하는
-방법이다. \
+방법이다.\
 이를 구하기 위해서는 오차제곱합 S를 $\beta_0$와 $\beta_1$으로 각각
 편미분하여 이를 0으로 하여 구하면 된다.\
 $\beta_0$로 편미분하는 방법\
