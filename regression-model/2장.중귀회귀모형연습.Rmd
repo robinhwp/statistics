@@ -1,0 +1,32 @@
+---
+title: "test multiple regression model"
+author: "robinhwp"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 중회귀모형 테스트
+
+```{r}
+market2=read.table("./data/market2.txt", header=T)
+head(market2, 3)
+X=market2[,2:3]
+X=cbind(1,X)
+Y=market2[,4]
+X=as.matrix(X)
+Y=as.matrix(Y)
+XTX=t(X)%*%X
+XTXI=solve(XTX)
+XTY=t(X)%*%Y
+beta=round(XTXI%*%XTY, 3)
+
+```
+- 적합된 회귀식
+$$\begin{aligned}
+\hat{Y}&=\hat{\beta_0} + \hat{\beta_1}X_1 + \hat{\beta_2}X_2
+\\&=0.850 + 1.558X_1 + 0.427X_2
+\end{aligned}$$

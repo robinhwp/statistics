@@ -140,7 +140,7 @@ abline(h=0, lty=2)
 
 ```{r}
 
-p.x<-data.frame(price= c(1,45,))
+p.x<-data.frame(price= seq(1,45,5))
 pc=predict(super.lm, int="c", newdata = p.x)
 pred.x=p.x$price
 plot(super$price, super$time, ylim=range(super$time , pc))
