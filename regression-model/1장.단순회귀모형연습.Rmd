@@ -9,98 +9,155 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## 단순회귀모형 테스트
+## 단순회귀모형
 
-### 1. 데이터 로드
+### 1. 데이터 로드 및 산점도 그림림
 
 ```{r}
 # 데이터 로드 data/market-1.txt
 market=read.table("./data/market-1.txt", header = TRUE)
+plot(market$X, market$Y, xlab = "광고료", ylab = "매출", main="광고료와 판매액의 산점도도", pch=10)
 ```
 
-### 2. 산점도
+### 2. 회귀직선을 그려본다.
 
 ```{r}
-# 산점도
-plot(market$X, market$Y, xlab = "광고료", ylab = "매출", main="광고료와 판매액의 산점도도", pch=10)
+# 산점도가 선형이면 선형회귀 모형을 구한 후 회귀직선을 출력해 본다.
 #회귀직선을 그리려면 선형회귀모형을 구해야한다.
 market.lm=lm(Y~X, data = market)
+plot(market$X, market$Y, xlab = "광고료", ylab = "매출", main="광고료와 판매액의 산점도도", pch=10)
 abline(market.lm)
 ```
 
-### 3. summary 및 분산분석
+### 3. summary 및 분산분석 데이터 생성
 
 ```{r}
 # summary
-summary(market.lm)
+market.lm.summary = summary(market.lm)
+market.lm.anova = anova(market.lm)
 
 ```
 
-### 4. 신뢰구간
-
+### 4. 추정된 회귀식
 ```{r}
+# ID   X        Y   
+#  1  4.2      9.3
+#  2  8.5     18.5
+#  3  9.3     22.8
+#  4  7.5     17.7
+#  5  6.3     14.6
+#  6 12.2     27.9
+#  7  6.5     12.5
+#  8 10.4     25.2
+#  9  5.8     10.8
+# 10  9.2     20.5
+# 11  7.2     14.9
+# 12  8.5     19.2
+# 13 10.6     22.5
+# 14 13.9     28.4
+# 15 12.7     25.6
 
-# use result of summary
-
-alpha=0.05
-# t(n-2;\alpha/2)
-qval=qt(1-alpha/2, market.lm$df.residual)
-paste("alpha:", alpha, "df:",market.lm$df.residual, ">  qt:",qval)  
-# \beta_1
-(b_1 = summary(market.lm)["coefficients"]$coefficients[2,1])
-# \sqrt{\hat{var(b_1)}} # b_1에 대한 분산 추정값값
-( serr_1 = summary(market.lm)["coefficients"]$coefficients[2,2])
-paste("\beta_1 interval : lower:", round(b_1-(qval*serr_1),6), ", upper:", round(b_1+(qval*serr_1),6))
-
-# \beta_0
-(b_0 = summary(market.lm)["coefficients"]$coefficients[1,1])
-# \sqrt{\hat{var(b_1)}} # b_1에 대한 분산 추정값값
-( serr_0 = summary(market.lm)["coefficients"]$coefficients[1,2])
-paste("\beta_0 interval : lower:", round(b_0-(qval*serr_0),6), ", upper:", round(b_0+(qval*serr_0),6))
-      
+b_0=market.lm.summary$coefficients["(Intercept)","Estimate"]
+b_1=market.lm.summary$coefficients["X","Estimate"]
+paste0("hat_Y=", round(b_0,5), " + ", round(b_1,5), "X")
 ```
+${Y}=\beta_0 + \beta_1 X + \varepsilon$ 식의 추정식은 $\hat{Y}=b_0 + b_1 X$ 
 
+$b_1={\sum_{i=1}^n(X_i-\bar{X})(Y_i -\bar{Y}) \over \sum_{i=1}^n (X_i - \bar{X})^2}$ 
+
+$b_0=  \bar{Y} -  b_1 \bar{X}$ 
+
+
+### 5. 신뢰구간 구하기
+
+`predict`함수를 이용한 $\hat{Y}와 \hat{Y}_{new}$의 $100(1-\alpha)$% 신뢰구간구간
 ```{r}
-anova(market.lm)
-```
-위의 산점도에 추정값의 신뢰구간을 출력하는 방법
-```{r}
-pred.frame = data.frame(X=seq(3.5,14.5,0.2))
+X=seq(3.5,14.5,0.2)
+pred.frame = data.frame(X=X)
+# hat_Y의 신뢰구간
 pc = predict(market.lm, int="c", newdata = pred.frame)
-pp = predict(market.lm, int="p", newdata = pred.frame)
 head(pc)
+
+# hat_Y_new의 신뢰구간간
+pp = predict(market.lm, int="p", newdata = pred.frame)
 head(pp)
 ```
-산점도 그리기
+
+
+```{r}
+# bar_x와 mse, sxx를 구한다.
+bar_x = mean(market$X)
+sxx = sum((market$X-bar_x)^2)
+mse = market.lm.anova["Residuals", "Mean Sq"]
+tval=qt(1-0.05/2, market.lm.anova["Residuals", "Df"])
+hat_y.fit=b_0+b_1*X
+
+
+
+```
+
+$\hat{Y}$의 신뢰계수 $100(1-\alpha)$% 신뢰구간 ( $\hat{Y} \pm t(n-2;\alpha/2)\sqrt{ MSE[{1\over n} + {(X-\bar{X})^2 \over S_{XX}}]}$ 
+```{r}
+
+hat_y.pc.lwr=hat_y.fit - tval * sqrt(mse*(1/length(market$X)+(X-bar_x)^2/sxx))
+hat_y.pc.upr=hat_y.fit + tval * sqrt(mse*(1/length(market$X)+(X-bar_x)^2/sxx))
+hat_y.pc=cbind(hat_y.fit, hat_y.pc.lwr, hat_y.pc.upr)
+colnames(hat_y.pc)= c("fit", "lwr", "upr")
+head(hat_y.pc)
+```
+
+
+주어진 X값에서 새로운 예측값 $Y_{new}$의 신뢰구간 
+$\hat{Y}_{new} \pm t(n-2;\alpha/2) \sqrt{ MSE[1 + {1\over n} + {(X-\bar{X})^2 \over S_{XX}}]}$ 
+```{r}
+hat_y.pp.lwr=hat_y.fit - tval * sqrt(mse*(1+1/length(market$X)+(X-bar_x)^2/sxx))
+hat_y.pp.upr=hat_y.fit + tval * sqrt(mse*(1+1/length(market$X)+(X-bar_x)^2/sxx))
+hat_y.pp=cbind(hat_y.fit, hat_y.pp.lwr, hat_y.pp.upr)
+colnames(hat_y.pp)= c("fit", "lwr", "upr")
+head(hat_y.pp)
+```
+### 6. 신뢰대 그려보기
+
+- `predict` 결과로 그려보기기
 ```{r}
 plot(market$X, market$Y, ylim=range(market$Y, pp),xlab = "광고료", ylab = "매출", main="광고료와 판매액의 산점도도", pch=10)
 
 matlines(pred.frame$X, pc, lty=c(1,2,2),col = "BLUE")
 matlines(pred.frame$X, pp, lty=c(1,3,3),col = "RED")
+```
 
+- 수식 결과로 그려보기
+```{r}
+plot(market$X, market$Y, ylim=range(market$Y, pp),xlab = "광고료", ylab = "매출", main="광고료와 판매액의 산점도도", pch=10)
+
+matlines(X, hat_y.pc, lty=c(1,2,2),col = "BLUE")
+matlines(X, hat_y.pp, lty=c(1,3,3),col = "RED")
 ```
 
 
-### 5. $\beta_1$의 검정
+### 7. $\beta_1$의 검정
 
 추정된 회귀직선의 기울기 $b_1$ 의 분포는$b_1 \sim N\left( \beta_1, {\sigma^2 \over S_{XX}} \right)$이므로,
 ${b_1 -\beta_1 \over \sqrt{{MSE\over S_{XX}}}} \sim t(n-2)$를 따른다. 따라서 이를 이용하게 되면 모집단 회귀직선의 기울기 $\beta_1$에 대한 검정이 가능해진다. $\beta_1$의 값이 어떤 특정한 값 $\beta_{10}$이 아닌가 하는 가설을 검정하려면 다음과 같이 귀무가설과 대립가설을 설정한 후 적합된 회귀직선을 이용하여 검정한다.
+
 귀무가설 $H_0: \beta_1 = \beta_{10}$\
 대립가설 $H_0: \beta_1 \ne \beta_{10}$\
-위의 가설 통계량은 
-$$t_0 = {b_1 - \beta_{10} \over \sqrt{\widehat{Var}(b_1)}} = {b_1-\beta_{10} \over \sqrt{MSE\over S_{XX}}}$$ 
+위의 가설 통계량은
+$$t_0 = {b_1 - \beta_{10} \over \sqrt{\widehat{Var}(b_1)}} = {b_1-\beta_{10} \over \sqrt{MSE\over S_{XX}}}$$
 이며, 양측검정이므로 $t(n-2;\alpha/2)$인 기각값을 구한 후, 만약 $|t_0| > t(n-2;\alpha/2)$이면 귀무가설을 기각하게 된다.
 
 ```{r}
 
 # t값
-( t_0 = summary(market.lm)["coefficients"]$coefficients[2,1]/summary(market.lm)["coefficients"]$coefficients[2,2])
+t_0 = market.lm.summary$coefficients["X","t value"]
 
-paste("t_0(", abs(t_0) , ") >  qt:",qval)
+paste("t_0(", abs(t_0) , ") >  qt:",tval)
 
-paste0("p-값=Pr(T>|",t_0,"|)=2X(1-Pr(T<",t_0,"))이므로,",2*(1-pt(t_0,length(market$X)-2)))
+paste0("p-값=Pr(T>|",t_0,"|)=2x(1-Pr(T<",t_0,"))이므로,",2*(1-pt(t_0,length(market$X)-2)))
 ```
-### 6. 가중회귀
+위에서 p-value가 3.55364715431961e-09 < 0.05이므로 귀무가설을 기각한다.
+
+### 8. 가중회귀
 ```{r}
 x=c(1,2,3,4,5)
 y=c(2,3,5,8,7)
@@ -119,31 +176,31 @@ anova(w.lm)
 
 
 
-### 1.7 분석사례
-```{r}
-super=read.table("./data/supermarket.txt", header = T)
-plot(super$price, super$time, pch=19)
+<!-- ### 1.7 분석사례 -->
+<!-- ```{r} -->
+<!-- super=read.table("./data/supermarket.txt", header = T) -->
+<!-- plot(super$price, super$time, pch=19) -->
 
-super.lm = lm(price ~ time, data = super)
-summary(super.lm)
+<!-- super.lm = lm(price ~ time, data = super) -->
+<!-- summary(super.lm) -->
 
-paste0("time_hat=", summary(super.lm)["coefficients"]$coefficients[1,1], " + ", +
-         summary(super.lm)["coefficients"]$coefficients[2,1],"X")
+<!-- paste0("time_hat=", summary(super.lm)["coefficients"]$coefficients[1,1], " + ", + -->
+<!--          summary(super.lm)["coefficients"]$coefficients[2,1],"X") -->
 
-anova(super.lm)
+<!-- anova(super.lm) -->
 
-cbind(super, super.lm$residuals, super.lm$fitted.values)
-plot(super$price, super.lm$residuals, pch=19)
-abline(h=0, lty=2)
+<!-- cbind(super, super.lm$residuals, super.lm$fitted.values) -->
+<!-- plot(super$price, super.lm$residuals, pch=19) -->
+<!-- abline(h=0, lty=2) -->
 
-```
+<!-- ``` -->
 
-```{r}
+<!-- ```{r} -->
 
-p.x<-data.frame(price= seq(1,45,5))
-pc=predict(super.lm, int="c", newdata = p.x)
-pred.x=p.x$price
-plot(super$price, super$time, ylim=range(super$time , pc))
-matlines(pred.x, pc, lty=c(1,2,2), col="BLUE")
-```
+<!-- p.x<-data.frame(price= seq(1,45,5)) -->
+<!-- pc=predict(super.lm, int="c", newdata = p.x) -->
+<!-- pred.x=p.x$price -->
+<!-- plot(super$price, super$time, ylim=range(super$time , pc)) -->
+<!-- matlines(pred.x, pc, lty=c(1,2,2), col="BLUE") -->
+<!-- ``` -->
 
