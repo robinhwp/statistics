@@ -59,7 +59,7 @@ market.lm.anova = anova(market.lm)
 
 b_0=market.lm.summary$coefficients["(Intercept)","Estimate"]
 b_1=market.lm.summary$coefficients["X","Estimate"]
-paste0("hat_Y=", round(b_0,5), " + ", round(b_1,5), "X")
+paste0("$\\hat{Y}=", round(b_0,5), " + ", round(b_1,5), "X$")
 ```
 ${Y}=\beta_0 + \beta_1 X + \varepsilon$ 식의 추정식은 $\hat{Y}=b_0 + b_1 X$ 
 
