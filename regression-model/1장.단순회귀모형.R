@@ -19,6 +19,8 @@ b0=bar_y-b1*bar_x
 paste0("$\\hat{Y}=", round(b0,5), " + ", round(b1,5), "X$")
 
 
+
+
 # 잔차들의 합은 0이다. → $\sum e_i = 0$ 
 sum(market.lm$residuals)
 # 잔차들의 $ X_i$에 의한 가중합은 0이다. → $\sum X_ie_i = 0$ 
@@ -117,11 +119,153 @@ plot(market$X, market$Y, ylim=range(market$Y, hat_y.pp))
 matlines(X, hat_y.pc, lty = c(1,2,3), col="BLUE")
 matlines(X, hat_y.pp, lty = c(1,3,3), col="RED")
 
-# H0: b1 = 0
-# H1: b1 != 0
+
+# 귀무가설 H0: β1 = β10
+# 대립가설 H1: β1 != β10
 # p-value 구하기
 (pvalue = market.lm.anova$`Pr(>F)`[1])
 (pvalue = market.lm.anova["X", "Pr(>F)"])
 (pvalue = 1-pf(market.lm.anova["X", "F value"], 
                market.lm.anova["X", "Df"], 
                market.lm.anova["Residuals", "Df"]))
+
+(n=length(market$Y))
+# market.lm.anova["Residuals", "Df"]는 (n-2)와 같다.
+(c(n -2, market.lm.anova["Residuals", "Df"] ))
+(qval=qt(1-0.05/2,market.lm.anova["Residuals", "Df"]))
+(β1 = market.lm.summary$coefficients["X","Estimate"])
+β10 = β1 + 1 # 임의의값 지정
+(t0 = (β1 - β10)/market.lm.summary$coefficients["X","Std. Error"])
+if(abs(t0) > qval)
+{
+  paste0("|t0|=",  abs(t0), "이고, t(n-2;α/2)=", qval, 
+         "이므로 |t0| > t(n-2;α/2)가 성립되어 귀무가설을 기각한다.")
+}else{
+  paste0("|t0|=",  abs(t0), "이고, t(n-2;α/2)=", qval, 
+         "이므로 |t0| > t(n-2;α/2)가 성립하지 않으므로 귀무가설을 기각하지 못한다.")
+}
+# 만약 β10이 0인 경우 교재와 같이 t0 = coefficients["X","Estimate"]/coefficients["X","Std. Error"] 가된다. 
+β10 = β1 # 임의의값 지정
+(t0 = (β1 - β10)/market.lm.summary$coefficients["X","Std. Error"])
+if(abs(t0) > qval)
+{
+  paste0("|t0|=",  abs(t0), "이고, t(n-2;α/2)=", qval, 
+         "이므로 |t0| > t(n-2;α/2)가 성립되어 귀무가설을 기각한다.")
+}else{
+  paste0("|t0|=",  abs(t0), "이고, t(n-2;α/2)=", qval, 
+         "이므로 |t0| > t(n-2;α/2)가 성립하지 않으므로 귀무가설을 기각하지 못한다.")
+}
+# 만약 β10이 0인 경우이므로 
+β10 = 0 # 임의의값 지정
+(t0 = (β1 - β10)/market.lm.summary$coefficients["X","Std. Error"])
+if(abs(t0) > qval)
+{
+  paste0("|t0|=",  abs(t0), "이고, t(n-2;α/2)=", qval, 
+         "이므로 |t0| > t(n-2;α/2)가 성립되어 귀무가설을 기각한다.")
+}else{
+  paste0("|t0|=",  abs(t0), "이고, t(n-2;α/2)=", qval, 
+         "이므로 |t0| > t(n-2;α/2)가 성립하지 않으므로 귀무가설을 기각하지 못한다.")
+}
+
+
+t0 = (β1 - β1)/market.lm.summary$coefficients["X","Std. Error"]
+# 책에서는 β10 = 0
+t0 = β1 / market.lm.summary$coefficients["X","Std. Error"]
+# 귀무가설을 기각하게 된다.
+
+  
+# 귀무가설 H0: b1 = 0
+# 대립가설 H1: b1 != 0
+# p-value 구하기
+(pvalue = market.lm.anova$`Pr(>F)`[1])
+(pvalue = market.lm.anova["X", "Pr(>F)"])
+(pvalue = 1-pf(market.lm.anova["X", "F value"], 
+               market.lm.anova["X", "Df"], 
+               market.lm.anova["Residuals", "Df"]))
+(pvalue=2*(1-pt(market.lm.summary$coefficients["X", "t value"], 
+                market.lm.summary$df[2])))
+α=0.05
+if(pvalue < α)
+{
+  paste0("p-value=",  pvalue, " 이므로", 
+         "p-value < α=", α, "가 성립되어 귀무가설을 기각한다.")
+}else{
+  paste0("p-value=",  pvalue, " 이므로", 
+         "p-value < α=", α, " 가 성립하지 않으므로 귀무가설을 기각하지 못한다.")
+}
+
+
+
+# 가중회귀 직선을 구하라
+x = c(1,2,3,4,5)
+y = c(2,3,5,8,7)
+w = 1/x
+w.lm = lm(y ~ x, weights=w)
+w.lm.summary = summary(w.lm)
+b0=w.lm.summary$coefficients["(Intercept)","Estimate"]
+b1=w.lm.summary$coefficients["x","Estimate"]
+paste0( "가중회귀직선 hat_Y = ", round(b0,4), " + ", round(b1,4) ,"X")
+
+
+
+
+# 분석사례
+
+
+# 1장 연습문제 3번
+bar_x=15.0 # mean(X)
+bar_y=13.0 # mean(Y)
+S_xx = 160.0 # sum((X - bar_x)^2)
+S_xy = 90.0 # sum((X - bar_x)*(Y-bar_y))
+S_yy = 83.2 # sum((Y - bar_y)^2)
+
+β1 = S_xy / S_xx
+β0=bar_y-β1*bar_x
+
+paste0("(1)회귀선적합 hat_Y =", round(β0,5), " + ", round(β1,5), "X")
+
+# (2) 분산분석표에 나오는 항목 정리
+n=20
+(x.df=1)
+(Residuals.df = n-1)
+(SSR = S_xy^2 / S_xx)
+(SST = S_yy)
+(SSE = SST - SSE)
+(MSR = SSR / x.df)
+(MSE = SSE / Residuals.df)
+(F0 = MSR / MSE)
+
+# (3) 상관계수 r
+(r = S_xy / (sqrt(S_xx)*sqrt(S_yy)))
+
+
+# 분석사례
+# 데이터를 읽는다.
+super = read.table("./data/supermarket.txt", header=T)
+head(super)
+# 산점도를 그려본다.
+plot(super$price, super$time, pch=19)
+#회귀모형적합 및 summary
+super.lm = lm(time ~ price, data=super)
+(super.lm.summary=summary(super.lm))
+# summary를 통해서 회귀직선을 적합한다.
+b0=super.lm.summary$coefficients["(Intercept)","Estimate"]
+b1=super.lm.summary$coefficients["price","Estimate"]
+paste0("$\\hat{time}=", round(b0,5), " + ", round(b1,5), " time$")
+paste0("기울기 t-값=", round(super.lm.summary$coefficients["price","t value"],5))
+paste0("p-값=", round(super.lm.summary$coefficients["price","Pr(>|t|)"],9))
+
+# 분산분석표 구하기
+(super.lm.anova=anova(super.lm))
+(F0=super.lm.anova["price", "F value"])
+(pvalue=super.lm.anova["price", "Pr(>F)"])
+# 잔차및 추정값 보기
+cbind(super, super.lm$residuals, super.lm$fitted.values)
+#  잔차그림 그리기
+plot(super$price, super.lm$residuals, pch=19)
+abline(h=0, lty=2)
+#추정값의 신뢰대 그리기
+p.x=data.frame(price=c(1:45))
+pc = predict(super.lm, int="c", newdata=p.x)
+plot(super$price, super$time, ylim=range(super$time, pc))
+matlines(p.x$price, pc, lty = c(1,2,2), col="blue")
