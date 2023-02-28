@@ -8,14 +8,14 @@ plot(market$X, market$Y, xlab = "광고료", ylab = "매출", main="광고료와
 abline(market.lm)
 market.lm.summary = summary(market.lm)
 # summary에서 회귀식 추출출
-b0=market.lm.summary$coefficients["(Intercept)","Estimate"]
-b1=market.lm.summary$coefficients["X","Estimate"]
+(b0=market.lm.summary$coefficients["(Intercept)","Estimate"])
+(b1=market.lm.summary$coefficients["X","Estimate"])
 paste0("$\\hat{Y}=", round(b0,5), " + ", round(b1,5), "X$")
 # summary를 이용하지 않고 b0과 b1을 구하면..
-bar_x=mean(market$X)
-bar_y=mean(market$Y)
-b1 = sum((market$X - bar_x)*(market$Y-bar_y))/sum((market$X - bar_x)^2)
-b0=bar_y-b1*bar_x
+(bar_x=mean(market$X))
+(bar_y=mean(market$Y))
+(b1 = sum((market$X - bar_x)*(market$Y-bar_y))/sum((market$X - bar_x)^2))
+(b0=bar_y-b1*bar_x)
 paste0("$\\hat{Y}=", round(b0,5), " + ", round(b1,5), "X$")
 
 
@@ -29,24 +29,25 @@ sum(market$x * market.lm$residuals)
 # 분산분석으로 검정
 market.lm.anova=anova(market.lm)
 # 분산분석에서 F0-값으로 검정
-F0=market.lm.anova["X", "F value"]
-Fvalue=qf(1-0.05, 1, market.lm.anova["Residuals", "Df"])
+(F0=market.lm.anova["X", "F value"])
+(Fvalue=qf(1-0.05, 1, market.lm.anova["Residuals", "Df"]))
 paste0("F0=", round(F0, 2), ">F(1,", market.lm.anova["Residuals", "Df"],",0.05)=",round(Fvalue,2))
 #분산분석에서 P-값으로 검정 -  “p-값<유의확률 0.05”
 paste0( "p-값(",market.lm.anova["X", "Pr(>F)"],")<", 0.05)
 
 # 분산분석표 분석에서의 SSR, SSE, SST
-SSR = market.lm.anova["X", "Sum Sq"]
-SSE = market.lm.anova["Residuals", "Sum Sq"]
-SST = SSR + SSE
-paste("SSR =", SSR, ", SSE = ", SSE, ", SST = ", SST)
+(SSR = market.lm.anova["X", "Sum Sq"])
+(SSE = market.lm.anova["Residuals", "Sum Sq"])
+(SST = SSR + SSE)
+# paste("SSR =", SSR, ", SSE = ", SSE, ", SST = ", SST)
 
 # b0, b1으로 hat_y를 구해서 SSR과 SSE를 구하는 방법
-hat_y = b0 + b1*market$X
-SSR = sum((hat_y-bar_y)^2)
-SSE = sum((market$Y - hat_y)^2)
-SST = SSR + SSE
-paste("SSR =", SSR, ", SSE = ", SSE, ", SST = ", SST)
+(hat_y = b0 + b1*market$X)
+(SSR = sum((hat_y-bar_y)^2))
+(SSE = sum((market$Y - hat_y)^2))
+(SST = SSR + SSE)
+(SST = sum((market$Y-bar_y)^2))
+# paste("SSR =", SSR, ", SSE = ", SSE, ", SST = ", SST)
 
 S_xx = sum( (market$X - bar_x)^2)
 S_xy = sum((market$X - bar_x)*(market$Y-bar_y))
