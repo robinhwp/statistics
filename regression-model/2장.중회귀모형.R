@@ -24,12 +24,11 @@ head(market2, 3)
 X=market2[,c(2,3)]
 Y=market2[,4]
 X=cbind(1,X)
-X=as.matrix(X)
-Y=as.matrix(Y)
-XTX=t(X)%*%X
-XTY=t(X)%*%Y
-beta=solve(XTX)%*%XTY
-beta=round(beta,3)
+(X=as.matrix(X))
+(Y=as.matrix(Y))
+(XTX=t(X)%*%X)
+(XTY=t(X)%*%Y)
+(beta=round(solve(XTX)%*%XTY,5))
 
 #적합된 회귀식은 hat_Y=hat_beta0 + hat_beta1*X1 + hat_beta2 * X2 가 된다.
 paste0("적합된 회귀식은 hat_Y=", beta[1,1], "+", beta[2,1],"X1+",beta[3,1], "X2 가 된다.")
@@ -59,17 +58,112 @@ market2.anova=anova(market2.lm)
 paste("SS(X1) =", market2.anova["X1", "Sum Sq"])
 paste("SS(X2|X1) =", market2.anova["X2", "Sum Sq"])
 paste("SS(X1,X2) =", market2.anova["X1", "Sum Sq"]+market2.anova["X2", "Sum Sq"])
-length(market2.anova[,"Df"])-1
 
 market2.anova["Residuals","Df"]
 market2.anova["Residuals","Sum Sq"]
 market2.anova["Residuals","Mean Sq"]
-sqrt(market2.anova["Residuals","Sum Sq"]/market2.anova["Residuals","Df"])
+(S_y.x=sqrt(market2.anova["Residuals","Sum Sq"]/market2.anova["Residuals","Df"]))
 
-length(rownames(market2.anova))
+# 멱등행렬(idempotent matrix) 또는 햇행렬(hat matrix) H 
+H = X%*%solve(t(X)%*%X)%*%t(X)
+HH = H%*%H
+HT = t(H)
 
-market2.anova[rownames(market2.anova)[3],"Df"]
+# 모두 같다.
+H[c(3:2),]
+HH[c(3:2),]
+HT[c(3:2),]
 
+e=Y-X%*%beta
+sum(e) # 오차항의 합은 0에 가깝다.
 
+t(X)%*%e # 0.01대(0.02를 안넘는)의 값을 0벡터라고 봐야하나.. 
+
+hat_Y =  beta[1,1] + beta[2,1]*X[,"X1"] + beta[3,1]*X[,"X2"]
+sum(hat_Y*e)
+
+X%*%beta
+
+# 단위행렬(Identity matrix) 만들기
+diag(3)
+
+# 1 행렬(matrix of 1) 만들기
+matrix(1, 3, 3) # 3 x 3 행렬
+
+# 회귀방정식의 신뢰성
+#############################################
+(n=length(Y))
+(bar_Y = mean(Y))
+(SST = sum ( (Y - bar_Y)^2 ))
+(SST = t(Y)%*%Y - n*(bar_Y)^2)
+I=diag(n)
+J=matrix(1, n, n)
+(SST=t(Y)%*%(I-J/n)%*%Y)
+
+(SSE=t(e)%*%e)
+(SSE=sum((Y-hat_Y)^2))
+(SSE=t(Y)%*%(I-H)%*%Y)
+
+(SSR = sum ( (hat_Y - bar_Y)^2 ))
+(SSR = t(hat_Y)%*%hat_Y - n*(bar_Y)^2)
+(SSR = t(Y)%*%(H-J/n)%*%Y)
+
+(k=length(colnames(X))-1)
+(MSR = SSR / k)
+(MSE = SSE / (n - k - 1))
+(F0 = MSR / MSE)
+
+(MSR=(market2.anova["X1","Sum Sq"]+market2.anova["X2","Sum Sq"])/k)
+(MSE=market2.anova["Residuals","Sum Sq"]/(n - k - 1))
+(F0 = market2.anova["Residuals","Sum Sq"])
+market2.summary
 # 표준화된 중회귀분석
 #############################################
+
+# j = 1, 2일때 sum Z_ij 과 sum (Z_ij)^2 
+bar_x1=mean(market2$X1)
+s_j1=sum((market2$X1-bar_x1)^2)
+z__1= (market2$X1 - bar_x1)/sqrt(s_j1)
+sum(z__1) # 0 ( 0에 아주 가까운 숫자 )
+sum(z__1^2) # 1
+
+bar_x2=mean(market2$X2)
+s_j2=sum((market2$X2-bar_x2)^2)
+z__2= (market2$X2 - bar_x2)/sqrt(s_j2)
+sum(z__2) # 0 ( 0에 아주 가까운 숫자 )
+sum(z__2^2) # 1
+
+
+# lm.beta 패키지를 이용하여 표준화회귀모형 적합
+# install.packages("lm.beta")
+library(lm.beta)
+market2.lm=lm(Y~X1+X2,data=market2)
+(market2.beta=lm.beta(market2.lm))
+
+
+coef(market2.beta)
+(market2.beta.summary=summary(market2.beta))
+market2.beta.summary$coefficients["X1","Standardized"]
+
+paste0("적합된 회귀식은 hat_Y*=", 
+       round(market2.beta.summary$coefficients["X1","Standardized"],4), "Z1 + ",
+       round(market2.beta.summary$coefficients["X2","Standardized"],4), "Z2 가 된다.")
+
+
+# 구간 추정과 가설 검정
+################################################
+# hat_vector β는 vector β의 불편추정량
+var(Y)
+solve(t(X)%*%X)*var(X)
+
+
+
+choose(365,k) 
+
+n = 365
+r = 5
+lfactorial(n)/lfactorial(n-r)
+
+
+
+

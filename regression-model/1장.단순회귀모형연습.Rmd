@@ -220,3 +220,8 @@ anova(w.lm)
 <!-- matlines(pred.x, pc, lty=c(1,2,2), col="BLUE") -->
 
 <!-- ``` -->
+
+```{python}
+10**3
+
+```
