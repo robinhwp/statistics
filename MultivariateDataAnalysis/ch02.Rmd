@@ -1,0 +1,109 @@
+# 2강
+- 단변량 그래프
+- Rmd 파일에서는 dev.new()/ def.off() 함수를 사용하지 않는다.
+
+
+## R 막대그림 및 원그림
+```{r}
+survey = read.csv('./data/survey.csv')
+edu_tb = table(survey$edu)
+edu_tb
+rownames(edu_tb) = c("무학","초졸", "중졸","고졸","대졸")
+barplot(edu_tb)
+
+# dev.new()
+pie(edu_tb, main="교육정도 원그림")
+# dev.off()
+
+
+# 겹친막대그림
+sex_edu = list(survey$sex, survey$edu)
+sex_edu_tb = table(sex_edu)
+sex_edu_tb
+barplot(sex_edu_tb, legend.text=rownames(sex_edu_tb), col=c("red","blue"))
+title("Stacked Barplot")
+
+# 한 화면에 여러개의 그래프 그리기
+
+# 남녀별로 교육정도의 원그림 그리기
+par(mfrow=c(1,2))
+pie(sex_edu_tb[1,])
+title("Education of Male")
+
+pie(sex_edu_tb[2,]) 
+title("Education of Female")
+
+par(mfrow=c(1,1))
+# R 히스토그램
+hist(survey$salary)
+# R 줄기-잎 그림
+stem(survey$salary)
+stem(survey$salary, scale=2)
+
+# 상자그림
+boxplot(salary ~ sex, data=survey)
+title("Boxplot of Salary")
+
+```
+
+## 파이썬 막대그림 및 원그림
+
+```{python}
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+# 데이터 읽기
+survey = pd.read_csv("./data/survey.csv")
+# 빈도수 구하기
+edu_freq = pd.crosstab(index=survey.edu, columns='count')
+edu_freq
+# 케이스 라벨 지정하기
+edu_freq.index = ["none", "elementary", "middle", "high", "college"]
+
+# 막대그림 그리기
+plt.bar(edu_freq.index, edu_freq["count"])
+# 원그림 그리기
+plt.pie(edu_freq["count"], labels=edu_freq.index) 
+
+# (edu, sex) 분할표 구하기
+edu_sex_tb = pd.crosstab(index=survey.edu, columns=survey.sex)
+# 케이스 및 변수이름 지정하기
+edu_sex_tb.index = ["none", "elementary", "middle", "high", "college"]
+edu_sex_tb.columns = ["Male", "Female"]
+
+# 겹친 막대그림 그리기
+edu_sex_tb.plot.bar(stacked=True)
+
+# 한화면에 여러개의 그래프 그리기
+plt.figure()
+plt.subplot(121) # 121 1행 2열 1번째
+plt.bar(edu_freq.index, edu_freq["count"])
+plt.subplot(122) # 121 1행 2열 2번째
+plt.pie(edu_freq["count"], labels=edu_freq.index) 
+
+import matplotlib.pyplot as plt
+# 히스토그램 그리기
+plt.hist(survey["salary"])
+
+# 줄기-잎 그림 그리기
+# pip3 install stemgraphic (in DOS prompt)
+import stemgraphic
+stemgraphic.stem_graphic(survey.salary, scale=50)
+
+import seaborn as sns
+sns.boxplot(x="sex", y="salary", data=survey)
+
+```
+
+# 이변량 그래프
+
+## R 이변량 그래프
+```{r}
+# plot using lines
+plot(co2)
+lines(smooth(co2),col='BLUE')
+# plot of mathematical functions
+x <- seq(0, 20, 0.1) 
+y <- exp(-x/10)*cos(2*x) 
+plot(x,y,type="l") 
+```

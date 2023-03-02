@@ -1,0 +1,85 @@
+
+# 1강
+- R과 Python 각각으로 기술통계량을 구하는 방법에 대한 설명
+- 기술통계량 요약 및 평균, 표준편차, 빈도표, 분할표에 대한 코드 숙지.
+
+
+## R을 이용한 기술통계량 구하기
+
+```{r}
+survey=read.csv('./data/survey.csv')
+head(survey, 3)
+
+# 기술통계량 요약
+mean(survey$age)
+sd(survey$age)
+survey$sex = factor(survey$sex, levels=c(1:2), labels=c("Male", "Female"))
+survey$marriage = factor(survey$marriage, levels=c(1:3), labels=c("Unmarried","Married","Divorced"))
+survey$job = factor(survey$job, levels=c(1:8), labels=c('a','b','c','d','e','f','g','other'))
+survey$edu = ordered(survey$edu, levels=c(1:5), labels=c('none','elem','med','high','college'))
+
+# 나이에 대한 (성별, 결혼상태, 성별x결혼상태) 평균 및 표준편차
+summary(survey[,-1])
+tapply(survey$age, survey$sex, mean)
+with(survey, tapply(age, sex, sd))
+with(survey, tapply(age, marriage, mean))
+
+# 나이에 대한 (성별, 결혼상태, 성별x결혼상태) 평균 및 표준편차
+sex_ma = list(survey$sex, survey$marriage)
+table(sex_ma)
+with(survey, tapply(age, sex_ma, mean))
+with(survey, tapply(age, sex_ma, sd))
+
+# 빈도표 및 분할표(성별, 교육) 
+table(survey$sex)
+table(survey$edu)
+table(survey$sex, survey$edu)
+sex_edu = table(survey$sex, survey$edu)
+summary(sex_edu)
+```
+
+## Python을 이용한 기술통계량 구하기
+```{python}
+import numpy as np
+import pandas as pd
+survey=pd.read_csv('./data/survey.csv')
+survey.head(3) # survey.head() : 기본으로 5개 survey.head(5)와 동일
+
+# 평균 구하기
+survey["age"].mean() # survey.age.mean()과 동일
+
+# 표준편차 구하기
+survey["age"].std()
+
+# 범주형 변수로 변환하기
+survey["sex"] = survey["sex"].astype("category")
+survey["job"] = survey["job"].astype("category")
+survey["edu"] = survey["edu"].astype("category")
+survey.marriage = survey.marriage.astype("category")
+
+# 연속인 변수의 기술통계량 구하기
+survey.iloc[:, 1:].describe()
+
+#나이에 대한 (성별, 결혼상태, 성별x결혼상태) 평균 및 표준편차
+agestat_by_sex = survey.groupby("sex")["age"].describe()
+agestat_by_sex
+agestat_by_sex["mean"] # 표준편차 : std
+
+# (sex, marriage)를 그룹으로 age의 기술통계량 구하기
+agestat_by_sex_marriage = survey.groupby(["sex","marriage"])["age"].describe()
+agestat_by_sex_marriage
+agestat_by_sex_marriage["mean"] # 표준편차 : std
+
+#빈도표 및 분할표(성별, 교육) 
+sex_freq = pd.crosstab(index=survey.sex, columns='count')
+sex_freq
+
+# (sex, edu)의 분할표 구하기
+sex_edu_table = pd.crosstab(index=survey.sex, columns=survey.edu)
+sex_edu_table
+
+# (sex, edu)의 분할표–카이제곱 검정
+from scipy.stats import chi2_contingency
+chi2_contingency(sex_edu_table)
+```
+

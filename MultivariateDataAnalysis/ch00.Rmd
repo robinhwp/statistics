@@ -5,6 +5,11 @@ output: html_notebook
 
 ## 1.0 파이썬과 R 정리
 
+```
+    파이썬 interactive 실행
+    Ctrl+Shift+P -> jupyter: Create interactive window 선택
+    os.chdir('D:\\robin\git\statistics\MultivariateDataAnalysis') 실행해야 디렉토리가 맞음
+```
 ### 서론
 
 파이썬도 RStudio에서 지원해주는것 같기는 한데 예전에 사용할때 vscode에서 단계별로 실행한 기억이 있는데 다시해보니 느낌에 차이가 나는듯 해서 R Studio를 파이썬도 스터디 용도로 사용해본다.
