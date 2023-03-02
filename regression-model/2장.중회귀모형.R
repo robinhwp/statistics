@@ -133,6 +133,19 @@ z__2= (market2$X2 - bar_x2)/sqrt(s_j2)
 sum(z__2) # 0 ( 0에 아주 가까운 숫자 )
 sum(z__2^2) # 1
 
+bar_y=mean(market2$Y)
+S_yy = sum((market2$Y - bar_y)^2)
+zY=(market2$Y - bar_y)/sqrt(S_yy)
+
+market2.Z=data.frame(Y=zY,Z1=z__1, Z2=z__2)
+par(mfrow=c(1,1))
+plot(market2.Z$Y, market2.Z$Z1)
+market2.lm1=lm(Y~Z1, data = market2.Z)
+abline(market2.lm1)
+market2.lm2=lm(Y~Z2, data = market2.Z)
+abline(market2.lm2)
+
+
 
 # lm.beta 패키지를 이용하여 표준화회귀모형 적합
 # install.packages("lm.beta")
@@ -149,21 +162,9 @@ paste0("적합된 회귀식은 hat_Y*=",
        round(market2.beta.summary$coefficients["X1","Standardized"],4), "Z1 + ",
        round(market2.beta.summary$coefficients["X2","Standardized"],4), "Z2 가 된다.")
 
-
+plot()
 # 구간 추정과 가설 검정
 ################################################
 # hat_vector β는 vector β의 불편추정량
-var(Y)
-solve(t(X)%*%X)*var(X)
-
-
-
-choose(365,k) 
-
-n = 365
-r = 5
-lfactorial(n)/lfactorial(n-r)
-
-
 
 
