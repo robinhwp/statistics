@@ -76,10 +76,11 @@ HT[c(3:2),]
 
 e=Y-X%*%beta
 sum(e) # 오차항의 합은 0에 가깝다.
-
 t(X)%*%e # 0.01대(0.02를 안넘는)의 값을 0벡터라고 봐야하나.. 
 
 hat_Y =  beta[1,1] + beta[2,1]*X[,"X1"] + beta[3,1]*X[,"X2"]
+re = market2$Y - hat_y
+var(re)
 sum(hat_Y*e)
 
 X%*%beta
@@ -168,3 +169,20 @@ plot()
 # hat_vector β는 vector β의 불편추정량
 
 
+
+
+
+# matrix
+mI = diag(length(market2$Y))
+mX = as.matrix(cbind(1, market2$X1, market2$X2))
+mY = as.matrix(market2$Y)                
+mHatβ = solve(t(mX)%*%mX)%*%t(mX)%*%mY 
+mHatY = X%*%mHatβ
+mH = mX%*%solve(t(mX)%*%mX)%*%t(mX)
+(mI-mH)%*%mY
+mX = as.matrix(cbind( c(4,5,5), c(3,2,1)))
+mI = diag(length(mX[,1]))
+mH = mX%*%solve(t(mX)%*%mX)%*%t(mX)
+(mI-mH)%*%mX
+mY = as.matrix(cbind( c(1,2,3), c(3,4,2)))
+(mI-mH)%*%mY
