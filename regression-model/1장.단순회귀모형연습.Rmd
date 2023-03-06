@@ -225,3 +225,4 @@ anova(w.lm)
 10**3
 
 ```
+$\hat {time}=0.39646 + 0.11598 \times price$

@@ -17,7 +17,7 @@ paste0("$\\hat{Y}=", round(b0,5), " + ", round(b1,5), "X$")
 (bar_y=mean(market$Y))
 (b1 = sum((market$X - bar_x)*(market$Y-bar_y))/sum((market$X - bar_x)^2))
 (b0=bar_y-b1*bar_x)
-paste0("$\\hat{Y}=", round(b0,5), " + ", round(b1,5), "X$")
+paste("$", "\", "hat{Y}=", round(b0,5), " + ", round(b1,5), "X$")
 
 
 
@@ -253,7 +253,9 @@ super.lm = lm(time ~ price, data=super)
 # summary를 통해서 회귀직선을 적합한다.
 b0=super.lm.summary$coefficients["(Intercept)","Estimate"]
 b1=super.lm.summary$coefficients["price","Estimate"]
-paste0("$\\hat{time}=", round(b0,5), " + ", round(b1,5), " time$")
+paste0("$/hat {", names(super.lm$model)[1],"}=", round(b0,5), " + ", round(b1,5), " \times ", names(super.lm$model)[2], "$")
+
+paste0("$\/hat{time}=", round(b0,5), " + ", round(b1,5), " time$")
 paste0("기울기 t-값=", round(super.lm.summary$coefficients["price","t value"],5))
 paste0("p-값=", round(super.lm.summary$coefficients["price","Pr(>|t|)"],9))
 
@@ -263,7 +265,14 @@ paste0("p-값=", round(super.lm.summary$coefficients["price","Pr(>|t|)"],9))
 (pvalue=super.lm.anova["price", "Pr(>F)"])
 # 잔차및 추정값 보기
 cbind(super, super.lm$residuals, super.lm$fitted.values)
-cbind(super, fitted(super.lm), residuals(super.lm))
+cbind(super, residuals(super.lm), fitted(super.lm))
+cbind(super, resid(super.lm), fitted(super.lm))
+
+confint(super.lm, level = 0.9)
+coef(super.lm)
+formula(super.lm)
+summary(super.lm)
+anova(super.lm)
 #  잔차그림 그리기
 plot(super$price, super.lm$residuals, pch=19)
 abline(h=0, lty=2)
@@ -283,4 +292,6 @@ fpain=factor(pain, levels = 0:3)
 levels(fpain)=c("none", "mild", "medium", "severe")
 as.numeric(fpain)
 as.integer(fpain)
+
+
 
