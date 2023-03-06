@@ -4,6 +4,7 @@
 market=read.table("./data/market-1.txt", header = TRUE)
 #회귀직선을 그리려면 선형회귀모형을 구해야한다.
 market.lm=lm(Y~X, data = market)
+with(market, plot(X, Y, xlab = "광고료", ylab = "매출", main="광고료와 판매액의 산점도도", pch=10))
 plot(market$X, market$Y, xlab = "광고료", ylab = "매출", main="광고료와 판매액의 산점도도", pch=10)
 abline(market.lm)
 market.lm.summary = summary(market.lm)
@@ -245,7 +246,7 @@ n=20
 super = read.table("./data/supermarket.txt", header=T)
 head(super)
 # 산점도를 그려본다.
-plot(super$price, super$time, pch=19)
+with(super, plot(price, time, pch=19))
 #회귀모형적합 및 summary
 super.lm = lm(time ~ price, data=super)
 (super.lm.summary=summary(super.lm))
@@ -262,11 +263,24 @@ paste0("p-값=", round(super.lm.summary$coefficients["price","Pr(>|t|)"],9))
 (pvalue=super.lm.anova["price", "Pr(>F)"])
 # 잔차및 추정값 보기
 cbind(super, super.lm$residuals, super.lm$fitted.values)
+cbind(super, fitted(super.lm), residuals(super.lm))
 #  잔차그림 그리기
 plot(super$price, super.lm$residuals, pch=19)
 abline(h=0, lty=2)
+plot(super.lm$fitted, super.lm$resid, pch=19)
+abline(h=0, lty=2)
+
 #추정값의 신뢰대 그리기
 p.x=data.frame(price=c(1:45))
 pc = predict(super.lm, int="c", newdata=p.x)
 plot(super$price, super$time, ylim=range(super$time, pc))
 matlines(p.x$price, pc, lty = c(1,2,2), col="blue")
+
+
+
+pain=c(0,3,2,2,1)
+fpain=factor(pain, levels = 0:3)
+levels(fpain)=c("none", "mild", "medium", "severe")
+as.numeric(fpain)
+as.integer(fpain)
+
