@@ -17,7 +17,7 @@ paste0("$\\hat{Y}=", round(b0,5), " + ", round(b1,5), "X$")
 (bar_y=mean(market$Y))
 (b1 = sum((market$X - bar_x)*(market$Y-bar_y))/sum((market$X - bar_x)^2))
 (b0=bar_y-b1*bar_x)
-paste("$", "\", "hat{Y}=", round(b0,5), " + ", round(b1,5), "X$")
+paste("$", "hat{Y}=", round(b0,5), " + ", round(b1,5), "X$")
 
 
 
@@ -241,19 +241,75 @@ n=20
 (r = S_xy / (sqrt(S_xx)*sqrt(S_yy)))
 
 
+
+##############################################
 # 분석사례
-# 데이터를 읽는다.
+##############################################
+# 1) 자료만들기
+
+# 2) 자료를 읽어 산점도 그리기
 super = read.table("./data/supermarket.txt", header=T)
 head(super)
-# 산점도를 그려본다.
 with(super, plot(price, time, pch=19))
-#회귀모형적합 및 summary
+
+# 3) 회귀모형 적합하기
 super.lm = lm(time ~ price, data=super)
-(super.lm.summary=summary(super.lm))
+
+# 단순회귀방정식 - 중회귀방정식에서도 사용가능. (chemical.lm$model과 coef(chemical.lm) 함수를 이용)
+str_l = paste0("hat_", names(super.lm$model)[1])
+str_r = paste0( round(coef(super.lm)["(Intercept)"], 3))
+for(i in 2:length(coef(super.lm))) 
+{
+  str_r = paste0( str_r, " + ", round(coef(super.lm)[names(super.lm$model)[i]], 3),
+                  "*", names(super.lm$model)[i])
+}
+paste0("추정된 회귀방정식: ", str_l, " = ", str_r)
+
+# 기울기 검정
+
+# 결정계수
+# f-값
+
+chemical.lm = lm(loss ~ speed+temp, data=chemical)
+summary(chemical.lm)
+
+# 추정된 회귀방정식 (chemical.lm$model과 coef(chemical.lm) 함수를 이용)
+str_l = paste0("hat_", names(chemical.lm$model)[1])
+str_r = paste0( round(coef(chemical.lm)["(Intercept)"], 3))
+for(i in 2:length(coef(chemical.lm))) 
+{
+  str_r = paste0( str_r, " + ", round(coef(chemical.lm)[names(chemical.lm$model)[i]], 3),
+                  "*", names(chemical.lm$model)[i])
+}
+paste0("추정된 회귀방정식: ", str_l, " = ", str_r)
+
+# 결정계수
+chemical.lm.summary=summary(chemical.lm)
+paste0("결정계수 R.squared = ", round(chemical.lm.summary$r.squared, 3), "으로 ",
+       round(chemical.lm.summary$r.squared*100,1), "% 설설명력이 있다.")
+
+# p-value
+α = 0.05
+for(i in 2:length(coef(chemical.lm))) 
+{
+  p.value = round(chemical.lm.summary$coefficients[names(chemical.lm$model)[i], "Pr(>|t|)"], 5)
+  if (p.value < α )
+  {
+    print(paste0( names(chemical.lm$model)[i], "의 p-value 가 ", p.value, "으로서 ", 
+                  names(chemical.lm$model)[1], "를(을) 설명하는데 유의하다"))
+  }
+  else
+  {
+    print(paste0( names(chemical.lm$model)[i], "의 p-value 가 ", p.value, "으로서 ", 
+                  names(chemical.lm$model)[1], "를(을) 설명하는데 그리 큰 영향을 준다고 할 수 없다."))
+  }
+}
+
+#회귀모형적합 및 summary
 # summary를 통해서 회귀직선을 적합한다.
 b0=super.lm.summary$coefficients["(Intercept)","Estimate"]
 b1=super.lm.summary$coefficients["price","Estimate"]
-paste0("$/hat {", names(super.lm$model)[1],"}=", round(b0,5), " + ", round(b1,5), " \times ", names(super.lm$model)[2], "$")
+paste0("$hat_{", names(super.lm$model)[1],"}=", round(b0,5), " + ", round(b1,5), " \times ", names(super.lm$model)[2], "$")
 
 paste0("$\/hat{time}=", round(b0,5), " + ", round(b1,5), " time$")
 paste0("기울기 t-값=", round(super.lm.summary$coefficients["price","t value"],5))
