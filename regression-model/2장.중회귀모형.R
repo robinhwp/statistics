@@ -172,9 +172,17 @@ paste0("적합된 회귀식은 hat_Y*=",
 
 
 
+# 변수추가
+#####################################################
+health = read.table("./data/health.txt", header=T)
+head(health,3)
 
-
-
+h1.lm = lm(Y ~ X1, data=health)
+h2.lm = lm(Y ~ X1+X4, data=health)
+anova(h1.lm, h2.lm)
+anova(h1.lm)
+anova(h2.lm)
+50795 - 24049
 
 # matrix
 mI = diag(length(market2$Y))
