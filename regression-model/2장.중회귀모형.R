@@ -27,6 +27,7 @@ X=cbind(1,X)
 (X=as.matrix(X))
 (Y=as.matrix(Y))
 (XTX=t(X)%*%X)
+solve(XTX)
 (XTY=t(X)%*%Y)
 (beta=round(solve(XTX)%*%XTY,5))
 
@@ -40,6 +41,17 @@ paste0("적합된 회귀식은 hat_Y=", beta[1,1], " + ", beta[2,1],"*", X1, " +
 # 중회귀모형 적합
 ###########################################
 market2.lm = lm(Y~X1+X2, data = market2)
+market2.lm2 = lm(Y~X1, data = market2)
+market2.lm1 = lm(Y~X2+X1, data = market2)
+market2.lm3 = lm(Y~X2, data = market2)
+anova(market2.lm)
+anova(market2.lm2)
+anova(market2.lm1)
+summary(market2.lm)
+summary(market2.lm1)
+summary(market2.lm3)
+
+
 market2.summary = summary(market2.lm)
 #적합된 회귀식은 
 paste0("hat_Y=", 
@@ -275,6 +287,7 @@ AVT["Regression", "F value"] = round(AVT["Regression", "Mean Sq"] / AVT["Residua
 AVT["Regression", "Pr(>F)"] = round(1-pf(AVT["Regression", "F value"], 
                                    AVT["Regression", "Df"], 
                                    AVT["Residuals", "Df"]), 6)
+print(AVT)
 
 # 6) 잔차 산점도 : (독립변수, 잔차)
 par(mfrow=c(1,2), pty="s")
@@ -298,3 +311,75 @@ for (i in 1:length(chemical$temp))
   }
 }
 
+# install.packages("car")
+library(car)
+health = read.table("./data/health.txt", header=T)
+head(health,3)
+h4.lm = lm(Y ~ X1+X2+X3+X4, data=health)
+avPlots(h4.lm)
+plot(health$X1, health$Y)
+
+typeof(health)
+colnames(health)
+
+
+# 테스트
+X1=c(3, 3, 4, 5, 5, 6, 6, 6, 7, 7, 8, 9, 10)
+X2=c(2, 4, 6, 5, 8, 4, 6, 9, 7, 9, 7, 9, 10)
+Y=c(1, 2, 3, 3, 6, 4, 5, 7, 3, 7, 6, 9, 10)
+
+par(mfrow=c(1,2))
+resid.YX1=resid(lm(Y~X1))    
+resid.X2X1=resid(lm(X2~X1))    
+plot(resid.X2X1, resid.YX1)
+lm0 = lm(resid.X2X1~ resid.YX1)
+abline(lm0)
+
+resid.YX2=resid(lm(Y~X2))    
+resid.X1X2=resid(lm(X1~X2))    
+plot(resid.X1X2, resid.YX2)
+lm1 = lm(resid.X1X2~ resid.YX2)
+abline(lm1)
+
+summary(lm0)
+summary(lm1)
+
+
+par(mfrow=c(1,2))
+plot(X1,Y)
+lm.YX1=lm(Y~X1)
+summary(lm.YX1)
+abline(lm.YX1)
+# 추정된회귀식
+paste0("hatY=", round(coef(lm.YX1)["(Intercept)"],4), " + ", 
+                round(coef(lm.YX1)["X1"],4), "*",
+       names(coef(lm.YX1))[2])
+
+plot(X2,Y)
+lm.YX2=lm(Y~X2)
+summary(lm.YX2)
+abline(lm.YX2)
+# 추정된회귀식
+paste0("hatY=", round(coef(lm.YX2)["(Intercept)"],4), " + ", 
+       round(coef(lm.YX2)[2],4), "*",
+       names(coef(lm.YX2))[2])
+
+lm.YX1X2=lm(Y~X1+X2)
+summary(lm.YX1X2)
+paste0("hatY=", round(coef(lm.YX1X2)["(Intercept)"],4), " + ", 
+       round(coef(lm.YX1X2)[2],4), "*",
+       names(coef(lm.YX1X2))[2], " + ",
+       round(coef(lm.YX1X2)[3],4), "*",
+       names(coef(lm.YX1X2))[3])
+
+avPlots(lm.YX1X2)
+
+# 실습코드 : 잔차 e(X1|X2,X3,X4)와 잔차 e(Y|X2,X3,X4)의 산점도도
+health = read.table("./data/health.txt", header=T)
+# head(health,3)
+h4.lm = lm(Y ~ X1+X2+X3+X4, data=health)
+h4.lm.y1 = lm(Y ~ X2+X3+X4, data=health)
+h4.lm.x1 = lm(X1 ~ X2+X3+X4, data=health)
+h4.lm11=lm(resid(h4.lm.y1)~resid(h4.lm.x1))
+plot(resid(h4.lm.x1),resid(h4.lm.y1), xlab="X1 | others", ylab = "Y | others")
+abline(h4.lm11, col="red", lwd=2)
