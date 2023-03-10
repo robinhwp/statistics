@@ -170,9 +170,9 @@ if(abs(t0) > qval)
 }
 
 
-t0 = (β1 - β1)/market.lm.summary$coefficients["X","Std. Error"]
+t0 = (β1 - β10)/market.lm.summary$coefficients["X","Std. Error"]
 # 책에서는 β10 = 0
-t0 = β1 / market.lm.summary$coefficients["X","Std. Error"]
+t0 = β1 / summary(market.lm)$coefficients["X","Std. Error"]
 # 귀무가설을 기각하게 된다.
 
   
