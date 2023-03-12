@@ -383,3 +383,4 @@ h4.lm.x1 = lm(X1 ~ X2+X3+X4, data=health)
 h4.lm11=lm(resid(h4.lm.y1)~resid(h4.lm.x1))
 plot(resid(h4.lm.x1),resid(h4.lm.y1), xlab="X1 | others", ylab = "Y | others")
 abline(h4.lm11, col="red", lwd=2)
+
