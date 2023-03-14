@@ -1,25 +1,65 @@
 
-###################################################
-# 제2장 분석사례(5강강)
-###################################################
-# 1) 자료읽기
-library(xlsx)
+# 추가변수그림
+
+```{r echo=TRUE}
+library(car)
+health = read.table("./data/health.txt", header=T)
+head(health,3)
+h4.lm=lm(Y~X1+X2+X3+X4, data=health)
+avPlots(h4.lm)
+```
+
+```{r echo=TRUE}
+
+# 실습코드 : 잔차 e(X1|X2,X3,X4)와 잔차 e(Y|X2,X3,X4)의 산점도
+h4.lm = lm(Y ~ X1+X2+X3+X4, data=health)
+h4.lm.y1 = lm(Y ~ X2+X3+X4, data=health)
+h4.lm.x1 = lm(X1 ~ X2+X3+X4, data=health)
+h4.lm11=lm(resid(h4.lm.y1)~resid(h4.lm.x1))
+plot(resid(h4.lm.x1),resid(h4.lm.y1), xlab="X1 | others", ylab = "Y | others")
+abline(h4.lm11, col="blue", lwd=2)
+
+```
+
+
+
+# 제2장 분석사례(5강)
+
+## 1) 자료읽기
+
+```{r}
+library(xlsx) 
 chemical=read.xlsx("./data/chemical.xlsx", 1)
 head(chemical)
+```
 
-# 2) 기술통계량 및 상관계수 보기
-summary(chemical[,-1])
+## 2) 기술통계량 및 상관계수 보기
+
+```{r}
+# 자료 요약
+summary(chemical[,-1]) 
+# 상관계수
 cor(chemical[,-1])
+```
 
-# 3) 산점도 그리기
-par(mfrow=c(1,2), pty="s")
+## 3) 산점도 그리기
+
+```{r}
+par(mfrow=c(1,2), pty="s") 
 plot(chemical$speed, chemical$loss, pch=19)
 plot(chemical$temp, chemical$loss, pch=19)
+```
 
-# 4) 회귀모형 적합하기
-chemical.lm = lm(loss ~ speed+temp, data=chemical)
+## 4) 회귀모형 적합하기
+
+```{r}
+chemical.lm = lm(loss ~ speed+temp, data=chemical) 
 summary(chemical.lm)
+```
 
+### 추정된 회귀방정식 1)
+
+```{r}
 # 추정된 회귀방정식 1) (chemical.lm$model과 coef(chemical.lm) 함수를 이용)
 str_l = paste0("hat_", names(chemical.lm$model)[1])
 str_r = paste0( round(coef(chemical.lm)["(Intercept)"], 3))
@@ -29,20 +69,33 @@ for(i in 2:length(coef(chemical.lm)))
                   "*", names(chemical.lm$model)[i])
 }
 paste0("추정된 회귀방정식: ", str_l, " = ", str_r)
+```
 
+### 추정된 회귀방정식 2)
+
+```{r}
 # 추정된 회귀방정식 2) 최소제곱법으로 β를 행렬방정식으로 계산
 mX=as.matrix(cbind(1, chemical$speed, chemical$temp))
 mY=as.matrix(chemical$loss)
 mβ=solve(t(mX)%*%mX)%*%t(mX)%*%mY
-paste0("hat_loss = ", round(mβ, 3)[1], " + ",
+paste0(" 최소제곱법 이용 : hat_loss = ", round(mβ, 3)[1], " + ",
        round(mβ, 3)[2], "*speed + ",
        round(mβ, 3)[3], "*temp")
+```
 
+### 결정계수
+
+```{r}
 # 결정계수
 chemical.lm.summary=summary(chemical.lm)
 paste0("결정계수 R.squared = ", round(chemical.lm.summary$r.squared, 3), "으로 ",
        round(chemical.lm.summary$r.squared*100,1), "% 설설명력이 있다.")
 
+```
+
+### p-value
+
+```{r}
 # p-value
 α = 0.05
 for(i in 2:length(coef(chemical.lm))) 
@@ -59,7 +112,11 @@ for(i in 2:length(coef(chemical.lm)))
                   names(chemical.lm$model)[1], "를(을) 설명하는데 그리 큰 영향을 준다고 할 수 없다."))
   }
 }
+```
 
+## 5) 분산분석표 구하기
+
+```{r}
 # 4) 분산분석표 구하기
 chemical.lm.anova=anova(chemical.lm)
 AVT = matrix(c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), nrow=3)
@@ -82,7 +139,11 @@ AVT["Regression", "Pr(>F)"] = round(1-pf(AVT["Regression", "F value"],
                                          AVT["Regression", "Df"], 
                                          AVT["Residuals", "Df"]), 6)
 print(AVT)
+```
 
+## 6) 잔차 산점도 : (독립변수, 잔차)
+
+```{r}
 # 6) 잔차 산점도 : (독립변수, 잔차)
 par(mfrow=c(1,2), pty="s")
 plot(chemical$speed, chemical.lm$resid, pch=19)
@@ -104,3 +165,4 @@ for (i in 1:length(chemical$temp))
     text(chemical$temp[i]+0.3, chemical.lm$resid[i]-0.3, as.character(i)) 
   }
 }
+```

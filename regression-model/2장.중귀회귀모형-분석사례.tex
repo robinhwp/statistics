@@ -1,0 +1,377 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={regression model chapter 2},
+  pdfauthor={robinhwp},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{regression model chapter 2}
+\author{robinhwp}
+\date{2023-03-14}
+
+\begin{document}
+\maketitle
+
+\hypertarget{uxc81c2uxc7a5-uxbd84uxc11duxc0acuxb8405uxac15}{%
+\section{제2장
+분석사례(5강)}\label{uxc81c2uxc7a5-uxbd84uxc11duxc0acuxb8405uxac15}}
+
+\hypertarget{uxc790uxb8ccuxc77duxae30}{%
+\subsection{1) 자료읽기}\label{uxc790uxb8ccuxc77duxae30}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(xlsx) }
+\NormalTok{chemical}\OtherTok{=}\FunctionTok{read.xlsx}\NormalTok{(}\StringTok{"./data/chemical.xlsx"}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\FunctionTok{head}\NormalTok{(chemical)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   id speed temp loss
+## 1  1    70   20   15
+## 2  2    80   27   42
+## 3  3    75   25   37
+## 4  4    62   24   28
+## 5  5    65   23   20
+## 6  6    58   18   14
+\end{verbatim}
+
+\hypertarget{uxae30uxc220uxd1b5uxacc4uxb7c9-uxbc0f-uxc0c1uxad00uxacc4uxc218-uxbcf4uxae30}{%
+\subsection{2) 기술통계량 및 상관계수
+보기}\label{uxae30uxc220uxd1b5uxacc4uxb7c9-uxbc0f-uxc0c1uxad00uxacc4uxc218-uxbcf4uxae30}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 자료 요약}
+\FunctionTok{summary}\NormalTok{(chemical[,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      speed           temp            loss      
+##  Min.   :50.0   Min.   :17.00   Min.   : 8.00  
+##  1st Qu.:57.5   1st Qu.:19.50   1st Qu.:13.75  
+##  Median :61.0   Median :20.50   Median :16.50  
+##  Mean   :63.0   Mean   :21.50   Mean   :20.25  
+##  3rd Qu.:70.5   3rd Qu.:24.25   3rd Qu.:24.25  
+##  Max.   :80.0   Max.   :27.00   Max.   :42.00
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 상관계수}
+\FunctionTok{cor}\NormalTok{(chemical[,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           speed      temp      loss
+## speed 1.0000000 0.8023847 0.8548423
+## temp  0.8023847 1.0000000 0.8953498
+## loss  0.8548423 0.8953498 1.0000000
+\end{verbatim}
+
+\hypertarget{uxc0b0uxc810uxb3c4-uxadf8uxb9acuxae30}{%
+\subsection{3) 산점도
+그리기}\label{uxc0b0uxc810uxb3c4-uxadf8uxb9acuxae30}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{), }\AttributeTok{pty=}\StringTok{"s"}\NormalTok{) }
+\FunctionTok{plot}\NormalTok{(chemical}\SpecialCharTok{$}\NormalTok{speed, chemical}\SpecialCharTok{$}\NormalTok{loss, }\AttributeTok{pch=}\DecValTok{19}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(chemical}\SpecialCharTok{$}\NormalTok{temp, chemical}\SpecialCharTok{$}\NormalTok{loss, }\AttributeTok{pch=}\DecValTok{19}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{2장.중귀회귀모형-분석사례_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\hypertarget{uxd68cuxadc0uxbaa8uxd615-uxc801uxd569uxd558uxae30}{%
+\subsection{4) 회귀모형
+적합하기}\label{uxd68cuxadc0uxbaa8uxd615-uxc801uxd569uxd558uxae30}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{chemical.lm }\OtherTok{=} \FunctionTok{lm}\NormalTok{(loss }\SpecialCharTok{\textasciitilde{}}\NormalTok{ speed}\SpecialCharTok{+}\NormalTok{temp, }\AttributeTok{data=}\NormalTok{chemical) }
+\FunctionTok{summary}\NormalTok{(chemical.lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = loss ~ speed + temp, data = chemical)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -7.7699 -2.4093  0.2795  3.4019  4.9654 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -47.6243     9.4580  -5.035 0.000704 ***
+## speed         0.4216     0.2350   1.794 0.106360    
+## temp          1.9217     0.6977   2.754 0.022316 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 4.465 on 9 degrees of freedom
+## Multiple R-squared:  0.8539, Adjusted R-squared:  0.8214 
+## F-statistic:  26.3 on 2 and 9 DF,  p-value: 0.0001741
+\end{verbatim}
+
+\hypertarget{uxcd94uxc815uxb41c-uxd68cuxadc0uxbc29uxc815uxc2dd-1}{%
+\subsubsection{추정된 회귀방정식
+1)}\label{uxcd94uxc815uxb41c-uxd68cuxadc0uxbc29uxc815uxc2dd-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 추정된 회귀방정식 1) (chemical.lm$model과 coef(chemical.lm) 함수를 이용)}
+\NormalTok{str\_l }\OtherTok{=} \FunctionTok{paste0}\NormalTok{(}\StringTok{"hat\_"}\NormalTok{, }\FunctionTok{names}\NormalTok{(chemical.lm}\SpecialCharTok{$}\NormalTok{model)[}\DecValTok{1}\NormalTok{])}
+\NormalTok{str\_r }\OtherTok{=} \FunctionTok{paste0}\NormalTok{( }\FunctionTok{round}\NormalTok{(}\FunctionTok{coef}\NormalTok{(chemical.lm)[}\StringTok{"(Intercept)"}\NormalTok{], }\DecValTok{3}\NormalTok{))}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{2}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(}\FunctionTok{coef}\NormalTok{(chemical.lm))) }
+\NormalTok{\{}
+\NormalTok{  str\_r }\OtherTok{=} \FunctionTok{paste0}\NormalTok{( str\_r, }\StringTok{" + "}\NormalTok{, }\FunctionTok{round}\NormalTok{(}\FunctionTok{coef}\NormalTok{(chemical.lm)[}\FunctionTok{names}\NormalTok{(chemical.lm}\SpecialCharTok{$}\NormalTok{model)[i]], }\DecValTok{3}\NormalTok{),}
+                  \StringTok{"*"}\NormalTok{, }\FunctionTok{names}\NormalTok{(chemical.lm}\SpecialCharTok{$}\NormalTok{model)[i])}
+\NormalTok{\}}
+\FunctionTok{paste0}\NormalTok{(}\StringTok{"추정된 회귀방정식: "}\NormalTok{, str\_l, }\StringTok{" = "}\NormalTok{, str\_r)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "추정된 회귀방정식: hat_loss = -47.624 + 0.422*speed + 1.922*temp"
+\end{verbatim}
+
+\hypertarget{uxcd94uxc815uxb41c-uxd68cuxadc0uxbc29uxc815uxc2dd-2}{%
+\subsubsection{추정된 회귀방정식
+2)}\label{uxcd94uxc815uxb41c-uxd68cuxadc0uxbc29uxc815uxc2dd-2}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 추정된 회귀방정식 2) 최소제곱법으로 β를 행렬방정식으로 계산}
+\NormalTok{mX}\OtherTok{=}\FunctionTok{as.matrix}\NormalTok{(}\FunctionTok{cbind}\NormalTok{(}\DecValTok{1}\NormalTok{, chemical}\SpecialCharTok{$}\NormalTok{speed, chemical}\SpecialCharTok{$}\NormalTok{temp))}
+\NormalTok{mY}\OtherTok{=}\FunctionTok{as.matrix}\NormalTok{(chemical}\SpecialCharTok{$}\NormalTok{loss)}
+\NormalTok{mβ}\OtherTok{=}\FunctionTok{solve}\NormalTok{(}\FunctionTok{t}\NormalTok{(mX)}\SpecialCharTok{\%*\%}\NormalTok{mX)}\SpecialCharTok{\%*\%}\FunctionTok{t}\NormalTok{(mX)}\SpecialCharTok{\%*\%}\NormalTok{mY}
+\FunctionTok{paste0}\NormalTok{(}\StringTok{" 최소제곱법 이용 : hat\_loss = "}\NormalTok{, }\FunctionTok{round}\NormalTok{(mβ, }\DecValTok{3}\NormalTok{)[}\DecValTok{1}\NormalTok{], }\StringTok{" + "}\NormalTok{,}
+       \FunctionTok{round}\NormalTok{(mβ, }\DecValTok{3}\NormalTok{)[}\DecValTok{2}\NormalTok{], }\StringTok{"*speed + "}\NormalTok{,}
+       \FunctionTok{round}\NormalTok{(mβ, }\DecValTok{3}\NormalTok{)[}\DecValTok{3}\NormalTok{], }\StringTok{"*temp"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] " 최소제곱법 이용 : hat_loss = -47.624 + 0.422*speed + 1.922*temp"
+\end{verbatim}
+
+\hypertarget{uxacb0uxc815uxacc4uxc218}{%
+\subsubsection{결정계수}\label{uxacb0uxc815uxacc4uxc218}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 결정계수}
+\NormalTok{chemical.lm.summary}\OtherTok{=}\FunctionTok{summary}\NormalTok{(chemical.lm)}
+\FunctionTok{paste0}\NormalTok{(}\StringTok{"결정계수 R.squared = "}\NormalTok{, }\FunctionTok{round}\NormalTok{(chemical.lm.summary}\SpecialCharTok{$}\NormalTok{r.squared, }\DecValTok{3}\NormalTok{), }\StringTok{"으로 "}\NormalTok{,}
+       \FunctionTok{round}\NormalTok{(chemical.lm.summary}\SpecialCharTok{$}\NormalTok{r.squared}\SpecialCharTok{*}\DecValTok{100}\NormalTok{,}\DecValTok{1}\NormalTok{), }\StringTok{"\% 설설명력이 있다."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "결정계수 R.squared = 0.854으로 85.4% 설설명력이 있다."
+\end{verbatim}
+
+\hypertarget{p-value}{%
+\subsubsection{p-value}\label{p-value}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# p{-}value}
+\NormalTok{α }\OtherTok{=} \FloatTok{0.05}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{2}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(}\FunctionTok{coef}\NormalTok{(chemical.lm))) }
+\NormalTok{\{}
+\NormalTok{  p.value }\OtherTok{=} \FunctionTok{round}\NormalTok{(chemical.lm.summary}\SpecialCharTok{$}\NormalTok{coefficients[}\FunctionTok{names}\NormalTok{(chemical.lm}\SpecialCharTok{$}\NormalTok{model)[i], }\StringTok{"Pr(\textgreater{}|t|)"}\NormalTok{], }\DecValTok{5}\NormalTok{)}
+  \ControlFlowTok{if}\NormalTok{ (p.value }\SpecialCharTok{\textless{}}\NormalTok{ α )}
+\NormalTok{  \{}
+    \FunctionTok{print}\NormalTok{(}\FunctionTok{paste0}\NormalTok{( }\FunctionTok{names}\NormalTok{(chemical.lm}\SpecialCharTok{$}\NormalTok{model)[i], }\StringTok{"의 p{-}value 가 "}\NormalTok{, p.value, }\StringTok{"으로서 "}\NormalTok{, }
+                  \FunctionTok{names}\NormalTok{(chemical.lm}\SpecialCharTok{$}\NormalTok{model)[}\DecValTok{1}\NormalTok{], }\StringTok{"를(을) 설명하는데 유의하다"}\NormalTok{))}
+\NormalTok{  \}}
+  \ControlFlowTok{else}
+\NormalTok{  \{}
+    \FunctionTok{print}\NormalTok{(}\FunctionTok{paste0}\NormalTok{( }\FunctionTok{names}\NormalTok{(chemical.lm}\SpecialCharTok{$}\NormalTok{model)[i], }\StringTok{"의 p{-}value 가 "}\NormalTok{, p.value, }\StringTok{"으로서 "}\NormalTok{, }
+                  \FunctionTok{names}\NormalTok{(chemical.lm}\SpecialCharTok{$}\NormalTok{model)[}\DecValTok{1}\NormalTok{], }\StringTok{"를(을) 설명하는데 그리 큰 영향을 준다고 할 수 없다."}\NormalTok{))}
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "speed의 p-value 가 0.10636으로서 loss를(을) 설명하는데 그리 큰 영향을 준다고 할 수 없다."
+## [1] "temp의 p-value 가 0.02232으로서 loss를(을) 설명하는데 유의하다"
+\end{verbatim}
+
+\hypertarget{uxbd84uxc0b0uxbd84uxc11duxd45c-uxad6cuxd558uxae30}{%
+\subsection{5) 분산분석표
+구하기}\label{uxbd84uxc0b0uxbd84uxc11duxd45c-uxad6cuxd558uxae30}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 4) 분산분석표 구하기}
+\NormalTok{chemical.lm.anova}\OtherTok{=}\FunctionTok{anova}\NormalTok{(chemical.lm)}
+\NormalTok{AVT }\OtherTok{=} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{), }\AttributeTok{nrow=}\DecValTok{3}\NormalTok{)}
+\FunctionTok{colnames}\NormalTok{(AVT)}\OtherTok{=}\FunctionTok{colnames}\NormalTok{(chemical.lm.anova)}
+\FunctionTok{rownames}\NormalTok{(AVT)}\OtherTok{=}\FunctionTok{c}\NormalTok{(}\StringTok{"Regression"}\NormalTok{, }\StringTok{"Residuals"}\NormalTok{, }\StringTok{"Total"}\NormalTok{)}
+
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{(}\FunctionTok{length}\NormalTok{(}\FunctionTok{rownames}\NormalTok{(AVT))}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{))}
+\NormalTok{\{}
+\NormalTok{  AVT[}\StringTok{"Regression"}\NormalTok{, }\StringTok{"Df"}\NormalTok{]}\OtherTok{=}\NormalTok{AVT[}\StringTok{"Regression"}\NormalTok{, }\StringTok{"Df"}\NormalTok{]}\SpecialCharTok{+}\FunctionTok{as.double}\NormalTok{(chemical.lm.anova[i,}\StringTok{"Df"}\NormalTok{])}
+\NormalTok{  AVT[}\StringTok{"Regression"}\NormalTok{, }\StringTok{"Sum Sq"}\NormalTok{]}\OtherTok{=}\NormalTok{AVT[}\StringTok{"Regression"}\NormalTok{, }\StringTok{"Sum Sq"}\NormalTok{]}\SpecialCharTok{+}\FunctionTok{as.double}\NormalTok{(chemical.lm.anova[i,}\StringTok{"Sum Sq"}\NormalTok{])}
+\NormalTok{\}}
+\NormalTok{AVT[}\StringTok{"Residuals"}\NormalTok{, }\StringTok{"Df"}\NormalTok{]}\OtherTok{=}\FunctionTok{as.double}\NormalTok{(chemical.lm.anova[}\StringTok{"Residuals"}\NormalTok{,}\StringTok{"Df"}\NormalTok{])}
+\NormalTok{AVT[}\StringTok{"Residuals"}\NormalTok{, }\StringTok{"Sum Sq"}\NormalTok{]}\OtherTok{=}\FunctionTok{as.double}\NormalTok{(chemical.lm.anova[}\StringTok{"Residuals"}\NormalTok{,}\StringTok{"Sum Sq"}\NormalTok{])}
+\NormalTok{AVT[}\StringTok{"Total"}\NormalTok{, }\StringTok{"Df"}\NormalTok{]}\OtherTok{=}\NormalTok{AVT[}\StringTok{"Regression"}\NormalTok{, }\StringTok{"Df"}\NormalTok{]}\SpecialCharTok{+}\NormalTok{AVT[}\StringTok{"Residuals"}\NormalTok{, }\StringTok{"Df"}\NormalTok{]}
+\NormalTok{AVT[}\StringTok{"Total"}\NormalTok{, }\StringTok{"Sum Sq"}\NormalTok{]}\OtherTok{=}\NormalTok{AVT[}\StringTok{"Regression"}\NormalTok{, }\StringTok{"Sum Sq"}\NormalTok{]}\SpecialCharTok{+}\NormalTok{AVT[}\StringTok{"Residuals"}\NormalTok{, }\StringTok{"Sum Sq"}\NormalTok{]}
+\NormalTok{AVT[}\StringTok{"Regression"}\NormalTok{, }\StringTok{"Mean Sq"}\NormalTok{] }\OtherTok{=}\NormalTok{ AVT[}\StringTok{"Regression"}\NormalTok{, }\StringTok{"Sum Sq"}\NormalTok{] }\SpecialCharTok{/}\NormalTok{ AVT[}\StringTok{"Regression"}\NormalTok{, }\StringTok{"Df"}\NormalTok{]}
+\NormalTok{AVT[}\StringTok{"Residuals"}\NormalTok{, }\StringTok{"Mean Sq"}\NormalTok{] }\OtherTok{=}\NormalTok{ AVT[}\StringTok{"Residuals"}\NormalTok{, }\StringTok{"Sum Sq"}\NormalTok{] }\SpecialCharTok{/}\NormalTok{ AVT[}\StringTok{"Residuals"}\NormalTok{, }\StringTok{"Df"}\NormalTok{]}
+\NormalTok{AVT[}\StringTok{"Regression"}\NormalTok{, }\StringTok{"F value"}\NormalTok{] }\OtherTok{=} \FunctionTok{round}\NormalTok{(AVT[}\StringTok{"Regression"}\NormalTok{, }\StringTok{"Mean Sq"}\NormalTok{] }\SpecialCharTok{/}\NormalTok{ AVT[}\StringTok{"Residuals"}\NormalTok{, }\StringTok{"Mean Sq"}\NormalTok{], }\DecValTok{1}\NormalTok{)}
+\NormalTok{AVT[}\StringTok{"Regression"}\NormalTok{, }\StringTok{"Pr(\textgreater{}F)"}\NormalTok{] }\OtherTok{=} \FunctionTok{round}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\FunctionTok{pf}\NormalTok{(AVT[}\StringTok{"Regression"}\NormalTok{, }\StringTok{"F value"}\NormalTok{], }
+\NormalTok{                                         AVT[}\StringTok{"Regression"}\NormalTok{, }\StringTok{"Df"}\NormalTok{], }
+\NormalTok{                                         AVT[}\StringTok{"Residuals"}\NormalTok{, }\StringTok{"Df"}\NormalTok{]), }\DecValTok{6}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(AVT)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            Df    Sum Sq   Mean Sq F value   Pr(>F)
+## Regression  2 1048.8114 524.40571    26.3 0.000174
+## Residuals   9  179.4386  19.93762     0.0 0.000000
+## Total      11 1228.2500   0.00000     0.0 0.000000
+\end{verbatim}
+
+\hypertarget{uxc794uxcc28-uxc0b0uxc810uxb3c4-uxb3c5uxb9bduxbcc0uxc218-uxc794uxcc28}{%
+\subsection{6) 잔차 산점도 : (독립변수,
+잔차)}\label{uxc794uxcc28-uxc0b0uxc810uxb3c4-uxb3c5uxb9bduxbcc0uxc218-uxc794uxcc28}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 6) 잔차 산점도 : (독립변수, 잔차)}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{), }\AttributeTok{pty=}\StringTok{"s"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(chemical}\SpecialCharTok{$}\NormalTok{speed, chemical.lm}\SpecialCharTok{$}\NormalTok{resid, }\AttributeTok{pch=}\DecValTok{19}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h=}\DecValTok{0}\NormalTok{, }\AttributeTok{lty=}\DecValTok{2}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(chemical}\SpecialCharTok{$}\NormalTok{speed))}
+\NormalTok{\{}
+  \ControlFlowTok{if}\NormalTok{(}\FunctionTok{abs}\NormalTok{(chemical.lm}\SpecialCharTok{$}\NormalTok{resid[i]) }\SpecialCharTok{\textgreater{}} \FloatTok{3.7}\NormalTok{)}
+\NormalTok{  \{}
+    \FunctionTok{text}\NormalTok{(chemical}\SpecialCharTok{$}\NormalTok{speed[i]}\SpecialCharTok{+}\FloatTok{0.3}\NormalTok{, chemical.lm}\SpecialCharTok{$}\NormalTok{resid[i]}\SpecialCharTok{{-}}\FloatTok{0.4}\NormalTok{, }\FunctionTok{as.character}\NormalTok{(i))}
+\NormalTok{  \}}
+\NormalTok{\}}
+
+\FunctionTok{plot}\NormalTok{(chemical}\SpecialCharTok{$}\NormalTok{temp, chemical.lm}\SpecialCharTok{$}\NormalTok{resid, }\AttributeTok{pch=}\DecValTok{19}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h=}\DecValTok{0}\NormalTok{, }\AttributeTok{lty=}\DecValTok{2}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(chemical}\SpecialCharTok{$}\NormalTok{temp))}
+\NormalTok{\{}
+  \ControlFlowTok{if}\NormalTok{(}\FunctionTok{abs}\NormalTok{(chemical.lm}\SpecialCharTok{$}\NormalTok{resid[i]) }\SpecialCharTok{\textgreater{}} \FloatTok{3.7}\NormalTok{)}
+\NormalTok{  \{}
+    \FunctionTok{text}\NormalTok{(chemical}\SpecialCharTok{$}\NormalTok{temp[i]}\SpecialCharTok{+}\FloatTok{0.3}\NormalTok{, chemical.lm}\SpecialCharTok{$}\NormalTok{resid[i]}\SpecialCharTok{{-}}\FloatTok{0.3}\NormalTok{, }\FunctionTok{as.character}\NormalTok{(i)) }
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{2장.중귀회귀모형-분석사례_files/figure-latex/unnamed-chunk-10-1.pdf}
+
+\end{document}
