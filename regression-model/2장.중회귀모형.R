@@ -90,7 +90,7 @@ e=Y-X%*%beta
 sum(e) # 오차항의 합은 0에 가깝다.
 t(X)%*%e # 0.01대(0.02를 안넘는)의 값을 0벡터라고 봐야하나.. 
 
-hat_Y =  beta[1,1] + beta[2,1]*X[,"X1"] + beta[3,1]*X[,"X2"]
+hat_y =  beta[1,1] + beta[2,1]*X[,"X1"] + beta[3,1]*X[,"X2"]
 re = market2$Y - hat_y
 var(re)
 sum(hat_Y*e)
@@ -155,6 +155,8 @@ par(mfrow=c(1,1))
 plot(market2.Z$Y, market2.Z$Z1)
 market2.lm1=lm(Y~Z1, data = market2.Z)
 abline(market2.lm1)
+
+# 
 market2.lm2=lm(Y~Z2, data = market2.Z)
 abline(market2.lm2)
 
@@ -210,6 +212,7 @@ mH = mX%*%solve(t(mX)%*%mX)%*%t(mX)
 (mI-mH)%*%mX
 mY = as.matrix(cbind( c(1,2,3), c(3,4,2)))
 (mI-mH)%*%mY
+
 
 
 
@@ -383,4 +386,25 @@ h4.lm.x1 = lm(X1 ~ X2+X3+X4, data=health)
 h4.lm11=lm(resid(h4.lm.y1)~resid(h4.lm.x1))
 plot(resid(h4.lm.x1),resid(h4.lm.y1), xlab="X1 | others", ylab = "Y | others")
 abline(h4.lm11, col="red", lwd=2)
+
+
+
+# 잔차검토
+par(mfrow=c(2,2))
+market=read.table("./data/market-1.txt", header = TRUE)
+market.lm=lm(Y~X, data = market)
+with(market, plot(X, Y, xlab = "광고료", ylab = "매출", main="광고료와 판매액의 산점도도", pch=10))
+abline(market.lm, col="blue")
+
+e = market$Y - fitted(market.lm)
+plot(fitted(market.lm), e, ylim=c(-10, 10))
+abline(h=0, col="red")
+ffY = fitted(market.lm) - coef(market.lm)["(Intercept)"]
+e = market$Y - ffY
+plot(ffY, e, ylim=c(-10, 10))
+abline(h=0, col="red")
+ffY = fitted(market.lm) - 5
+e = market$Y - ffY
+plot(ffY, e, ylim=c(-10, 10))
+abline(h=0, col="red")
 
