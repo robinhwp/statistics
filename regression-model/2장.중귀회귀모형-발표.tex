@@ -1,0 +1,458 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={presentation},
+  pdfauthor={robinhwp},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{presentation}
+\author{robinhwp}
+\date{2023-03-22}
+
+\begin{document}
+\maketitle
+
+\hypertarget{uxac15.-uxc81c2uxc7a5-uxc911uxd68cuxadc0uxbaa8uxd615-2}{%
+\section{5강. 제2장
+중회귀모형-2}\label{uxac15.-uxc81c2uxc7a5-uxc911uxd68cuxadc0uxbaa8uxd615-2}}
+
+\hypertarget{uxd45cuxc900uxd654uxb41c-uxc911uxd68cuxadc0uxbd84uxc11d}{%
+\subsection{1. 표준화된
+중회귀분석}\label{uxd45cuxc900uxd654uxb41c-uxc911uxd68cuxadc0uxbd84uxc11d}}
+
+\begin{itemize}
+\tightlist
+\item
+  종속변수와 독립변수의 표준화 정규분포의 표준화변환 (통개학개론
+  p103)에서 \(Z = { X - \mu \over \sigma }\) 식으로 변환하여 정규분포
+  \(N(0, 1)\)을 따르게 되는 것처럼 변수의 표준화로
+  회귀계수(\(\hat{\alpha}_i\))의 단위가 통일되어 비교가 가능해지게 된다.
+
+  \begin{itemize}
+  \item
+    하지만 이 비교를 가지고 너무 단정적으로 결론을 내리는데는 주의하여야
+    한다.
+  \item
+    \(\begin{aligned} Y_i^* = {Y_i - \bar{Y} \over \sqrt{S_{YY}}} \end{aligned}\),
+    \(\begin{aligned} Z_{ij} = {X_{ij} - \bar{X_j} \over \sqrt{S_{jj}}} \end{aligned}\)
+
+    \begin{itemize}
+    \tightlist
+    \item
+      \(S_{YY}=\sum(Y_i-\bar{Y})^2\)
+    \item
+      \(S_{jj}=\sum_i (X_{ij} - \bar{X_j})^2\)
+    \item
+      \(\bar{X_j}\): \(j\)번째 독립변수의 평균값
+    \end{itemize}
+  \item
+    \(\begin{aligned} \sum_{i} Z_{i\color{indianred}{j}} = 0, \sum_{i} (Z_{i\color{indianred}{j}})^2 = 1, (j=1,2,\cdots, k) \end{aligned}\)
+  \item
+    \(\sum Y_i^*=0, \sum(Y_i^*)^2=1\)
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{uxbcc0uxc218-uxd45cuxc900uxd654}{%
+\subsubsection{변수 표준화}\label{uxbcc0uxc218-uxd45cuxc900uxd654}}
+
+\begin{itemize}
+\tightlist
+\item
+  표준화된 변수(standardized variables)의 중회귀모형
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(Y_i^*=\alpha_1 Z_{i1} + \alpha_2 Z_{i2} + \cdots + \alpha_k Z_{ik} + \varepsilon_i'\)
+  \item
+    표준화된 중회귀모형은 \(Y\)의 절편이 \(0\) 이 되는 특징이 있다
+  \end{itemize}
+\item
+  표준화된 중회귀모형 추정하면
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(\hat{Y}_i^*=\hat{\alpha}_1 Z_{i1} + \hat{\alpha}_2 Z_{i2} + \cdots + \hat{\alpha}_k Z_{ik}\)
+    \(\alpha_i\)의 절대값이 크면 클수록 독립변수 \(X_i\)가 \(Y_i\)에
+    주는 영향이 크게 된다.
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{uxcd94uxc815uxacfc-uxac80uxc815}{%
+\subsection{2. 추정과 검정}\label{uxcd94uxc815uxacfc-uxac80uxc815}}
+
+\hypertarget{uxcd94uxc815uxb41c-uxd68cuxadc0uxacc4uxc218uxc758-uxbd84uxc0b0}{%
+\subsubsection{추정된 회귀계수의
+분산}\label{uxcd94uxc815uxb41c-uxd68cuxadc0uxacc4uxc218uxc758-uxbd84uxc0b0}}
+
+\begin{itemize}
+\item
+  회귀계수벡터
+  \(\boldsymbol{\beta}'=(\beta_0,\beta_1,\beta_2,\cdots,\beta_k)\)의
+  \(\boldsymbol{\beta}\)의 추정량 \(\boldsymbol{\hat{\beta}}\)\\
+  \(\color{blue}{E(\boldsymbol{\hat{\beta}}) = \boldsymbol{\beta}}\)
+
+  \(\begin{aligned} E(\boldsymbol{\hat{\beta}}) &= E[(\boldsymbol{X'X})^{-1}\boldsymbol{X'Y}] \\&=(\boldsymbol{X'X})^{-1}\boldsymbol{X'}E(\boldsymbol{Y}) \\&= (\boldsymbol{X'X})^{-1}\boldsymbol{X'X\beta} \\&=\boldsymbol{\beta} \end{aligned}\)
+
+  \(\boldsymbol{\hat{\beta}}\)는 \(\boldsymbol{\beta}\)의 불편추정량
+\item
+  \(\boldsymbol{\hat{\beta}}\)의 분산-공분산 행렬은\\
+  \(\color{blue} {Var(\boldsymbol{\hat{\beta}})= (\boldsymbol{X'X})^{-1}\sigma^2}\)\\
+  \(\begin{aligned} Var(\boldsymbol{\hat{\beta}}) &=Var[(\boldsymbol{X'X})^{-1}\boldsymbol{X'Y}] \\&=(\boldsymbol{X'X})^{-1}\boldsymbol{X'}Var[\boldsymbol{Y}][(\boldsymbol{X'X})^{-1}\boldsymbol{X'}]' \\&=(\boldsymbol{X'X})^{-1}\boldsymbol{X'}[\boldsymbol{I}\sigma^2]\boldsymbol{X}(\boldsymbol{X'X})^{-1} \\&=(\boldsymbol{X'X})^{-1}\boldsymbol{X'}\boldsymbol{X}(\boldsymbol{X'X})^{-1}\sigma^2 \\&=(\boldsymbol{X'X})^{-1}\sigma^2 \end{aligned}\)
+\end{itemize}
+
+그런데 \(Var(\boldsymbol{\hat{\beta}})\)는 벡터
+\(\boldsymbol{\hat{\beta}}\)의 구성원들 간의 분산과 공분산을 나타내는
+행렬로서 \((\boldsymbol{X’X})^{-1}\)행렬의 구성원을\\
+\(c_{ij}(i,j=0,1,2,\cdots, k)\)라 하면 다음과 같이 쓸수 있다.
+
+\begin{itemize}
+\tightlist
+\item
+  \(Var(\hat{\beta}_i)=c_{ii}\sigma^2, (i = 0, 1, 2, \cdots, k)\)
+\item
+  \(Cov(\hat{\beta}_i, \hat{\beta}_j)=c_{ij}\sigma^2, (i \ne j)\)
+\end{itemize}
+
+만약 우리가 특별히 관심 있는 독립변수 \(X_i\)라면 \(b_i\)의 분산이
+작게되는 회귀방정식이 요구될 것이며,\\
+\(c_{ii}\)의 값이 크지 않도록 계획행렬(design matrix)
+\(\boldsymbol{X}\)를 설계해 줄 필요가 있을 것이다.\\
+\(\boldsymbol{X}\) 행렬의 설계에 따라서
+\(Var(\boldsymbol{\hat{\beta}})\)가 크게 달라지기 때문이다.
+
+\hypertarget{eyuxc758-uxad6cuxac04uxcd94uxc815}{%
+\subsubsection{\texorpdfstring{\(E(Y)\)의
+구간추정}{E(Y)의 구간추정}}\label{eyuxc758-uxad6cuxac04uxcd94uxc815}}
+
+\begin{itemize}
+\tightlist
+\item
+  독립변수들의 임의의 값 (\(x_1, x_2, \cdots, x_k\))에서
+  \(E(\boldsymbol{Y})\)의 구간추정
+\end{itemize}
+
+\(\hat{Y} \pm t(n-k-1;\alpha/2)\sqrt{\boldsymbol{x'}(\boldsymbol{X'X})^{-1}\boldsymbol{x}\cdot MSE}\)
+
+\(\begin{aligned}\boldsymbol{\hat{Y}}&=\hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\beta}_2 x_2 + \cdots + \hat{\beta}_k x_k \\&= \begin{pmatrix} 1, x_1,x_2,\cdots,x_k \end{pmatrix} \begin{pmatrix} \hat{\beta}_0 \\ \hat{\beta}_1 \\ \hat{\beta}_2 \\ \vdots \\ \hat{\beta}_k \end{pmatrix} \\&= \boldsymbol{x'\hat{\beta}}\end{aligned}\)
+
+⇒
+\(\begin{aligned} Var(\hat{Y})&=Var(\boldsymbol{x'\hat{\beta}})=\boldsymbol{x'}Var(\boldsymbol{\hat{\beta}})\boldsymbol{x} \\&=\boldsymbol{x}'(\boldsymbol{X'X})^{-1}\boldsymbol{x}\sigma^2 \end{aligned}\)
+
+⇒ \(E(Y)\)의 \(100(1-\alpha)\)\% 신뢰구간\\
+\(\color{blue}{\hat{Y} \pm t(n-k-1;\alpha/2)\sqrt{\boldsymbol{x'}(\boldsymbol{X'X})^{-1}\boldsymbol{x}\cdot MSE}}\)
+
+\hypertarget{uxd68cuxadc0uxacc4uxc218-beta_iuxc758-uxac00uxc124-uxbc0f-uxac80uxc815uxd1b5uxacc4uxb7c9}{%
+\subsubsection{\texorpdfstring{회귀계수 \(\beta_i\)의 가설 및
+검정통계량}{회귀계수 \textbackslash beta\_i의 가설 및 검정통계량}}\label{uxd68cuxadc0uxacc4uxc218-beta_iuxc758-uxac00uxc124-uxbc0f-uxac80uxc815uxd1b5uxacc4uxb7c9}}
+
+\begin{itemize}
+\tightlist
+\item
+  가설
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(H_0 : \beta_i = \beta_{i0}\)
+  \item
+    \(H_1 : \beta_i \ne \beta_{i0}\)
+  \end{itemize}
+\item
+  검정통계량
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(\begin{aligned} t_0={b_i - \beta_{i0} \over \sqrt{c_{ii}\cdot MSE}} \end{aligned}\),
+    \(c_{ii}\) 는
+    \(Var(\boldsymbol{\hat{\beta}})= (\boldsymbol{X'X})^{-1}\sigma^2\)의
+    대각선 값
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{uxc77cuxbc18uxc801-uxbaa8uxd615uxbe44uxad50}{%
+\subsubsection{일반적
+모형비교}\label{uxc77cuxbc18uxc801-uxbaa8uxd615uxbe44uxad50}}
+
+\begin{itemize}
+\item
+  두 모형의 비교는 \texttt{완전모형}과 \texttt{축소모형}의 잔차제곱합의
+  차이를 이용함 두 모형을 비교하기위한 검정통계량은
+  \(\begin{aligned} F_0 = {MSR \over MSE} \end{aligned}\) 을 사용한다.
+
+  \texttt{완전모형} : 데이터에 잘 적합되리라고 고려되는 모형 (
+  \(Y_i = \beta_0 + \beta_1 X_i + \varepsilon_i\) )
+
+  \begin{itemize}
+  \tightlist
+  \item
+    완전모형의 경우의 잔차제곱합
+
+    \begin{itemize}
+    \tightlist
+    \item
+      \(\hat{Y}=b_0 + b_1X\)
+    \item
+      \(SSE(F)=\sum [Y_i-(b_0 + b_1 X_i)]^2 = \sum (Y_i - \hat{Y}_i)^2 = SSE\)
+    \end{itemize}
+  \end{itemize}
+
+  \texttt{축소모형} : 귀무가설 \(H_0 : \beta_1 = 0\) 의 가정하에서의
+  모형 ( \(Y_i = \beta_0 + \varepsilon_i\) )
+
+  \begin{itemize}
+  \item
+    축소모형의 경우 잔차제곱합 ( \(\beta_1 = 0\) 이라고 가정 )
+
+    \begin{itemize}
+    \tightlist
+    \item
+      \(\hat{Y}=b_0\)
+    \item
+      \(SSE(R)=\sum (Y_i-b_0)^2 = \sum (Y_i - \bar{Y})^2 = SST\)
+    \end{itemize}
+  \item
+    두 모형을 비교하기위한 검정통계량
+
+    \begin{itemize}
+    \tightlist
+    \item
+      \(\begin{aligned} F_0 = {MSR \over MSE} \end{aligned}\)\\
+      \(\begin{aligned} F_0 = {{[SSE(R)-SSE(F)] \over df_R - df_F} \over {SSE(F) \\over df_F}} &\Rightarrow {{[SST-SSE] \over (n-1) - (n-2)} \over {SSE \\over n-2}} \\&= {{SSR} \over {SSE \\over n-2}} = {MSR \over MSE} \end{aligned}\)
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{uxbcc0uxc218uxcd94uxac00}{%
+\subsection{3. 변수추가}\label{uxbcc0uxc218uxcd94uxac00}}
+
+\hypertarget{uxcd94uxac00uxc81cuxacf1uxd569}{%
+\subsubsection{추가제곱합}\label{uxcd94uxac00uxc81cuxacf1uxd569}}
+
+\begin{itemize}
+\tightlist
+\item
+  중회귀모형을 적합하는데 있어서 어떤 특정한 변수를 회귀모형에
+  포함시키는 것이 바람직한가를 결정하고 싶은 경우
+
+  \begin{itemize}
+  \tightlist
+  \item
+    이 변수를 포함시키지 않고 구한 회귀제곱합보다 이 변수를 포함시키고
+    구한 회귀제곱합(regression sum of squares )이 추가적으로 어느 정도
+    커졌는가를 검토. 이와 같은 경우에 추가적으로 증가된 제곱합을
+    추가제곱합(extra sum of squares)이라고 함.
+  \item
+    추가제곱합은 새로운 변수가 모형에 추가될 때의 회귀제곱합의 증가분을
+    나타내는 것으로서 이 값이 작을수록 회귀에 대한 기여도가 떨어진다는
+    것을 의미.
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{uxcd94uxac00uxbcc0uxc218uxadf8uxb9bcadded-variable-plot}{%
+\subsubsection{추가변수그림(added variable
+plot)}\label{uxcd94uxac00uxbcc0uxc218uxadf8uxb9bcadded-variable-plot}}
+
+\begin{itemize}
+\item
+  중회귀모형에서 새로운 변수선택은 기존의 모형이 설명하지 못하는 부분을
+  새로운 변수가 들어옴으로써 추가설명력이 얼마나 유의한 가에 따라 결정
+
+  \begin{itemize}
+  \tightlist
+  \item
+    새로운 변수의 효과를 그래프로 표현할 수 있는데, 이러한 그래프 중의
+    하나가 추가변수그림(added variable plot)임. 이를 편회귀그림(partial
+    regression plot)이라고도 함.
+  \end{itemize}
+\item
+  추가변수 그림 그리는 절차
+
+  \begin{itemize}
+  \tightlist
+  \item
+    독립변수가 2개인 회귀모형에서 변수 \(X_2\)의 추가변수그림을 그리는
+    절차
+
+    \begin{itemize}
+    \tightlist
+    \item
+      \(Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \varepsilon\)
+    \end{itemize}
+  \end{itemize}
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    \(Y\)를 \(X_1\)으로 회귀한 후 얻어지는 잔차, \(e(Y|X_1)\)을 구한다.
+  \item
+    \(X_2\)를 \(X_1\)으로 회귀한 후 얻어지는 잔차, \(e(X_2|X_1)\)을
+    구한다.
+  \item
+    앞에서 구한 두 잔차에서 \(x\)-축을 \(e(X_2|X_1)\), \(y\)-축을
+    \(e(Y|X_1)\)으로 한 산점도를 추가변수 그림이라 함.
+  \end{enumerate}
+
+  → 추가변수그림이 선형관계가 있으면 변수 \(X_2\)는 추가적인 설명력이
+  있다고 판단.
+
+  위의 방식대로 강의에 있는 추가변수그림 첫번째 그래프를 그려보는 테스트
+  코드.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 실습코드 : 잔차 e(X1|X2,X3,X4)와 잔차 e(Y|X2,X3,X4)의 산점도}
+\NormalTok{health }\OtherTok{=} \FunctionTok{read.table}\NormalTok{(}\StringTok{"./data/health.txt"}\NormalTok{, }\AttributeTok{header=}\NormalTok{T)}
+\CommentTok{\# head(health,3)}
+\NormalTok{h4.lm }\OtherTok{=} \FunctionTok{lm}\NormalTok{(Y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ X1}\SpecialCharTok{+}\NormalTok{X2}\SpecialCharTok{+}\NormalTok{X3}\SpecialCharTok{+}\NormalTok{X4, }\AttributeTok{data=}\NormalTok{health)}
+\NormalTok{h4.lm.y1 }\OtherTok{=} \FunctionTok{lm}\NormalTok{(Y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ X2}\SpecialCharTok{+}\NormalTok{X3}\SpecialCharTok{+}\NormalTok{X4, }\AttributeTok{data=}\NormalTok{health)}
+\NormalTok{h4.lm.x1 }\OtherTok{=} \FunctionTok{lm}\NormalTok{(X1 }\SpecialCharTok{\textasciitilde{}}\NormalTok{ X2}\SpecialCharTok{+}\NormalTok{X3}\SpecialCharTok{+}\NormalTok{X4, }\AttributeTok{data=}\NormalTok{health)}
+\NormalTok{h4.lm11}\OtherTok{=}\FunctionTok{lm}\NormalTok{(}\FunctionTok{resid}\NormalTok{(h4.lm.y1)}\SpecialCharTok{\textasciitilde{}}\FunctionTok{resid}\NormalTok{(h4.lm.x1))}
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{resid}\NormalTok{(h4.lm.x1),}\FunctionTok{resid}\NormalTok{(h4.lm.y1), }\AttributeTok{xlab=}\StringTok{"X1 | others"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Y | others"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(h4.lm11, }\AttributeTok{col=}\StringTok{"red"}\NormalTok{, }\AttributeTok{lwd=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\end{itemize}
+
+\hypertarget{uxc794uxcc28uxac80uxd1a0-uxbc0f-uxbd84uxc11d-uxc0acuxb840}{%
+\subsection{4. 잔차검토 및 분석
+사례}\label{uxc794uxcc28uxac80uxd1a0-uxbc0f-uxbd84uxc11d-uxc0acuxb840}}
+
+\hypertarget{uxc794uxcc28uxc758-uxac80uxd1a0}{%
+\subsubsection{잔차의 검토}\label{uxc794uxcc28uxc758-uxac80uxd1a0}}
+
+\includegraphics{5강 제2장 중회귀모형-2 8bcef66ab07b4fd6b163768d59a06c84/Untitled.png}
+
+\textbf{잔차(}\(e_i\))를 \(\hat{Y}_i\)에 대한 산점도를 그렸을때,
+
+ⓐ 가정에 아무런 모순이 없는것으로 판정된다.
+
+ⓑ 분산이 일정하지 않으며, 가중회귀(weighted regression)를 쓰거나 또는
+\(Y_i\)를 변환시켜 회귀분석함이 바람직하다.
+
+ⓒ 절편이 필요한 모형인데 절편을 사용하지 않았을 경우에 생길 수 있는
+형태이다.
+
+ⓓ 모형이 타당하지 않다. 추가적으로 독립변수의 제곱항이 필요하다. 또는
+\(Y_i\)의 적절한 변환이 필요하다.
+
+\textbf{잔차(}\(e_i\))를 독립변수 \(X_{ij}, j= 1,2,...,k\) 에 대한
+산점도를 그렸을때
+
+ⓐ 가정에 아무런 모순이 없는 경우로 사용된 중회귀모형이 적절한다.
+
+ⓑ 분산이 일정하지 않으며, 가중회귀(weighted regression)를 쓰거나 또는
+\(Y_i\)를 변환시켜 회귀분석함이 바람직하다.
+
+ⓒ 중회귀분석 과정에서 계산상에 착오가 있는 경우이다. \(X_{ij}\)의
+선형효과가 적절히 취급되지 않았다, 즉 \(X_{ij}\)항을 빠뜨려서 계산했거나
+계산상에 실수가 있다.
+
+ⓓ 필요한 독립변수의 항들이 포함되어 있지 않다. 특히 필요한 제곱항이
+빠졌을 경우에 발생한다.
+
+\hypertarget{section}{%
+\subsubsection{}\label{section}}
+
+\end{document}

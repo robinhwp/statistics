@@ -3,7 +3,7 @@ title: "중회귀모형(mutiple linear regression models)"
 output: html_document
 ---
 
-### 중회귀모형
+## 중회귀모형
 
 중선형회귀모형(multiple linear regression models)를 간단히 중회귀모형(multiple regression models)이라고도 함.\
 독립변수의 수가 k개인 중회귀모형\
@@ -55,7 +55,7 @@ $\hat{B}=(X'X)^{-1}X'Y = \begin{pmatrix} 0.850 \\ 1.558 \\ 0.427\end{pmatrix}$\
 적합된 선형회귀식\
 $\begin{aligned} \hat{Y} &= \hat{\beta_0} + \hat{\beta_1}X_1 + \hat{\beta_2}X_2 \\ &= 0.850 + 1.558X_1 + 0.427X_2 \end{aligned}$
 
-**적합된 회귀식의 검정**\
+### 적합된 회귀식의 검정
 
 ```{r}
 market2 = read.table("./data/market-2.txt", header = T); head(market2, 3)
@@ -67,7 +67,7 @@ summary(market2.lm)
 결정계수: $R^2 = 0.9799$\
 F-통계량=2.292.5이고, 유의확율 $p-값=06.567\times 10^{-11}$로서 적합된 중회귀모형이 이 데이터를 설명하는데 유의함. (이는 귀무가설 $H_0:\beta_1=\beta_2=0$이 기각되므로 $\beta_1$과 $\beta_2$가 동시에 0이되지 않을 것이라는 의미임)
 
-**분산분석표**\
+#### 분산분석표
 
 ```{r}
 anova(market2.lm)
@@ -75,7 +75,9 @@ anova(market2.lm)
 
 중회귀모형의 분산분석 결과 해석\
 $SS(X1)=485.57$\
-$SS(X2|X1)=22.30$  여기서 $SS(X2|X1)$는 변수 $X1$이 적합된 후, 변수 $X2$가 추가되었을 때의 추가제곱합을 의미, 회귀제곱합 $SS(X1, X2)=SS(X1) + SS(X2|X1)$\
+$SS(X2|X1)=22.30$ 여기서 $SS(X2|X1)$는 변수 $X1$이 적합된 후, 변수 $X2$가 추가되었을 때의 추가제곱합을 의미, 회귀제곱합 $SS(X1, X2)=SS(X1) + SS(X2|X1)$\
+\
+분산분석표의 X1과 X2의 값은 다른 분산분석표가 나온다. $SS(X2)=411.56$ 과 $SS(X1|X2)=96.31$가 되어 다른 값을 갖게 된다.
 
 \
 **분산분석표**\
@@ -87,6 +89,8 @@ $SS(X2|X1)=22.30$  여기서 $SS(X2|X1)$는 변수 $X1$이 적합된 후, 변�
 |  계  |   14   | 518.29 |          |       |           |
 
 평균제곱 = 제곱합 / 자유도 = 507.87 / 2 = 253.94\
+
+중회귀모형의 적합식에서 적합할때의 X1과 X2의 순서를 다르게 하면\
 
 ```{r}
 names(market2.lm)
