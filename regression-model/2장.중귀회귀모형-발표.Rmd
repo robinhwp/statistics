@@ -48,6 +48,31 @@ knitr::opts_chunk$set(echo = TRUE)
         $\alpha_i$의 절대값이 크면 클수록 독립변수 $X_i$가 $Y_i$에 주는 영향이
         크게 된다.
 
+```{r}
+ # install.packages("lm.beta")
+library(lm.beta)
+market2.lm = lm(Y ~ X1+X2, data=market2)
+market2.beta = lm.beta(market2.lm)
+print(market2.beta)
+```
+표준화 공식을 이용해서 표준화 해보면
+```{r}
+S_yy=sum((market2$Y-mean(market2$Y))^2)
+S_11=sum((market2$X1-mean(market2$X1))^2)
+S_22=sum((market2$X2-mean(market2$X2))^2)
+Y=(market2$Y-mean(market2$Y))/sqrt(S_yy)
+Z1 = (market2$X1-mean(market2$X1))/sqrt(S_11)
+Z2 = (market2$X2-mean(market2$X2))/sqrt(S_22)
+market2.std.lm=lm(Y~Z1+Z2)
+summary(market2.std.lm)
+```
+```{r}
+# 소수점 자리를 맞춰서 출력해보면 동일함을 알 수 있다.
+round(coef(market2.std.lm), 7)
+```
+
+
+
 ## 2. 추정과 검정
 
 ### 추정된 회귀계수의 분산
