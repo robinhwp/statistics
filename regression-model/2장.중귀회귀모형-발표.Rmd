@@ -48,14 +48,21 @@ knitr::opts_chunk$set(echo = TRUE)
         $\alpha_i$의 절대값이 크면 클수록 독립변수 $X_i$가 $Y_i$에 주는 영향이
         크게 된다.
 
+```{r include=FALSE}
+# 테스트를 위한 데이터 로드
+market2=read.table("./data/market-2.txt", header = T)
+```
+
 ```{r}
- # install.packages("lm.beta")
+# install.packages("lm.beta")
 library(lm.beta)
 market2.lm = lm(Y ~ X1+X2, data=market2)
 market2.beta = lm.beta(market2.lm)
 print(market2.beta)
 ```
+
 표준화 공식을 이용해서 표준화 해보면
+
 ```{r}
 S_yy=sum((market2$Y-mean(market2$Y))^2)
 S_11=sum((market2$X1-mean(market2$X1))^2)
@@ -66,12 +73,11 @@ Z2 = (market2$X2-mean(market2$X2))/sqrt(S_22)
 market2.std.lm=lm(Y~Z1+Z2)
 summary(market2.std.lm)
 ```
+
 ```{r}
 # 소수점 자리를 맞춰서 출력해보면 동일함을 알 수 있다.
 round(coef(market2.std.lm), 7)
 ```
-
-
 
 ## 2. 추정과 검정
 
@@ -119,6 +125,76 @@ $\begin{aligned} Var(\hat{Y})&=Var(\boldsymbol{x'\hat{\beta}})=\boldsymbol{x'}Va
 
 ⇒ $E(Y)$의 $100(1-\alpha)$% 신뢰구간\
 $\color{blue}{\hat{Y} \pm t(n-k-1;\alpha/2)\sqrt{\boldsymbol{x'}(\boldsymbol{X'X})^{-1}\boldsymbol{x}\cdot MSE}}$
+
+```{r}
+# 1 : 95% 신뢰구간
+pred.x = data.frame(X1=10, X2=10)
+(pc = predict(market2.lm, int="c", newdata=pred.x))
+```
+
+```{r}
+df = 15 -1 -2
+tv=qt(1-0.05/2,12)
+X=market2[,2:3]
+X=cbind(1,X)
+Y=market2[,4]
+X=as.matrix(X)
+Y=as.matrix(Y)
+XTX=t(X)%*%X
+XTXI=solve(XTX)
+XTY=t(X)%*%Y
+beta=XTXI%*%XTY
+MSE = anova(market2.lm)["Residuals", "Mean Sq"]
+
+xx=matrix(c(1,10,10), nrow = 3, ncol = 1)
+hY=t(xx)%*%beta
+val=tv*sqrt(t(xx)%*%XTXI%*%xx * MSE )
+c(fit=hY, lwr=hY-val, upr=hY+val)
+
+```
+
+```{r}
+
+# βi 의 95% 신뢰구간
+# XTXI의 대각선 * MSE를 이용하여 신뢰구간을 구한다.
+lwr = beta
+upr = beta
+for( i in 1:length(beta))
+{
+  (lwr[i] = beta[i] - tv * sqrt(XTXI[i,i] * MSE))
+  (upr[i] = beta[i] + tv * sqrt(XTXI[i,i] * MSE))
+}
+intβ=cbind(beta, lwr, upr)
+colnames(intβ)=c("β", "lwr", "upr")
+print(intβ)
+
+```
+
+```{r}
+# 1 : 99% 신뢰구간
+pred.x = data.frame(X1=10, X2=10)
+(pc99 = predict(market2.lm, int="c", level = 0.99, newdata=pred.x))
+```
+
+```{r}
+
+pred.x = data.frame(X1=10, X2=10)
+(pc99 = predict(market2.lm, int="p", level = 0.99, newdata=pred.x))
+```
+
+```{r}
+# 회귀계수 검정
+summary(market2.lm)
+```
+
+```{r}
+coefs = summary(market2.lm)$coefficients
+paste("['X1', 'Estimate']/['X1', 'Std. Error']) =", coefs['X1', 'Estimate']/coefs['X1', 'Std. Error'])
+paste("['X1', 't value'] =",coefs["X1", "t value"])
+
+paste("X1의 유의확률 p-값 =", coefs["X1", "Pr(>|t|)"])
+paste("X2의 유의확률 p-값 =", coefs["X2", "Pr(>|t|)"])
+```
 
 ### 회귀계수 $\beta_i$의 가설 및 검정통계량
 
@@ -171,6 +247,16 @@ $\color{blue}{\hat{Y} \pm t(n-k-1;\alpha/2)\sqrt{\boldsymbol{x'}(\boldsymbol{X'X
         나타내는 것으로서 이 값이 작을수록 회귀에 대한 기여도가 떨어진다는 것을
         의미.
 
+```{r}
+health = read.table("./data/health.txt", header=T)
+(n = length(health[,1])) # 자료의 case가 몇개인지 저장
+h1.lm = lm(Y ~ X1, data=health)
+h2.lm = lm(Y ~ X1+X4, data=health)
+anova(h1.lm, h2.lm)
+anova(h1.lm)
+anova(h2.lm)
+```
+
 ### 추가변수그림(added variable plot)
 
 -   중회귀모형에서 새로운 변수선택은 기존의 모형이 설명하지 못하는 부분을 새로운
@@ -195,17 +281,24 @@ $\color{blue}{\hat{Y} \pm t(n-k-1;\alpha/2)\sqrt{\boldsymbol{x'}(\boldsymbol{X'X
 
     위의 방식대로 강의에 있는 추가변수그림 첫번째 그래프를 그려보는 테스트 코드.
 
-    ``` r
-    # 실습코드 : 잔차 e(X1|X2,X3,X4)와 잔차 e(Y|X2,X3,X4)의 산점도
-    health = read.table("./data/health.txt", header=T)
-    # head(health,3)
-    h4.lm = lm(Y ~ X1+X2+X3+X4, data=health)
-    h4.lm.y1 = lm(Y ~ X2+X3+X4, data=health)
-    h4.lm.x1 = lm(X1 ~ X2+X3+X4, data=health)
-    h4.lm11=lm(resid(h4.lm.y1)~resid(h4.lm.x1))
-    plot(resid(h4.lm.x1),resid(h4.lm.y1), xlab="X1 | others", ylab = "Y | others")
-    abline(h4.lm11, col="red", lwd=2)
-    ```
+```{r}
+# 실습코드 : 잔차 e(X1|X2,X3,X4)와 잔차 e(Y|X2,X3,X4)의 산점도
+health = read.table("./data/health.txt", header=T)
+# head(health,3)
+h4.lm = lm(Y ~ X1+X2+X3+X4, data=health)
+h4.lm.y1 = lm(Y ~ X2+X3+X4, data=health)
+h4.lm.x1 = lm(X1 ~ X2+X3+X4, data=health)
+h4.lm11=lm(resid(h4.lm.y1)~resid(h4.lm.x1))
+plot(resid(h4.lm.x1),resid(h4.lm.y1), xlab="X1 | others", ylab = "Y | others")
+abline(h4.lm11, col="red", lwd=2)
+```
+
+```{r}
+library(car)
+h4.lm = lm(Y ~ X1+X2+X3+X4, data=health)
+avPlots(h4.lm)
+
+```
 
 ## 4. 잔차검토 및 분석 사례
 

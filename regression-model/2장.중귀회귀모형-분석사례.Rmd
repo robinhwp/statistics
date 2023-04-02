@@ -2,31 +2,9 @@
 ---
 ---
 
-# 추가변수그림
-
-```{r echo=TRUE}
-library(car)
-health = read.table("./data/health.txt", header=T)
-head(health,3)
-h4.lm=lm(Y~X1+X2+X3+X4, data=health)
-avPlots(h4.lm)
-```
-
-```{r echo=TRUE}
-
-# 실습코드 : 잔차 e(X1|X2,X3,X4)와 잔차 e(Y|X2,X3,X4)의 산점도
-h4.lm = lm(Y ~ X1+X2+X3+X4, data=health)
-h4.lm.y1 = lm(Y ~ X2+X3+X4, data=health)
-h4.lm.x1 = lm(X1 ~ X2+X3+X4, data=health)
-h4.lm11=lm(resid(h4.lm.y1)~resid(h4.lm.x1))
-plot(resid(h4.lm.x1),resid(h4.lm.y1), xlab="X1 | others", ylab = "Y | others")
-abline(h4.lm11, col="blue", lwd=2)
-
-```
-
 # 제2장 분석사례(5강)
 
-회귀분석 절차 소개 회귀분석 절차는 크게 4가지로 아래와 같습니다.
+회귀분석 절차 소개 - 회귀분석 절차는 크게 4가지로 아래와 같습니다.
 
 +-------------------------------+-----------------------------------------------------------------------------------+
 | 절차                          | 내용                                                                              |
@@ -83,28 +61,14 @@ plot(chemical$speed, chemical$loss, pch=19)
 plot(chemical$temp, chemical$loss, pch=19)
 ```
 
-## 4) 회귀모형 적합하기
+## 4) 회귀모형 적합하기 - ②
 
 ```{r}
 chemical.lm = lm(loss ~ speed+temp, data=chemical) 
 summary(chemical.lm)
 ```
 
-변수 순서에 따라 영향력이 다른가? (차이는 없다)
-
-```{r}
-chemical.lm = lm(loss ~ temp+speed, data=chemical) 
-summary(chemical.lm)
-```
-
-추가변수 그림
-
-```{r}
-library(car)
-avPlots(chemical.lm)
-```
-
-### 추정된 회귀방정식 1)
+### 추정된 회귀방정식 1) - ②
 
 ```{r}
 # 추정된 회귀방정식 1) (chemical.lm$model과 coef(chemical.lm) 함수를 이용)
@@ -118,7 +82,7 @@ for(i in 2:length(coef(chemical.lm)))
 paste0("추정된 회귀방정식: ", str_l, " = ", str_r)
 ```
 
-### 추정된 회귀방정식 2)
+### 추정된 회귀방정식 2) - ②
 
 ```{r}
 # 추정된 회귀방정식 2) 최소제곱법으로 β를 행렬방정식으로 계산
@@ -130,7 +94,7 @@ paste0(" 최소제곱법 이용 : hat_loss = ", round(mβ, 3)[1], " + ",
        round(mβ, 3)[3], "*temp")
 ```
 
-### 결정계수
+### 결정계수 - ②
 
 ```{r}
 # 결정계수
@@ -139,7 +103,7 @@ paste0("결정계수 R.squared = ", round(summary(chemical.lm)$r.squared, 3), "�
 
 ```
 
-### p-value
+### p-value - ②
 
 ```{r}
 # p-value
@@ -160,7 +124,19 @@ for(i in 2:length(coef(chemical.lm)))
 }
 ```
 
-## 5) 분산분석표 구하기
+## 5) 분산분석표 구하기 - ②
+
+```{r}
+# 설명변수가 적합되는 순서에 따른 분산분석표 - speed+temp
+anova(lm(loss ~ speed+temp, data=chemical) )
+```
+
+```{r}
+# 설명변수가 적합되는 순서에 따른 분산분석표 - temp+speed
+anova(lm(loss ~ temp+speed, data=chemical) )
+```
+
+위에서 설명변수의 순서와 상관없이 잔차의 제곱합 및 잔차제곱의 평균값은 변동이 없으나 회귀계수는 순서에 따라 값이 변경된다.
 
 ```{r}
 # 4) 분산분석표 구하기 ( p83 분산분석표 만들기 )
@@ -191,23 +167,23 @@ print(AVT)
 ```{r}
 # 6) 잔차 산점도 : (독립변수, 잔차)
 par(mfrow=c(1,2), pty="s")
-plot(chemical$speed, chemical.lm$resid, pch=19)
+plot(chemical$speed, chemical.lm$resid, pch=19, ylim = c(-max(chemical.lm$resid)*2, max(chemical.lm$resid)*2))
 abline(h=0, lty=2)
 for (i in 1:length(chemical$speed))
 {
   if(abs(chemical.lm$resid[i]) > 3.7)
   {
-    text(chemical$speed[i]+0.3, chemical.lm$resid[i]-0.4, as.character(i))
+    text(chemical$speed[i]+0.8, chemical.lm$resid[i]-0.5, as.character(i))
   }
 }
 
-plot(chemical$temp, chemical.lm$resid, pch=19)
+plot(chemical$temp, chemical.lm$resid, pch=19,ylim = c(-max(chemical.lm$resid)*2, max(chemical.lm$resid)*2))
 abline(h=0, lty=2)
 for (i in 1:length(chemical$temp))
 {
   if(abs(chemical.lm$resid[i]) > 3.7)
   {
-    text(chemical$temp[i]+0.3, chemical.lm$resid[i]-0.3, as.character(i)) 
+    text(chemical$temp[i]+0.4, chemical.lm$resid[i]-0.4, as.character(i)) 
   }
 }
 ```
@@ -215,7 +191,7 @@ for (i in 1:length(chemical$temp))
 ## 6) 잔차 산점도 -2 : (추정값, 잔차)
 
 ```{r}
-plot(chemical.lm$fitted, chemical.lm$resid)
+plot(chemical.lm$fitted, chemical.lm$resid, ylim = c(-max(chemical.lm$resid)*2, max(chemical.lm$resid)*2))
 abline(h=0, lty=2)
 for (i in 1:length(chemical$temp))
 {

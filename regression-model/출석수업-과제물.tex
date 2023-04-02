@@ -1,0 +1,1448 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{kotex}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\author{}
+\date{\vspace{-2.5em}2023-04-02}
+
+\begin{document}
+
+\hypertarget{uxb144-1uxd559uxae30-uxd68cuxadc0uxbaa8uxd615-uxcd9cuxc11duxc218uxc5c5-uxacfcuxc81cuxbb3c}{%
+\subsection{2023년 1학기 회귀모형 출석수업
+과제물}\label{uxb144-1uxd559uxae30-uxd68cuxadc0uxbaa8uxd615-uxcd9cuxc11duxc218uxc5c5-uxacfcuxc81cuxbb3c}}
+
+\hypertarget{uxbc88.-uxc5f0uxc2b5uxbb38uxc81c-1uxc7a5-1uxbc88p.-39-uxc790uxb8ccuxb97c-uxc774uxc6a9uxd558uxc5ec-1.7-uxbd84uxc11duxc0acuxb840uxc640-uxac19uxc774-uxbd84uxc11duxd558uxace0-uxc124uxba85uxd558uxc2dcuxc624.}{%
+\subsubsection{１번. 연습문제 1장 1번(p.~39) 자료를 이용하여 1.7
+분석사례와 같이 분석하고,
+설명하시오.}\label{uxbc88.-uxc5f0uxc2b5uxbb38uxc81c-1uxc7a5-1uxbc88p.-39-uxc790uxb8ccuxb97c-uxc774uxc6a9uxd558uxc5ec-1.7-uxbd84uxc11duxc0acuxb840uxc640-uxac19uxc774-uxbd84uxc11duxd558uxace0-uxc124uxba85uxd558uxc2dcuxc624.}}
+
+\hypertarget{uxad50uxc7acuxc758-uxb370uxc774uxd130-uxc785uxb825-uxbc0f-uxd655uxc778}{%
+\paragraph{1) 교재의 데이터 입력 및
+확인}\label{uxad50uxc7acuxc758-uxb370uxc774uxd130-uxc785uxb825-uxbc0f-uxd655uxc778}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 교재의 데이터 입력 및 확인}
+\NormalTok{X }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{9}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{6}\NormalTok{)}
+\NormalTok{Y }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{39}\NormalTok{, }\DecValTok{24}\NormalTok{, }\DecValTok{115}\NormalTok{, }\DecValTok{105}\NormalTok{, }\DecValTok{50}\NormalTok{, }\DecValTok{86}\NormalTok{, }\DecValTok{67}\NormalTok{, }\DecValTok{90}\NormalTok{, }\DecValTok{140}\NormalTok{, }\DecValTok{112}\NormalTok{, }\DecValTok{70}\NormalTok{, }\DecValTok{186}\NormalTok{, }\DecValTok{43}\NormalTok{, }\DecValTok{126}\NormalTok{)}
+\CommentTok{\# X, Y 두 변수의 마지막 3개의 값을 확인}
+\FunctionTok{tail}\NormalTok{(}\FunctionTok{cbind}\NormalTok{(X, Y), }\DecValTok{3}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       X   Y
+## [12,] 7 186
+## [13,] 2  43
+## [14,] 6 126
+\end{verbatim}
+
+\hypertarget{uxc0b0uxc810uxb3c4uxb97c-uxadf8uxb824uxbcf8uxb2e4.}{%
+\paragraph{2) 산점도를
+그려본다.}\label{uxc0b0uxc810uxb3c4uxb97c-uxadf8uxb824uxbcf8uxb2e4.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 산점도를 그린다.}
+\FunctionTok{plot}\NormalTok{(X, Y, }\AttributeTok{pch=}\DecValTok{19}\NormalTok{, }\AttributeTok{main=}\StringTok{"기계의 사용연도와 정비비용의 산점도"}\NormalTok{, }
+     \AttributeTok{xlab =} \StringTok{"사용연도 (단위:년)"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"정비비용 (단위:1000원)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <b8>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <b3>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <9d>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <82>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <ac>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <9a>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <a9>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <97>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <8f>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <99>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <80>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <95>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <b9>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <b9>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <9a>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <a9>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <9d>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <82>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <90>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <8f>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '기계의 사용연도와 정비비용의
+## 산점도' in 'mbcsToSbcs': dot substituted for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도 (단위:년)' in
+## 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도 (단위:년)' in
+## 'mbcsToSbcs': dot substituted for <82>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도 (단위:년)' in
+## 'mbcsToSbcs': dot substituted for <ac>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도 (단위:년)' in
+## 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도 (단위:년)' in
+## 'mbcsToSbcs': dot substituted for <9a>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도 (단위:년)' in
+## 'mbcsToSbcs': dot substituted for <a9>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도 (단위:년)' in
+## 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도 (단위:년)' in
+## 'mbcsToSbcs': dot substituted for <97>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도 (단위:년)' in
+## 'mbcsToSbcs': dot substituted for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도 (단위:년)' in
+## 'mbcsToSbcs': dot substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도 (단위:년)' in
+## 'mbcsToSbcs': dot substituted for <8f>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도 (단위:년)' in
+## 'mbcsToSbcs': dot substituted for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도 (단위:년)' in
+## 'mbcsToSbcs': dot substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도 (단위:년)' in
+## 'mbcsToSbcs': dot substituted for <8b>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도 (단위:년)' in
+## 'mbcsToSbcs': dot substituted for <a8>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도 (단위:년)' in
+## 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도 (단위:년)' in
+## 'mbcsToSbcs': dot substituted for <9c>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도 (단위:년)' in
+## 'mbcsToSbcs': dot substituted for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도 (단위:년)' in
+## 'mbcsToSbcs': dot substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도 (단위:년)' in
+## 'mbcsToSbcs': dot substituted for <85>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도 (단위:년)' in
+## 'mbcsToSbcs': dot substituted for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용 (단위:1000원)' in
+## 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용 (단위:1000원)' in
+## 'mbcsToSbcs': dot substituted for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용 (단위:1000원)' in
+## 'mbcsToSbcs': dot substituted for <95>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용 (단위:1000원)' in
+## 'mbcsToSbcs': dot substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용 (단위:1000원)' in
+## 'mbcsToSbcs': dot substituted for <b9>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용 (단위:1000원)' in
+## 'mbcsToSbcs': dot substituted for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용 (단위:1000원)' in
+## 'mbcsToSbcs': dot substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용 (단위:1000원)' in
+## 'mbcsToSbcs': dot substituted for <b9>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용 (단위:1000원)' in
+## 'mbcsToSbcs': dot substituted for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용 (단위:1000원)' in
+## 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용 (단위:1000원)' in
+## 'mbcsToSbcs': dot substituted for <9a>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용 (단위:1000원)' in
+## 'mbcsToSbcs': dot substituted for <a9>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용 (단위:1000원)' in
+## 'mbcsToSbcs': dot substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용 (단위:1000원)' in
+## 'mbcsToSbcs': dot substituted for <8b>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용 (단위:1000원)' in
+## 'mbcsToSbcs': dot substituted for <a8>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용 (단위:1000원)' in
+## 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용 (단위:1000원)' in
+## 'mbcsToSbcs': dot substituted for <9c>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용 (단위:1000원)' in
+## 'mbcsToSbcs': dot substituted for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용 (단위:1000원)' in
+## 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용 (단위:1000원)' in
+## 'mbcsToSbcs': dot substituted for <9b>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용 (단위:1000원)' in
+## 'mbcsToSbcs': dot substituted for <90>
+\end{verbatim}
+
+\includegraphics{출석수업-과제물_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+\hypertarget{uxd68cuxadc0uxbaa8uxd615-uxc801uxd569-uxbc0f-uxc694uxc57d-uxc815uxbcf4-uxd655uxc778}{%
+\paragraph{3) 회귀모형 적합 및 요약 정보
+확인}\label{uxd68cuxadc0uxbaa8uxd615-uxc801uxd569-uxbc0f-uxc694uxc57d-uxc815uxbcf4-uxd655uxc778}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 회귀모형 적합 및 요약 정보 확인}
+\NormalTok{machine.lm }\OtherTok{=} \FunctionTok{lm}\NormalTok{(Y}\SpecialCharTok{\textasciitilde{}}\NormalTok{X)}
+\FunctionTok{summary}\NormalTok{(machine.lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Y ~ X)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -33.204 -20.383  -4.748  13.957  61.433 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)   29.107     15.969   1.823 0.093341 .  
+## X             13.637      3.149   4.330 0.000978 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 29.11 on 12 degrees of freedom
+## Multiple R-squared:  0.6098, Adjusted R-squared:  0.5773 
+## F-statistic: 18.75 on 1 and 12 DF,  p-value: 0.0009779
+\end{verbatim}
+
+\hypertarget{uxbd84uxc0b0uxbd84uxc11duxd45c-uxd655uxc778}{%
+\paragraph{4) 분산분석표
+확인}\label{uxbd84uxc0b0uxbd84uxc11duxd45c-uxd655uxc778}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{anova}\NormalTok{(machine.lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: Y
+##           Df Sum Sq Mean Sq F value    Pr(>F)    
+## X          1  15887 15887.2  18.753 0.0009779 ***
+## Residuals 12  10166   847.2                      
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\hypertarget{uxc794uxcc28uxc640-uxcd94uxc815uxac12-uxbcf4uxae30}{%
+\paragraph{5) 잔차와 추정값
+보기}\label{uxc794uxcc28uxc640-uxcd94uxc815uxac12-uxbcf4uxae30}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 회귀모형 적합 결과(machine.lm)의 변수 확인}
+\FunctionTok{names}\NormalTok{(machine.lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "coefficients"  "residuals"     "effects"       "rank"         
+##  [5] "fitted.values" "assign"        "qr"            "df.residual"  
+##  [9] "xlevels"       "call"          "terms"         "model"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# X와 Y와 잔차 및 추정값을 합쳐서 보기}
+\FunctionTok{cbind}\NormalTok{(X, Y, }\FunctionTok{resid}\NormalTok{(machine.lm), }\FunctionTok{fitted}\NormalTok{(machine.lm))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    X   Y                     
+## 1  3  39 -31.018395  70.01839
+## 2  1  24 -18.744147  42.74415
+## 3  5 115  17.707358  97.29264
+## 4  8 105 -33.204013 138.20401
+## 5  1  50   7.255853  42.74415
+## 6  4  86   2.344482  83.65552
+## 7  2  67  10.618729  56.38127
+## 8  6  90 -20.929766 110.92977
+## 9  9 140 -11.841137 151.84114
+## 10 3 112  41.981605  70.01839
+## 11 5  70 -27.292642  97.29264
+## 12 7 186  61.433110 124.56689
+## 13 2  43 -13.381271  56.38127
+## 14 6 126  15.070234 110.92977
+\end{verbatim}
+
+\hypertarget{uxc794uxcc28uxc640-uxb3c5uxb9bduxbcc0uxc218-x-uxc5d0-uxb300uxd55c-uxc0b0uxc810uxb3c4uxb97c-uxadf8uxb824uxbcf8uxb2e4.}{%
+\paragraph{6) 잔차와 독립변수 X 에 대한 산점도를
+그려본다.}\label{uxc794uxcc28uxc640-uxb3c5uxb9bduxbcc0uxc218-x-uxc5d0-uxb300uxd55c-uxc0b0uxc810uxb3c4uxb97c-uxadf8uxb824uxbcf8uxb2e4.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 잔차를 독립변수 X에 대해 산점도를 그려본다.}
+\FunctionTok{plot}\NormalTok{(X, }\FunctionTok{resid}\NormalTok{(machine.lm), }\AttributeTok{pch=}\DecValTok{19}\NormalTok{, }\AttributeTok{main=}\StringTok{"잔차와 X 산점도"}\NormalTok{, }\AttributeTok{xlab=}\StringTok{"X"}\NormalTok{, }\AttributeTok{ylab=}\StringTok{"잔차"}\NormalTok{ )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '잔차와 X 산점도' in 'mbcsToSbcs':
+## dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '잔차와 X 산점도' in 'mbcsToSbcs':
+## dot substituted for <9e>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '잔차와 X 산점도' in 'mbcsToSbcs':
+## dot substituted for <94>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '잔차와 X 산점도' in 'mbcsToSbcs':
+## dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '잔차와 X 산점도' in 'mbcsToSbcs':
+## dot substituted for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '잔차와 X 산점도' in 'mbcsToSbcs':
+## dot substituted for <a8>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '잔차와 X 산점도' in 'mbcsToSbcs':
+## dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '잔차와 X 산점도' in 'mbcsToSbcs':
+## dot substituted for <99>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '잔차와 X 산점도' in 'mbcsToSbcs':
+## dot substituted for <80>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '잔차와 X 산점도' in 'mbcsToSbcs':
+## dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '잔차와 X 산점도' in 'mbcsToSbcs':
+## dot substituted for <82>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '잔차와 X 산점도' in 'mbcsToSbcs':
+## dot substituted for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '잔차와 X 산점도' in 'mbcsToSbcs':
+## dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '잔차와 X 산점도' in 'mbcsToSbcs':
+## dot substituted for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '잔차와 X 산점도' in 'mbcsToSbcs':
+## dot substituted for <90>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '잔차와 X 산점도' in 'mbcsToSbcs':
+## dot substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '잔차와 X 산점도' in 'mbcsToSbcs':
+## dot substituted for <8f>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '잔차와 X 산점도' in 'mbcsToSbcs':
+## dot substituted for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '잔차' in 'mbcsToSbcs': dot
+## substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '잔차' in 'mbcsToSbcs': dot
+## substituted for <9e>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '잔차' in 'mbcsToSbcs': dot
+## substituted for <94>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '잔차' in 'mbcsToSbcs': dot
+## substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '잔차' in 'mbcsToSbcs': dot
+## substituted for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '잔차' in 'mbcsToSbcs': dot
+## substituted for <a8>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 잔차가 0인 라인 타입 2번 선을 그린다.}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h=}\DecValTok{0}\NormalTok{, }\AttributeTok{lty=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{출석수업-과제물_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\hypertarget{uxcd94uxc815uxac12uxc758-uxc2e0uxb8b0uxb300-uxadf8uxb9acuxae30}{%
+\paragraph{7) 추정값의 신뢰대
+그리기}\label{uxcd94uxc815uxac12uxc758-uxc2e0uxb8b0uxb300-uxadf8uxb9acuxae30}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# X의 범위와 갯수에 맞게 생성}
+\NormalTok{machine.frame }\OtherTok{=} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{X=}\FunctionTok{seq}\NormalTok{(}\AttributeTok{from =} \FunctionTok{min}\NormalTok{(X), }\AttributeTok{to=}\FunctionTok{max}\NormalTok{(X),}\AttributeTok{by=}\NormalTok{((}\FunctionTok{max}\NormalTok{(X)}\SpecialCharTok{{-}}\FunctionTok{min}\NormalTok{(X))}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{length}\NormalTok{(X)}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{))))}
+\NormalTok{pc }\OtherTok{=} \FunctionTok{predict}\NormalTok{(machine.lm, }\AttributeTok{int=}\StringTok{"c"}\NormalTok{, }\AttributeTok{newdata=}\NormalTok{machine.frame)}
+\NormalTok{pp }\OtherTok{=} \FunctionTok{predict}\NormalTok{(machine.lm, }\AttributeTok{int=}\StringTok{"p"}\NormalTok{, }\AttributeTok{newdata=}\NormalTok{machine.frame)}
+\FunctionTok{plot}\NormalTok{(X, Y, }\AttributeTok{ylim=}\FunctionTok{range}\NormalTok{(Y, pc), }\AttributeTok{main=}\StringTok{"추정값의 신뢰대"}\NormalTok{, }\AttributeTok{xlab=}\StringTok{"사용연도(X)"}\NormalTok{, }\AttributeTok{ylab=}\StringTok{"정비비용(Y)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '추정값의 신뢰대' in 'mbcsToSbcs':
+## dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '추정값의 신뢰대' in 'mbcsToSbcs':
+## dot substituted for <b6>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '추정값의 신뢰대' in 'mbcsToSbcs':
+## dot substituted for <94>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '추정값의 신뢰대' in 'mbcsToSbcs':
+## dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '추정값의 신뢰대' in 'mbcsToSbcs':
+## dot substituted for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '추정값의 신뢰대' in 'mbcsToSbcs':
+## dot substituted for <95>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '추정값의 신뢰대' in 'mbcsToSbcs':
+## dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '추정값의 신뢰대' in 'mbcsToSbcs':
+## dot substituted for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '추정값의 신뢰대' in 'mbcsToSbcs':
+## dot substituted for <92>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '추정값의 신뢰대' in 'mbcsToSbcs':
+## dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '추정값의 신뢰대' in 'mbcsToSbcs':
+## dot substituted for <9d>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '추정값의 신뢰대' in 'mbcsToSbcs':
+## dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '추정값의 신뢰대' in 'mbcsToSbcs':
+## dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '추정값의 신뢰대' in 'mbcsToSbcs':
+## dot substituted for <8b>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '추정값의 신뢰대' in 'mbcsToSbcs':
+## dot substituted for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '추정값의 신뢰대' in 'mbcsToSbcs':
+## dot substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '추정값의 신뢰대' in 'mbcsToSbcs':
+## dot substituted for <a2>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '추정값의 신뢰대' in 'mbcsToSbcs':
+## dot substituted for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '추정값의 신뢰대' in 'mbcsToSbcs':
+## dot substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '추정값의 신뢰대' in 'mbcsToSbcs':
+## dot substituted for <8c>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '추정값의 신뢰대' in 'mbcsToSbcs':
+## dot substituted for <80>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도(X)' in 'mbcsToSbcs': dot
+## substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도(X)' in 'mbcsToSbcs': dot
+## substituted for <82>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도(X)' in 'mbcsToSbcs': dot
+## substituted for <ac>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도(X)' in 'mbcsToSbcs': dot
+## substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도(X)' in 'mbcsToSbcs': dot
+## substituted for <9a>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도(X)' in 'mbcsToSbcs': dot
+## substituted for <a9>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도(X)' in 'mbcsToSbcs': dot
+## substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도(X)' in 'mbcsToSbcs': dot
+## substituted for <97>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도(X)' in 'mbcsToSbcs': dot
+## substituted for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도(X)' in 'mbcsToSbcs': dot
+## substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도(X)' in 'mbcsToSbcs': dot
+## substituted for <8f>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '사용연도(X)' in 'mbcsToSbcs': dot
+## substituted for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용(Y)' in 'mbcsToSbcs': dot
+## substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용(Y)' in 'mbcsToSbcs': dot
+## substituted for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용(Y)' in 'mbcsToSbcs': dot
+## substituted for <95>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용(Y)' in 'mbcsToSbcs': dot
+## substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용(Y)' in 'mbcsToSbcs': dot
+## substituted for <b9>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용(Y)' in 'mbcsToSbcs': dot
+## substituted for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용(Y)' in 'mbcsToSbcs': dot
+## substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용(Y)' in 'mbcsToSbcs': dot
+## substituted for <b9>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용(Y)' in 'mbcsToSbcs': dot
+## substituted for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용(Y)' in 'mbcsToSbcs': dot
+## substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용(Y)' in 'mbcsToSbcs': dot
+## substituted for <9a>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '정비비용(Y)' in 'mbcsToSbcs': dot
+## substituted for <a9>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{matlines}\NormalTok{(machine.frame}\SpecialCharTok{$}\NormalTok{X, pc, }\AttributeTok{lty=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{), }\AttributeTok{col=}\StringTok{"BLUE"}\NormalTok{)}
+\FunctionTok{matlines}\NormalTok{(machine.frame}\SpecialCharTok{$}\NormalTok{X, pp, }\AttributeTok{lty=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{), }\AttributeTok{col=}\StringTok{"RED"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{출석수업-과제물_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+\hypertarget{uxbc88.-uxc5f0uxc2b5uxbb38uxc81c-2uxc7a5-3uxbc88p.-87-uxc790uxb8ccuxb97c-uxc774uxc6a9uxd558uxc5ec-2.8-uxbd84uxc11duxc0acuxb840uxc640-uxac19uxc774-uxbd84uxc11duxd558uxace0-uxc124uxba85uxd558uxc2dcuxc624.}{%
+\subsection{2번. 연습문제 2장 3번(p.~87) 자료를 이용하여 2.8 분석사례와
+같이 분석하고,
+설명하시오.}\label{uxbc88.-uxc5f0uxc2b5uxbb38uxc81c-2uxc7a5-3uxbc88p.-87-uxc790uxb8ccuxb97c-uxc774uxc6a9uxd558uxc5ec-2.8-uxbd84uxc11duxc0acuxb840uxc640-uxac19uxc774-uxbd84uxc11duxd558uxace0-uxc124uxba85uxd558uxc2dcuxc624.}}
+
+\hypertarget{uxad50uxc7acuxc758-uxb370uxc774uxd130-uxc785uxb825}{%
+\paragraph{1) 교재의 데이터
+입력}\label{uxad50uxc7acuxc758-uxb370uxc774uxd130-uxc785uxb825}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Y }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\FloatTok{2.8}\NormalTok{, }\FloatTok{3.9}\NormalTok{, }\FloatTok{3.9}\NormalTok{, }\FloatTok{4.4}\NormalTok{, }\FloatTok{3.1}\NormalTok{, }\FloatTok{3.1}\NormalTok{, }\FloatTok{3.5}\NormalTok{, }\FloatTok{3.6}\NormalTok{, }\FloatTok{3.0}\NormalTok{, }\FloatTok{3.3}\NormalTok{)}
+\NormalTok{X1 }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{24}\NormalTok{, }\DecValTok{25}\NormalTok{, }\DecValTok{28}\NormalTok{, }\DecValTok{15}\NormalTok{, }\DecValTok{18}\NormalTok{, }\DecValTok{22}\NormalTok{, }\DecValTok{22}\NormalTok{, }\DecValTok{12}\NormalTok{, }\DecValTok{15}\NormalTok{)}
+\NormalTok{X2 }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{27}\NormalTok{, }\DecValTok{26}\NormalTok{, }\DecValTok{28}\NormalTok{, }\DecValTok{26}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{24}\NormalTok{, }\DecValTok{27}\NormalTok{, }\DecValTok{25}\NormalTok{, }\DecValTok{27}\NormalTok{, }\DecValTok{25}\NormalTok{)}
+\NormalTok{X3 }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{64}\NormalTok{, }\DecValTok{72}\NormalTok{, }\DecValTok{80}\NormalTok{, }\DecValTok{88}\NormalTok{, }\DecValTok{81}\NormalTok{, }\DecValTok{45}\NormalTok{, }\DecValTok{46}\NormalTok{, }\DecValTok{69}\NormalTok{, }\DecValTok{54}\NormalTok{, }\DecValTok{39}\NormalTok{)}
+\CommentTok{\# 마지막 데이터 3개}
+\FunctionTok{tail}\NormalTok{(}\FunctionTok{cbind}\NormalTok{(Y, X1, X2, X3), }\DecValTok{3}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         Y X1 X2 X3
+##  [8,] 3.6 22 25 69
+##  [9,] 3.0 12 27 54
+## [10,] 3.3 15 25 39
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{res }\OtherTok{=} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{cbind}\NormalTok{(Y, X1, X2, X3))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{uxae30uxc220uxd1b5uxacc4uxb7c9-uxbc0f-uxc0c1uxad00uxacc4uxc218-uxbcf4uxae30}{%
+\paragraph{2) 기술통계량 및 상관계수
+보기}\label{uxae30uxc220uxd1b5uxacc4uxb7c9-uxbc0f-uxc0c1uxad00uxacc4uxc218-uxbcf4uxae30}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 자료 요약 보기}
+\FunctionTok{summary}\NormalTok{(res) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        Y               X1             X2              X3      
+##  Min.   :2.800   Min.   :10.0   Min.   :24.00   Min.   :39.0  
+##  1st Qu.:3.100   1st Qu.:15.0   1st Qu.:25.25   1st Qu.:48.0  
+##  Median :3.400   Median :20.0   Median :26.50   Median :66.5  
+##  Mean   :3.460   Mean   :19.1   Mean   :26.50   Mean   :63.8  
+##  3rd Qu.:3.825   3rd Qu.:23.5   3rd Qu.:27.00   3rd Qu.:78.0  
+##  Max.   :4.400   Max.   :28.0   Max.   :30.00   Max.   :88.0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 상관계수 보기}
+\FunctionTok{cor}\NormalTok{(res)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             Y         X1         X2        X3
+## Y   1.0000000  0.9493267 -0.1172336 0.5557581
+## X1  0.9493267  1.0000000 -0.1567513 0.4721047
+## X2 -0.1172336 -0.1567513  1.0000000 0.4971997
+## X3  0.5557581  0.4721047  0.4971997 1.0000000
+\end{verbatim}
+
+\hypertarget{uxc0b0uxc810uxb3c4-uxadf8uxb9acuxae30}{%
+\paragraph{3) 산점도
+그리기}\label{uxc0b0uxc810uxb3c4-uxadf8uxb9acuxae30}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{), }\AttributeTok{pty=}\StringTok{"s"}\NormalTok{) }
+\FunctionTok{plot}\NormalTok{(X1, Y, }\AttributeTok{pch =} \DecValTok{19}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(res}\SpecialCharTok{$}\NormalTok{X2, res}\SpecialCharTok{$}\NormalTok{Y, }\AttributeTok{pch =} \DecValTok{19}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(res}\SpecialCharTok{$}\NormalTok{X3, res}\SpecialCharTok{$}\NormalTok{Y, }\AttributeTok{pch =} \DecValTok{19}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{출석수업-과제물_files/figure-latex/unnamed-chunk-11-1.pdf}
+
+\hypertarget{uxd68cuxadc0uxbaa8uxd615-uxc801uxd569uxd558uxae30}{%
+\paragraph{4) 회귀모형
+적합하기}\label{uxd68cuxadc0uxbaa8uxd615-uxc801uxd569uxd558uxae30}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{res.lm }\OtherTok{=} \FunctionTok{lm}\NormalTok{(Y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ X1}\SpecialCharTok{+}\NormalTok{X2}\SpecialCharTok{+}\NormalTok{X3, }\AttributeTok{data=}\NormalTok{res) }
+\FunctionTok{summary}\NormalTok{(res.lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Y ~ X1 + X2 + X3, data = res)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.23490 -0.07744 -0.02166  0.08840  0.23442 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)   
+## (Intercept)  2.409213   1.125954   2.140  0.07618 . 
+## X1           0.069788   0.012640   5.521  0.00149 **
+## X2          -0.024767   0.044830  -0.552  0.60060   
+## X3           0.005864   0.005052   1.161  0.28978   
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.172 on 6 degrees of freedom
+## Multiple R-squared:  0.9202, Adjusted R-squared:  0.8803 
+## F-statistic: 23.05 on 3 and 6 DF,  p-value: 0.001079
+\end{verbatim}
+
+\hypertarget{uxcd94uxc815uxb41c-uxd68cuxadc0uxbc29uxc815uxc2dd}{%
+\paragraph{5-1) 추정된
+회귀방정식}\label{uxcd94uxc815uxb41c-uxd68cuxadc0uxbc29uxc815uxc2dd}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 추정된 회귀방정식}
+\NormalTok{str }\OtherTok{=} \FunctionTok{paste0}\NormalTok{(}\StringTok{"분산분석표 이용: hat\_"}\NormalTok{, }\FunctionTok{names}\NormalTok{(res.lm}\SpecialCharTok{$}\NormalTok{model)[}\DecValTok{1}\NormalTok{], }\StringTok{" = "}\NormalTok{)}
+\NormalTok{str }\OtherTok{=} \FunctionTok{paste0}\NormalTok{( str, }\FunctionTok{round}\NormalTok{(}\FunctionTok{coef}\NormalTok{(res.lm)[}\StringTok{"(Intercept)"}\NormalTok{], }\DecValTok{3}\NormalTok{))}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{2}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(}\FunctionTok{coef}\NormalTok{(res.lm)))}
+\NormalTok{\{}
+\NormalTok{  str }\OtherTok{=} \FunctionTok{paste0}\NormalTok{( str, }\StringTok{" + "}\NormalTok{, }\FunctionTok{round}\NormalTok{(}\FunctionTok{coef}\NormalTok{(res.lm)[}\FunctionTok{names}\NormalTok{(res.lm}\SpecialCharTok{$}\NormalTok{model)[i]], }\DecValTok{3}\NormalTok{),}
+                \StringTok{"*"}\NormalTok{, }\FunctionTok{names}\NormalTok{(res.lm}\SpecialCharTok{$}\NormalTok{model)[i])}
+\NormalTok{\}}
+\FunctionTok{print}\NormalTok{(str)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "분산분석표 이용: hat_Y = 2.409 + 0.07*X1 + -0.025*X2 + 0.006*X3"
+\end{verbatim}
+
+\hypertarget{uxcd94uxc815uxb41c-uxd68cuxadc0uxbc29uxc815uxc2dd-1}{%
+\paragraph{5-2) 추정된
+회귀방정식}\label{uxcd94uxc815uxb41c-uxd68cuxadc0uxbc29uxc815uxc2dd-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 추정된 회귀방정식을 최소제곱법으로 β를 행렬방정식으로 계산}
+\NormalTok{mX}\OtherTok{=}\FunctionTok{as.matrix}\NormalTok{(}\FunctionTok{cbind}\NormalTok{(}\DecValTok{1}\NormalTok{, X1, X2, X3))}
+\NormalTok{mY}\OtherTok{=}\FunctionTok{as.matrix}\NormalTok{(Y)}
+\NormalTok{mβ}\OtherTok{=}\FunctionTok{solve}\NormalTok{(}\FunctionTok{t}\NormalTok{(mX)}\SpecialCharTok{\%*\%}\NormalTok{mX)}\SpecialCharTok{\%*\%}\FunctionTok{t}\NormalTok{(mX)}\SpecialCharTok{\%*\%}\NormalTok{mY}
+
+\NormalTok{str }\OtherTok{=} \FunctionTok{paste0}\NormalTok{(}\StringTok{" 최소제곱법 이용 : hat\_Y = "}\NormalTok{, }\FunctionTok{round}\NormalTok{(mβ[}\DecValTok{1}\NormalTok{], }\DecValTok{3}\NormalTok{))}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{2}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(}\FunctionTok{rownames}\NormalTok{(mβ)))}
+\NormalTok{\{}
+\NormalTok{  str }\OtherTok{=} \FunctionTok{paste0}\NormalTok{( str, }\StringTok{" + "}\NormalTok{, }\FunctionTok{round}\NormalTok{(mβ[i], }\DecValTok{3}\NormalTok{), }\StringTok{"*"}\NormalTok{, }\FunctionTok{rownames}\NormalTok{(mβ)[i])}
+\NormalTok{\}}
+\FunctionTok{print}\NormalTok{(str)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] " 최소제곱법 이용 : hat_Y = 2.409 + 0.07*X1 + -0.025*X2 + 0.006*X3"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{paste0}\NormalTok{(}\StringTok{"결정계수 R.squared ="}\NormalTok{, }\FunctionTok{round}\NormalTok{(}\FunctionTok{summary}\NormalTok{(res.lm)}\SpecialCharTok{$}\NormalTok{r.squared, }\DecValTok{3}\NormalTok{), }\StringTok{"으로"}\NormalTok{,}
+\FunctionTok{round}\NormalTok{(}\FunctionTok{summary}\NormalTok{(res.lm)}\SpecialCharTok{$}\NormalTok{r.squared}\SpecialCharTok{*}\DecValTok{100}\NormalTok{,}\DecValTok{1}\NormalTok{), }\StringTok{"\% 설명력이 있다."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "결정계수 R.squared =0.92으로92% 설명력이 있다."
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{paste0}\NormalTok{(}\StringTok{"추정값의 표준오차 sqrt(MSE) = "}\NormalTok{, }\FunctionTok{round}\NormalTok{(}\FunctionTok{summary}\NormalTok{(res.lm)}\SpecialCharTok{$}\NormalTok{sigma, }\DecValTok{3}\NormalTok{), }\StringTok{"로 σ의 추정치가 "}\NormalTok{,}\FunctionTok{round}\NormalTok{(}\FunctionTok{summary}\NormalTok{(res.lm)}\SpecialCharTok{$}\NormalTok{sigma, }\DecValTok{3}\NormalTok{), }\StringTok{"임을 알 수 있다."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "추정값의 표준오차 sqrt(MSE) = 0.172로 σ의 추정치가 0.172임을 알 수 있다."
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{α }\OtherTok{=} \FloatTok{0.05}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{2}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(}\FunctionTok{coef}\NormalTok{(res.lm)))}
+\NormalTok{\{}
+\NormalTok{  p.value }\OtherTok{=} \FunctionTok{round}\NormalTok{(}\FunctionTok{summary}\NormalTok{(res.lm)}\SpecialCharTok{$}\NormalTok{coefficients[}
+    \FunctionTok{names}\NormalTok{(res.lm}\SpecialCharTok{$}\NormalTok{model)[i],}\StringTok{"Pr(\textgreater{}|t|)"}\NormalTok{],}\DecValTok{5}\NormalTok{)}
+  \ControlFlowTok{if}\NormalTok{ (p.value }\SpecialCharTok{\textless{}}\NormalTok{ α )}
+\NormalTok{    \{}
+    \FunctionTok{print}\NormalTok{(}\FunctionTok{paste0}\NormalTok{( }\FunctionTok{names}\NormalTok{(res.lm}\SpecialCharTok{$}\NormalTok{model)[i], }\StringTok{"의 p{-}value = "}\NormalTok{, p.value, }\StringTok{"으로서 "}\NormalTok{,}
+                  \FunctionTok{names}\NormalTok{(res.lm}\SpecialCharTok{$}\NormalTok{model)[}\DecValTok{1}\NormalTok{], }\StringTok{"를(을) 설명하는데 유의하다"}\NormalTok{))}
+\NormalTok{    \}}
+  \ControlFlowTok{else}
+\NormalTok{    \{}
+      \FunctionTok{print}\NormalTok{(}\FunctionTok{paste0}\NormalTok{( }\FunctionTok{names}\NormalTok{(res.lm}\SpecialCharTok{$}\NormalTok{model)[i], }\StringTok{"의 p{-}value = "}\NormalTok{, p.value,}
+                    \StringTok{"으로서 "}\NormalTok{, }\FunctionTok{names}\NormalTok{(res.lm}\SpecialCharTok{$}\NormalTok{model)[}\DecValTok{1}\NormalTok{], }
+                    \StringTok{"를(을) 설명하는데 그리 큰 영향을 준다고 할 수 없다."}\NormalTok{))}
+\NormalTok{    \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "X1의 p-value = 0.00149으로서 Y를(을) 설명하는데 유의하다"
+## [1] "X2의 p-value = 0.6006으로서 Y를(을) 설명하는데 그리 큰 영향을 준다고 할 수 없다."
+## [1] "X3의 p-value = 0.28978으로서 Y를(을) 설명하는데 그리 큰 영향을 준다고 할 수 없다."
+\end{verbatim}
+
+\hypertarget{uxcd94uxac00uxbcc0uxc218uxadf8uxb9bc-uxadf8uxb824uxbcf4uxae30}{%
+\paragraph{6) 추가변수그림
+그려보기}\label{uxcd94uxac00uxbcc0uxc218uxadf8uxb9bc-uxadf8uxb824uxbcf4uxae30}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(car)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: carData
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{avPlots}\NormalTok{(res.lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{출석수업-과제물_files/figure-latex/unnamed-chunk-18-1.pdf}
+
+추가 그림을 그려보면 X1이 Y을 설명하는데 유의한 변수임을 알 수 있다.
+
+\hypertarget{uxbd84uxc0b0uxbd84uxc11duxd45c-uxad6cuxd558uxae30}{%
+\paragraph{7-1) 분산분석표
+구하기}\label{uxbd84uxc0b0uxbd84uxc11duxd45c-uxad6cuxd558uxae30}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{anova}\NormalTok{(res.lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: Y
+##           Df  Sum Sq Mean Sq F value    Pr(>F)    
+## X1         1 2.00432 2.00432 67.7386 0.0001738 ***
+## X2         1 0.00227 0.00227  0.0768 0.7909535    
+## X3         1 0.03988 0.03988  1.3477 0.2897756    
+## Residuals  6 0.17753 0.02959                      
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\hypertarget{uxbd84uxc0b0uxbd84uxc11duxd45c-uxc815uxb9ac}{%
+\paragraph{7-2) 분산분석표
+정리}\label{uxbd84uxc0b0uxbd84uxc11duxd45c-uxc815uxb9ac}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{AVT }\OtherTok{=} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{), }\AttributeTok{nrow=}\DecValTok{3}\NormalTok{)}
+\FunctionTok{colnames}\NormalTok{(AVT)}\OtherTok{=}\FunctionTok{colnames}\NormalTok{(}\FunctionTok{anova}\NormalTok{(res.lm))}
+\FunctionTok{rownames}\NormalTok{(AVT)}\OtherTok{=}\FunctionTok{c}\NormalTok{(}\StringTok{"Regression"}\NormalTok{, }\StringTok{"Residuals"}\NormalTok{, }\StringTok{"Total"}\NormalTok{)}
+
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{(}\FunctionTok{length}\NormalTok{(}\FunctionTok{rownames}\NormalTok{(}\FunctionTok{summary}\NormalTok{(res.lm)}\SpecialCharTok{$}\NormalTok{coefficients))}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{))}
+\NormalTok{\{}
+\NormalTok{  AVT[}\StringTok{"Regression"}\NormalTok{, }\StringTok{"Df"}\NormalTok{]}\OtherTok{=}\NormalTok{AVT[}\StringTok{"Regression"}\NormalTok{, }\StringTok{"Df"}\NormalTok{]}\SpecialCharTok{+}\FunctionTok{as.double}\NormalTok{(}\FunctionTok{anova}\NormalTok{(res.lm)[i,}\StringTok{"Df"}\NormalTok{])}
+\NormalTok{  AVT[}\StringTok{"Regression"}\NormalTok{, }\StringTok{"Sum Sq"}\NormalTok{]}\OtherTok{=}
+\NormalTok{    AVT[}\StringTok{"Regression"}\NormalTok{, }\StringTok{"Sum Sq"}\NormalTok{]}\SpecialCharTok{+}\FunctionTok{as.double}\NormalTok{(}\FunctionTok{anova}\NormalTok{(res.lm)[i,}\StringTok{"Sum Sq"}\NormalTok{])}
+\NormalTok{\}}
+
+\NormalTok{AVT[}\StringTok{"Residuals"}\NormalTok{, }\StringTok{"Df"}\NormalTok{]}\OtherTok{=}\FunctionTok{as.double}\NormalTok{(}\FunctionTok{anova}\NormalTok{(res.lm)[}\StringTok{"Residuals"}\NormalTok{,}\StringTok{"Df"}\NormalTok{])}
+\NormalTok{AVT[}\StringTok{"Residuals"}\NormalTok{, }\StringTok{"Sum Sq"}\NormalTok{]}\OtherTok{=}\FunctionTok{as.double}\NormalTok{(}\FunctionTok{anova}\NormalTok{(res.lm)[}\StringTok{"Residuals"}\NormalTok{,}\StringTok{"Sum Sq"}\NormalTok{])}
+\NormalTok{AVT[}\StringTok{"Total"}\NormalTok{, }\StringTok{"Df"}\NormalTok{]}\OtherTok{=}\NormalTok{AVT[}\StringTok{"Regression"}\NormalTok{, }\StringTok{"Df"}\NormalTok{]}\SpecialCharTok{+}\NormalTok{AVT[}\StringTok{"Residuals"}\NormalTok{, }\StringTok{"Df"}\NormalTok{]}
+\NormalTok{AVT[}\StringTok{"Total"}\NormalTok{, }\StringTok{"Sum Sq"}\NormalTok{]}\OtherTok{=}\NormalTok{AVT[}\StringTok{"Regression"}\NormalTok{, }\StringTok{"Sum Sq"}\NormalTok{]}\SpecialCharTok{+}\NormalTok{AVT[}\StringTok{"Residuals"}\NormalTok{, }\StringTok{"Sum Sq"}\NormalTok{]}
+\NormalTok{AVT[}\StringTok{"Regression"}\NormalTok{, }\StringTok{"Mean Sq"}\NormalTok{] }\OtherTok{=}\NormalTok{ AVT[}\StringTok{"Regression"}\NormalTok{, }\StringTok{"Sum Sq"}\NormalTok{] }\SpecialCharTok{/}\NormalTok{ AVT[}\StringTok{"Regression"}\NormalTok{, }\StringTok{"Df"}\NormalTok{]}
+\NormalTok{AVT[}\StringTok{"Residuals"}\NormalTok{, }\StringTok{"Mean Sq"}\NormalTok{] }\OtherTok{=}\NormalTok{ AVT[}\StringTok{"Residuals"}\NormalTok{, }\StringTok{"Sum Sq"}\NormalTok{] }\SpecialCharTok{/}\NormalTok{ AVT[}\StringTok{"Residuals"}\NormalTok{, }\StringTok{"Df"}\NormalTok{]}
+\NormalTok{AVT[}\StringTok{"Regression"}\NormalTok{, }\StringTok{"F value"}\NormalTok{] }\OtherTok{=} 
+  \FunctionTok{round}\NormalTok{(AVT[}\StringTok{"Regression"}\NormalTok{, }\StringTok{"Mean Sq"}\NormalTok{] }\SpecialCharTok{/}\NormalTok{ AVT[}\StringTok{"Residuals"}\NormalTok{, }\StringTok{"Mean Sq"}\NormalTok{], }\DecValTok{1}\NormalTok{)}
+\NormalTok{AVT[}\StringTok{"Regression"}\NormalTok{, }\StringTok{"Pr(\textgreater{}F)"}\NormalTok{] }\OtherTok{=} 
+  \FunctionTok{round}\NormalTok{( (}\DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{pf}\NormalTok{( AVT[}\StringTok{"Regression"}\NormalTok{, }\StringTok{"F value"}\NormalTok{],}
+\NormalTok{                AVT[}\StringTok{"Regression"}\NormalTok{, }\StringTok{"Df"}\NormalTok{],}
+\NormalTok{                AVT[}\StringTok{"Residuals"}\NormalTok{, }\StringTok{"Df"}\NormalTok{])), }
+        \DecValTok{6}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(AVT)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            Df    Sum Sq    Mean Sq F value   Pr(>F)
+## Regression  3 2.0464661 0.68215537    23.1 0.001073
+## Residuals   6 0.1775339 0.02958898     0.0 0.000000
+## Total       9 2.2240000 0.00000000     0.0 0.000000
+\end{verbatim}
+
+위에서 설명변수의 순서와 상관없이 잔차의 제곱합 및 잔차제곱의 평균값은
+변동이 없으나 회귀계수는 순서에 따라 값이 변경된다.
+
+\hypertarget{uxc794uxcc28-uxc0b0uxc810uxb3c4uxb3c5uxb9bduxbcc0uxc218uxc640-uxc794uxcc28}{%
+\paragraph{8-1) 잔차 산점도(독립변수와
+잔차)}\label{uxc794uxcc28-uxc0b0uxc810uxb3c4uxb3c5uxb9bduxbcc0uxc218uxc640-uxc794uxcc28}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 독립변수와 잔차의 산점도를 그리고 각 케이스의 번호 출력}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{), }\AttributeTok{pty=}\StringTok{"s"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(res}\SpecialCharTok{$}\NormalTok{X1, res.lm}\SpecialCharTok{$}\NormalTok{resid, }\AttributeTok{pch=}\DecValTok{19}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{( i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(res.lm}\SpecialCharTok{$}\NormalTok{resid))}
+\NormalTok{\{}
+  \ControlFlowTok{if}\NormalTok{(res.lm}\SpecialCharTok{$}\NormalTok{resid[i] }\SpecialCharTok{\textgreater{}} \FunctionTok{quantile}\NormalTok{(res.lm}\SpecialCharTok{$}\NormalTok{resid, }\FunctionTok{c}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.9}\NormalTok{))[}\DecValTok{2}\NormalTok{] }\SpecialCharTok{||}
+\NormalTok{     res.lm}\SpecialCharTok{$}\NormalTok{resid[i] }\SpecialCharTok{\textless{}} \FunctionTok{quantile}\NormalTok{(res.lm}\SpecialCharTok{$}\NormalTok{resid, }\FunctionTok{c}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.9}\NormalTok{))[}\DecValTok{1}\NormalTok{])}
+    \FunctionTok{text}\NormalTok{(res}\SpecialCharTok{$}\NormalTok{X1[i]}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, res.lm}\SpecialCharTok{$}\NormalTok{resid[i], }\FunctionTok{as.character}\NormalTok{(i))}
+\NormalTok{\}}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h=}\DecValTok{0}\NormalTok{, }\AttributeTok{lty=}\DecValTok{2}\NormalTok{)}
+
+\FunctionTok{plot}\NormalTok{(res}\SpecialCharTok{$}\NormalTok{X2, res.lm}\SpecialCharTok{$}\NormalTok{resid, }\AttributeTok{pch=}\DecValTok{19}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{( i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(res.lm}\SpecialCharTok{$}\NormalTok{resid))}
+\NormalTok{\{}
+  \ControlFlowTok{if}\NormalTok{(res.lm}\SpecialCharTok{$}\NormalTok{resid[i] }\SpecialCharTok{\textgreater{}} \FunctionTok{quantile}\NormalTok{(res.lm}\SpecialCharTok{$}\NormalTok{resid, }\FunctionTok{c}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.9}\NormalTok{))[}\DecValTok{2}\NormalTok{] }\SpecialCharTok{||}
+\NormalTok{     res.lm}\SpecialCharTok{$}\NormalTok{resid[i] }\SpecialCharTok{\textless{}} \FunctionTok{quantile}\NormalTok{(res.lm}\SpecialCharTok{$}\NormalTok{resid, }\FunctionTok{c}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.9}\NormalTok{))[}\DecValTok{1}\NormalTok{])}
+    \FunctionTok{text}\NormalTok{(res}\SpecialCharTok{$}\NormalTok{X2[i]}\SpecialCharTok{+}\FloatTok{0.3}\NormalTok{, res.lm}\SpecialCharTok{$}\NormalTok{resid[i], }\FunctionTok{as.character}\NormalTok{(i))}
+\NormalTok{\}}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h=}\DecValTok{0}\NormalTok{, }\AttributeTok{lty=}\DecValTok{2}\NormalTok{)}
+
+\FunctionTok{plot}\NormalTok{(res}\SpecialCharTok{$}\NormalTok{X3, res.lm}\SpecialCharTok{$}\NormalTok{resid, }\AttributeTok{pch=}\DecValTok{19}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{( i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(res.lm}\SpecialCharTok{$}\NormalTok{resid))}
+\NormalTok{\{}
+  \ControlFlowTok{if}\NormalTok{(res.lm}\SpecialCharTok{$}\NormalTok{resid[i] }\SpecialCharTok{\textgreater{}} \FunctionTok{quantile}\NormalTok{(res.lm}\SpecialCharTok{$}\NormalTok{resid, }\FunctionTok{c}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.9}\NormalTok{))[}\DecValTok{2}\NormalTok{] }\SpecialCharTok{||}
+\NormalTok{     res.lm}\SpecialCharTok{$}\NormalTok{resid[i] }\SpecialCharTok{\textless{}} \FunctionTok{quantile}\NormalTok{(res.lm}\SpecialCharTok{$}\NormalTok{resid, }\FunctionTok{c}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.9}\NormalTok{))[}\DecValTok{1}\NormalTok{])}
+    \FunctionTok{text}\NormalTok{(res}\SpecialCharTok{$}\NormalTok{X3[i]}\SpecialCharTok{+}\DecValTok{3}\NormalTok{, res.lm}\SpecialCharTok{$}\NormalTok{resid[i], }\FunctionTok{as.character}\NormalTok{(i))}
+\NormalTok{\}}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h=}\DecValTok{0}\NormalTok{, }\AttributeTok{lty=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{출석수업-과제물_files/figure-latex/unnamed-chunk-21-1.pdf}
+
+\hypertarget{uxc794uxcc28-uxc0b0uxc810uxb3c4--2-uxcd94uxc815uxac12-uxc794uxcc28}{%
+\paragraph{8-2) 잔차 산점도 -2 : (추정값,
+잔차)}\label{uxc794uxcc28-uxc0b0uxc810uxb3c4--2-uxcd94uxc815uxac12-uxc794uxcc28}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(res.lm}\SpecialCharTok{$}\NormalTok{fitted, res.lm}\SpecialCharTok{$}\NormalTok{resid, }\AttributeTok{pch=}\DecValTok{19}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{( i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(res.lm}\SpecialCharTok{$}\NormalTok{resid))}
+\NormalTok{\{}
+    \FunctionTok{text}\NormalTok{(res.lm}\SpecialCharTok{$}\NormalTok{fitted[i]}\SpecialCharTok{+}\FloatTok{0.03}\NormalTok{, res.lm}\SpecialCharTok{$}\NormalTok{resid[i], }\FunctionTok{as.character}\NormalTok{(i))}
+\NormalTok{\}}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h=}\DecValTok{0}\NormalTok{, }\AttributeTok{lty=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{출석수업-과제물_files/figure-latex/unnamed-chunk-22-1.pdf}
+
+\end{document}

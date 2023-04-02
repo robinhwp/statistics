@@ -390,7 +390,7 @@ abline(h4.lm11, col="red", lwd=2)
 
 
 # 잔차검토
-par(mfrow=c(2,2))
+par(mfrow=c(1,4))
 market=read.table("./data/market-1.txt", header = TRUE)
 market.lm=lm(Y~X, data = market)
 with(market, plot(X, Y, xlab = "광고료", ylab = "매출", main="광고료와 판매액의 산점도도", pch=10))
