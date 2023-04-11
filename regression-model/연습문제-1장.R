@@ -53,10 +53,10 @@ abline(h=0, lty=2)
 
 # 추정값의 신뢰대 그리기
 machine.frame = data.frame(X=seq(from = min(X), to=max(X),by=((max(X)-min(X))/(length(X)-1))))
-pc = predict(machine.lm, int="c", newdata=machine.frame)
+pc = predict(machine.lm, int="c", resid(machine.lm))
 pp = predict(machine.lm, int="p", newdata=machine.frame)
 plot(X, Y, ylim=range(Y, pp), main="추정값의 신뢰대", xlab="사용연도", ylab="정비비용")
-matlines(machine.frame$X, pc, lty=c(1,2,2), col="BLUE")
-matlines(machine.frame$X, pp, lty=c(1,3,3), col="RED")
+matlines(machine.frame$X, resid(machine.lm), lty=c(1,2,2), col="BLUE")
+matlines(machine.frame$X, resid(machine.lm), lty=c(1,3,3), col="RED")
 
 

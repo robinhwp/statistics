@@ -31,7 +31,7 @@ VIF(lm(X5~X2+X3+X4, data = hospital))
 hald=read.table("./data/hald.txt", header = T)
 # install.packages("leaps")
 library(leaps)
-all.lm=regsubsets(Y~., data = hald)
+all.lm=regsubsets(Y~., data = hald, nbest = 1)
 (rs=summary(all.lm))
 names(rs)
 rs$rsq
@@ -39,7 +39,7 @@ rs$adjr2
 rs$cp
 
 # forward selection
-start.lm=lm(Y~1, data = hald)
+start.lm=lm(Y~-1, data = hald)
 full.lm=lm(Y~., data = hald)
 step(start.lm, scope=list(lower=start.lm, upper=full.lm), direction = "forward")
 

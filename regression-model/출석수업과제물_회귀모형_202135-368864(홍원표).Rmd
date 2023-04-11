@@ -1,11 +1,8 @@
 ---
-title: ''
+title: '2023년 1학기 회귀모형 출석수업 과제물'
+author: "홍원표_202135-368864"
 date: "`r Sys.Date()`"
-output:
-  html_document:
-    df_print: paged
-  pdf_document:
-    extra_dependencies: kotex
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -13,8 +10,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## 2023년 1학기 회귀모형 출석수업 과제물
+### 이름 : 홍원표
+### 학번 : 202135-368864
+### 연락처 : 010-5343-4341
 
-### １번. 연습문제 1장 1번(p. 39) 자료를 이용하여 1.7 분석사례와 같이 분석하고, 설명하시오.
+## １번. 연습문제 1장 1번(p. 39) 자료를 이용하여 1.7 분석사례와 같이 분석하고, 설명하시오.
 
 #### 1) 교재의 데이터 입력 및 확인
 
@@ -34,7 +34,7 @@ plot(X, Y, pch=19, main="기계의 사용연도와 정비비용의 산점도",
      xlab = "사용연도 (단위:년)", ylab = "정비비용 (단위:1000원)")
 ```
 
-- 사용연도와 정비비용 변수간에는 선형상관관계사 존재하는 것으로 보여진다.
+- 사용연도와 정비비용 변수간에는 선형상관계가 존재하는 것으로 보여진다.
 
 #### 3) 회귀모형 적합 및 요약 정보 확인
 
@@ -44,7 +44,9 @@ machine.lm = lm(Y~X)
 summary(machine.lm)
 ```
 적합된 모형의 요약정보에서 회귀계수의 추정값의 절편 $b_0=29.107$ 이고 기울기 $b_1=13.637$인 단순회귀 방정식은  $\hat{Y}=29.107+13.637 \times X$가 된다.
+
 결정계수 $R^2=0.6098$로서 총변동중에서 약 61%가 회귀방정식으로 설명되는 회귀변동이 차지하고 있다는 것을 타나낸다. 
+
 회귀계수 X의 F-값은 4.330이고 p-값은 0.000978 으로 매우 작으므로 귀무가설 $H_0: \beta_1 = 0$ 을 기각하고 회귀계수 $\beta_1$ 이 유의하다는 것을 알 수 있다.
  
 #### 4) 분산분석표 확인
@@ -83,11 +85,11 @@ abline(h=0, lty=2)
 #### 7) 추정값의 신뢰대 그리기
 
 ```{r}
-# X의 범위와 갯수에 맞게 생성
-machine.frame = data.frame(X=1:length(X))
+# X의 범위와 갯수에 맞게 생성 range(X) -> 1 ~ 9
+machine.frame = data.frame(X=1:9)
 pc = predict(machine.lm, int="c", newdata=machine.frame)
 pp = predict(machine.lm, int="p", newdata=machine.frame)
-plot(X, Y, ylim=range(Y, pc), main="추정값의 신뢰대", xlab="사용연도(X)", ylab="정비비용(Y)")
+plot(X, Y, ylim=range(pp), main="추정값의 신뢰대", xlab="사용연도(X)", ylab="정비비용(Y)")
 matlines(machine.frame$X, pc, lty=c(1,2,2), col="BLUE")
 matlines(machine.frame$X, pp, lty=c(1,3,3), col="RED")
 
@@ -206,7 +208,7 @@ for(i in 1:(length(rownames(summary(res.lm)$coefficients))-1))
 {
   AVT["Regression", "Df"]=AVT["Regression", "Df"]+as.double(anova(res.lm)[i,"Df"])
   AVT["Regression", "Sum Sq"]=
-    AVT["Regression", "Sum Sq"]+as.double(anova(res.lm)[i,"Sum Sq"])
+  AVT["Regression", "Sum Sq"]+as.double(anova(res.lm)[i,"Sum Sq"])
 }
 # 분산분석 데이터에서 잔차에 필요한 정보를 행렬에 넣는다.
 AVT["Residuals", "Df"]=as.double(anova(res.lm)["Residuals","Df"])
@@ -221,12 +223,11 @@ AVT["Regression", "F value"] =
 AVT["Regression", "Pr(>F)"] = 
   round( (1 - pf( AVT["Regression", "F value"],
                 AVT["Regression", "Df"],
-                AVT["Residuals", "Df"])), 
-        6)
+                AVT["Residuals", "Df"])), 6)
 print(AVT)
 ```
 
-위에서 설명변수의 순서와 상관없이 잔차의 제곱합 및 잔차제곱의 평균값은 변동이 없으나 회귀계수는 순서에 따라 값이 변경된다.
+anova(res.lm)로 표시된 분산분석표를 보면 설명변수의 순서와 상관없이 잔차의 제곱합 및 잔차제곱의 평균값은 변동이 없으나 회귀계수는 설명변수의 순서에 따라 값이 변경된다. 하지만 정리된 분산분석표에서는 회귀계수들의 값들이 합하여 표시되기 때문에 영향이 없다.
 
 #### 8-1) 잔차 산점도(독립변수와 잔차)
 
@@ -236,8 +237,8 @@ par(mfrow=c(1,3), pty="s")
 plot(res$X1, res.lm$resid, pch=19)
 for( i in 1:length(res.lm$resid))
 {
-  if(res.lm$resid[i] > quantile(res.lm$resid, c(0.1, 0.9))[2] ||
-     res.lm$resid[i] < quantile(res.lm$resid, c(0.1, 0.9))[1])
+  if(res.lm$resid[i] > quantile(res.lm$resid, c(0.1, 0.8))[2] ||
+     res.lm$resid[i] < quantile(res.lm$resid, c(0.1, 0.8))[1])
     text(res$X1[i]+1.5, res.lm$resid[i], as.character(i))
 }
 abline(h=0, lty=2)
@@ -245,8 +246,8 @@ abline(h=0, lty=2)
 plot(res$X2, res.lm$resid, pch=19)
 for( i in 1:length(res.lm$resid))
 {
-  if(res.lm$resid[i] > quantile(res.lm$resid, c(0.1, 0.9))[2] ||
-     res.lm$resid[i] < quantile(res.lm$resid, c(0.1, 0.9))[1])
+  if(res.lm$resid[i] > quantile(res.lm$resid, c(0.1, 0.8))[2] ||
+     res.lm$resid[i] < quantile(res.lm$resid, c(0.1, 0.8))[1])
     text(res$X2[i]+0.4, res.lm$resid[i], as.character(i))
 }
 abline(h=0, lty=2)
@@ -254,8 +255,8 @@ abline(h=0, lty=2)
 plot(res$X3, res.lm$resid, pch=19)
 for( i in 1:length(res.lm$resid))
 {
-  if(res.lm$resid[i] > quantile(res.lm$resid, c(0.1, 0.9))[2] ||
-     res.lm$resid[i] < quantile(res.lm$resid, c(0.1, 0.9))[1])
+  if(res.lm$resid[i] > quantile(res.lm$resid, c(0.1, 0.8))[2] ||
+     res.lm$resid[i] < quantile(res.lm$resid, c(0.1, 0.8))[1])
     text(res$X3[i]+3.5, res.lm$resid[i], as.character(i))
 }
 abline(h=0, lty=2)
@@ -272,3 +273,10 @@ for( i in 1:length(res.lm$resid))
 }
 abline(h=0, lty=2)
 ```
+
+추정값의 잔차는 일정범위 안에 들어가기 때문에 회귀에 대한 기본가정을 만족한다고 할수 있다.
+
+
+***
+##### 2023년 회귀모형 출석수업 과제물 끝
+***
