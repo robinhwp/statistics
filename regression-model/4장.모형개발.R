@@ -62,4 +62,10 @@ library(faraway) # install.packages("faraway")
 fruitfly[c(1,26,51,75,101), ]
 
 
-
+prater = read.table("./data/prater.txt", header = T)
+head(prater, 2)
+prater.lm = lm(Y~X1+X2+X3+X4, data=prater)
+summary(prater.lm)
+start.lm = lm(Y~1, data=prater)
+full.lm = prater.lm
+step(start.lm, scope = list(upper=full.lm), data=prater, direction = "both")
