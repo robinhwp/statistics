@@ -4,7 +4,17 @@
 ## 오차의 등분산
 goose = read.table("./data/goose.txt", header = T)
 head(goose, 3)
+# 하나의 그래프에 산점도를 겹쳐서 그린다.
+par(mfrow=c(1,1))
+plot(goose$obsA, goose$photo, pch=19, col="red")
+par(new=TRUE)
+plot(goose$obsB, goose$photo, pch=20, col="blue")
+goose.lm = lm(photo~obsA+obsB, data=goose)
+summary(goose.lm)
+plot(goose.lm$fitted, goose.lm$resid, pch=19)
+
 goose.lm = lm(photo~obsA, data=goose)
+summary(goose.lm)
 plot(goose.lm$fitted, goose.lm$resid, pch=19)
 # 잔차산점도는 가 증가함에 따라 잔차의 흩어짐이 많아짐 이분산성이 의심됨
 library(car)
