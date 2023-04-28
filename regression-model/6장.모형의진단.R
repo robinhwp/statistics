@@ -48,3 +48,4 @@ boxcox(Y~X, data=energy, lambda = seq(-2, 2, 1/2), plotit = TRUE)
 # λ값을 찾으면 됨. 그림에서 λ는 0.5 가 됨. 
 # 이는 sqrt(root) 변환에 해당. 
 
+
