@@ -197,12 +197,19 @@ if(pvalue < α)
 }
 
 
+par(mfrow=c(1,2))
 
 # 가중회귀 직선을 구하라
 x = c(1,2,3,4,5)
 y = c(2,3,5,8,7)
+n.lm = lm(y~x)
+plot(n.lm$fitted, n.lm$resid)
+abline(n.lm)
+
 w = 1/x
 w.lm = lm(y ~ x, weights=w)
+plot(w.lm$fitted, w.lm$resid)
+abline(w.lm)
 w.lm.summary = summary(w.lm)
 b0=w.lm.summary$coefficients["(Intercept)","Estimate"]
 b1=w.lm.summary$coefficients["x","Estimate"]

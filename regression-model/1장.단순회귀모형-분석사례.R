@@ -95,12 +95,14 @@ abline(h=0, lty=2)
 plot(super.lm$fitted, super.lm$resid, pch=19)
 abline(h=0, lty=2)
 
+
 #추정값의 신뢰대 그리기
 # range(super$price) : 1.5 ~ 42.1 범위입니다.
-p.x=data.frame(price=c(1:45)+5) # 6 ~ 50까지로 x의 범위를 변경했습니다.
+p.x=data.frame(price=1:45) # 6 ~ 50까지로 x의 범위를 변경했습니다.
 pc = predict(super.lm, int="c", newdata=p.x)
 pp = predict(super.lm, int="p", newdata=p.x)
 # 산점도를 그릴때 신뢰대의 위치를 확인하기 위해서 xlim과 ylim으로 범위를 키웠습니다.
 plot(super$price, super$time, ylim=range(pp), xlim=c(min(super$price)-mean(super$price), max(super$price)+mean(super$price)))
 matlines(p.x$price, pc, lty = c(1,2,2), col="blue")
 matlines(p.x$price, pp, lty = c(1,2,2), col="red")
+

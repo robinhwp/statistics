@@ -27,10 +27,12 @@ ncvTest(goose.lm)
 tree = read.table("./data/tree.txt", header = T)
 head(tree, 3)
 tree.lm = lm(V~D+H, data=tree)
+par(mfrow=c(1,2))
 plot(tree$D, tree.lm$resid, pch=19)
 plot(tree$H, tree.lm$resid, pch=19)
 #변수D의 잔차산점도의 경우2차 함수형태의 비선형성이 나타남
 
+par(mfrow=c(1,1))
 ## 오차의 정규성
 goose.lm = lm(photo ~ obsA, data = goose)
 qqPlot(goose.lm)
@@ -39,7 +41,7 @@ qqPlot(goose.lm)
 goose.rstudent = rstudent(goose.lm)
 shapiro.test(goose.rstudent)
 # W = 0.7192, p-value = 5.971e-08
-# W 통계량은 0.7192이고 유의확률 p-value가 매우 작으므로 정규성 가정을 기각함.
+# W 통계량은 0.7192이고 유의확률 p-value가 매우 작으므규성 가정을 기각함로 정.
 
 ### 치료
 
