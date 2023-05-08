@@ -57,11 +57,52 @@ logit_mg = glm(y~glider_g$p_size_med, family = binomial(link=logit))
 
 summary(logit_mg)
 
-
+par(mfrow=c(1,1))
 f <- function(x){x^2}
 x <- 1:250
 plot(x, f(x), type='l')
 
-f <- function(x){1/(1+exp(-x))}
+
+par(mfrow=c(1,2))
+π <- function(x){1/(1+exp(-x))}
 x <- seq(-5, 5, .05)
-plot(x, f(x), type='l')
+plot(x, π(x), type='l', col="red" )
+logit <- function(x){log(π(x)/(1-π(x)))}
+plot(x, logit(x), type='l', col="blue" )
+
+par(mfrow=c(1,1))
+π <- function(x){1/(1+exp(-x))}
+x <- seq(-5, 5, .05)
+plot(x, π(x), type='l', ylab="π(x)")
+par(new=TRUE)
+plot(x, π(-x), type='l',ylab="π(x)", col="red" )
+text(-2, π(2), "beta1<0")
+text(2, π(2), "beta1>0")
+
+
+p_size <- seq(20, 230, 1)
+hat_eta <- predict(logit_m2, list(p_size_km=p_size), 
+                     type="link")
+par(mfrow=c(1,2))
+with(glider, plot(p_size_km, occurr, xlab='구획의 크기(x)', 
+       ylab="hat pi(x) \\ occurr", sub='(a)', pch=20))
+lines(p_size, exp(hat_eta)/(1+exp(hat_eta)),lwd=1.5, 
+        col='red')
+glider_g <- read.csv("./data/sugar_glider_binomial_g.csv")
+plot(glider_g$p_size_med, glider_g$cases/glider_g$count, 
+ xlab='구획의 크기(x)', 
+ ylim=c(0,1), ylab="hat pi(x) \\ sample prop.", sub='(b)', 
+ pch=20, col='blue')
+lines(p_size, exp(hat_eta)/(1+exp(hat_eta)), lwd=1.5, 
+ col='red')
+
+
+# 정리된 자료의 로지스틱 회귀모형 적합
+glider_g <- read.csv('./data/sugar_glider_binomial_g.csv') 
+head(glider_g) 
+
+y <- cbind(glider_g$cases, glider_g$count-glider_g$cases) 
+logit_mg <- glm(y~glider_g$p_size_med, family=binomial(link=logit)) 
+summary(logit_mg) 
+
+ 

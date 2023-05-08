@@ -1,0 +1,304 @@
+---
+title: ''
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+  pdf_document:
+    extra_dependencies: kotex
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 2023년 1학기 회귀모형 출석수업 과제물
+
+### １번. 연습문제 1장 1번(p. 39) 자료를 이용하여 1.7 분석사례와 같이 분석하고, 설명하시오.
+
+#### 1) 교재의 데이터 입력 및 확인
+
+```{r}
+# 교재의 데이터 입력 및 확인
+X = c(3, 1, 5, 8, 1, 4, 2, 6, 9, 3, 5, 7, 2, 6)
+Y = c(39, 24, 115, 105, 50, 86, 67, 90, 140, 112, 70, 186, 43, 126)
+# X, Y 두 변수의 마지막 3개의 값을 확인
+tail(cbind(X, Y), 3) 
+```
+
+#### 2) 산점도를 그려본다.
+
+```{r}
+# 산점도를 그린다.
+plot(X, Y, pch=19, main="기계의 사용연도와 정비비용의 산점도", 
+     xlab = "사용연도 (단위:년)", ylab = "정비비용 (단위:1000원)")
+```
+
+#### 3) 회귀모형 적합 및 요약 정보 확인
+
+```{r}
+# 회귀모형 적합 및 요약 정보 확인
+machine.lm = lm(Y~X)
+summary(machine.lm)
+```
+
+#### 4) 분산분석표 확인
+
+```{r}
+anova(machine.lm)
+```
+
+#### 5) 잔차와 추정값 보기
+
+```{r}
+# 회귀모형 적합 결과(machine.lm)의 변수 확인
+names(machine.lm)
+# X와 Y와 잔차 및 추정값을 합쳐서 보기
+cbind(X, Y, resid(machine.lm), fitted(machine.lm))
+```
+
+#### 6) 잔차와 독립변수 X 에 대한 산점도를 그려본다.
+
+```{r}
+# 잔차를 독립변수 X에 대해 산점도를 그려본다.
+plot(X, resid(machine.lm), pch=19, main="잔차와 X 산점도", xlab="X", ylab="잔차" )
+# 잔차가 0인 라인 타입 2번 선을 그린다.
+abline(h=0, lty=2)
+```
+
+#### 7) 추정값의 신뢰대 그리기
+
+```{r}
+# X의 범위와 갯수에 맞게 생성
+machine.frame = data.frame(X=1:length(X))
+pc = predict(machine.lm, int="c", newdata=machine.frame)
+pp = predict(machine.lm, int="p", newdata=machine.frame)
+plot(X, Y, ylim=range(Y, pc), main="추정값의 신뢰대", xlab="사용연도(X)", ylab="정비비용(Y)")
+matlines(machine.frame$X, pc, lty=c(1,2,2), col="BLUE")
+matlines(machine.frame$X, pp, lty=c(1,3,3), col="RED")
+
+```
+
+## 2번. 연습문제 2장 3번(p. 87) 자료를 이용하여 2.8 분석사례와 같이 분석하고, 설명하시오.
+
+#### 1) 교재의 데이터 입력
+
+```{r}
+Y = c(2.8, 3.9, 3.9, 4.4, 3.1, 3.1, 3.5, 3.6, 3.0, 3.3)
+X1 = c(10, 24, 25, 28, 15, 18, 22, 22, 12, 15)
+X2 = c(27, 26, 28, 26, 30, 24, 27, 25, 27, 25)
+X3 = c(64, 72, 80, 88, 81, 45, 46, 69, 54, 39)
+# 마지막 데이터 3개
+tail(cbind(Y, X1, X2, X3), 3) 
+res = as.data.frame(cbind(Y, X1, X2, X3))
+```
+
+#### 2) 기술통계량 및 상관계수 보기
+
+```{r}
+# 자료 요약 보기
+summary(res) 
+```
+
+```{r}
+# 상관계수 보기
+cor(res)
+```
+
+#### 3) 산점도 그리기
+
+```{r}
+par(mfrow=c(1,3), pty="s") 
+plot(X1, Y, pch = 19)
+plot(res$X2, res$Y, pch = 19)
+plot(res$X3, res$Y, pch = 19)
+```
+
+#### 4) 회귀모형 적합하기
+
+```{r}
+res.lm = lm(Y ~ X1+X2+X3, data=res) 
+summary(res.lm)
+```
+
+#### 5-1) 추정된 회귀방정식
+
+```{r}
+# 추정된 회귀방정식
+str = paste0("분산분석표 이용: hat_", names(res.lm$model)[1], " = ")
+str = paste0( str, round(coef(res.lm)["(Intercept)"], 3))
+for(i in 2:length(coef(res.lm)))
+{
+  str = paste0( str, " + ", round(coef(res.lm)[names(res.lm$model)[i]], 3),
+                "*", names(res.lm$model)[i])
+}
+print(str)
+```
+
+#### 5-2) 추정된 회귀방정식 
+
+```{r}
+# 추정된 회귀방정식을 최소제곱법으로 β를 행렬방정식으로 계산
+mX=as.matrix(cbind(1, X1, X2, X3))
+mY=as.matrix(Y)
+mβ=solve(t(mX)%*%mX)%*%t(mX)%*%mY
+
+str = paste0(" 최소제곱법 이용 : hat_Y = ", round(mβ[1], 3))
+for(i in 2:length(rownames(mβ)))
+{
+  str = paste0( str, " + ", round(mβ[i], 3), "*", rownames(mβ)[i])
+}
+print(str)
+```
+
+```{r}
+paste0("결정계수 R.squared =", round(summary(res.lm)$r.squared, 3), "으로",
+round(summary(res.lm)$r.squared*100,1), "% 설명력이 있다.")
+```
+
+```{r}
+paste0("추정값의 표준오차 sqrt(MSE) = ", round(summary(res.lm)$sigma, 3), "로 σ의 추정치가 ",round(summary(res.lm)$sigma, 3), "임을 알 수 있다.")
+```
+
+```{r}
+α = 0.05
+for(i in 2:length(coef(res.lm)))
+{
+  p.value = round(summary(res.lm)$coefficients[
+    names(res.lm$model)[i],"Pr(>|t|)"],5)
+  if (p.value < α )
+    {
+    print(paste0( names(res.lm$model)[i], "의 p-value = ", p.value, "으로서 ",
+                  names(res.lm$model)[1], "를(을) 설명하는데 유의하다"))
+    }
+  else
+    {
+      print(paste0( names(res.lm$model)[i], "의 p-value = ", p.value,
+                    "으로서 ", names(res.lm$model)[1], 
+                    "를(을) 설명하는데 그리 큰 영향을 준다고 할 수 없다."))
+    }
+}
+
+      
+```
+
+#### 6) 추가변수그림 그려보기
+
+```{r warning=FALSE}
+library(car)
+avPlots(res.lm)
+```
+
+추가 그림을 그려보면 X1이 Y을 설명하는데 유의한 변수임을 알 수 있다.
+
+#### 7-1) 분산분석표 구하기
+
+```{r}
+anova(res.lm)
+```
+
+#### 7-2) 분산분석표 정리
+
+```{r}
+AVT = matrix(c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), nrow=3)
+colnames(AVT)=colnames(anova(res.lm))
+rownames(AVT)=c("Regression", "Residuals", "Total")
+
+for(i in 1:(length(rownames(summary(res.lm)$coefficients))-1))
+{
+  AVT["Regression", "Df"]=AVT["Regression", "Df"]+as.double(anova(res.lm)[i,"Df"])
+  AVT["Regression", "Sum Sq"]=
+    AVT["Regression", "Sum Sq"]+as.double(anova(res.lm)[i,"Sum Sq"])
+}
+
+AVT["Residuals", "Df"]=as.double(anova(res.lm)["Residuals","Df"])
+AVT["Residuals", "Sum Sq"]=as.double(anova(res.lm)["Residuals","Sum Sq"])
+AVT["Total", "Df"]=AVT["Regression", "Df"]+AVT["Residuals", "Df"]
+AVT["Total", "Sum Sq"]=AVT["Regression", "Sum Sq"]+AVT["Residuals", "Sum Sq"]
+AVT["Regression", "Mean Sq"] = AVT["Regression", "Sum Sq"] / AVT["Regression", "Df"]
+AVT["Residuals", "Mean Sq"] = AVT["Residuals", "Sum Sq"] / AVT["Residuals", "Df"]
+AVT["Regression", "F value"] = 
+  round(AVT["Regression", "Mean Sq"] / AVT["Residuals", "Mean Sq"], 1)
+AVT["Regression", "Pr(>F)"] = 
+  round( (1 - pf( AVT["Regression", "F value"],
+                AVT["Regression", "Df"],
+                AVT["Residuals", "Df"])), 
+        6)
+print(AVT)
+```
+
+위에서 설명변수의 순서와 상관없이 잔차의 제곱합 및 잔차제곱의 평균값은 변동이 없으나 회귀계수는 순서에 따라 값이 변경된다.
+
+#### 8-1) 잔차 산점도(독립변수와 잔차)
+
+```{r}
+# 독립변수와 잔차의 산점도를 그리고 각 케이스의 번호 출력
+par(mfrow=c(1,3), pty="s")
+plot(res$X1, res.lm$resid, pch=19)
+for( i in 1:length(res.lm$resid))
+{
+  if(res.lm$resid[i] > quantile(res.lm$resid, c(0.1, 0.9))[2] ||
+     res.lm$resid[i] < quantile(res.lm$resid, c(0.1, 0.9))[1])
+    text(res$X1[i]-1, res.lm$resid[i], as.character(i))
+}
+abline(h=0, lty=2)
+
+plot(res$X2, res.lm$resid, pch=19)
+for( i in 1:length(res.lm$resid))
+{
+  if(res.lm$resid[i] > quantile(res.lm$resid, c(0.1, 0.9))[2] ||
+     res.lm$resid[i] < quantile(res.lm$resid, c(0.1, 0.9))[1])
+    text(res$X2[i]+0.3, res.lm$resid[i], as.character(i))
+}
+abline(h=0, lty=2)
+
+plot(res$X3, res.lm$resid, pch=19)
+for( i in 1:length(res.lm$resid))
+{
+  if(res.lm$resid[i] > quantile(res.lm$resid, c(0.1, 0.9))[2] ||
+     res.lm$resid[i] < quantile(res.lm$resid, c(0.1, 0.9))[1])
+    text(res$X3[i]+3, res.lm$resid[i], as.character(i))
+}
+abline(h=0, lty=2)
+
+```
+
+#### 8-2) 잔차 산점도 -2 : (추정값, 잔차)
+
+```{r}
+plot(res.lm$fitted, res.lm$resid, pch=19)
+for( i in 1:length(res.lm$resid))
+{
+    text(res.lm$fitted[i]+0.03, res.lm$resid[i], as.character(i))
+}
+abline(h=0, lty=2)
+```
+
+
+69.74758748	=NORM.INV(0.1,80,8)
+
+
+93.15882902	=NORM.INV(0.95,80,8)
+
+0.977249868	=NORM.DIST(40,30,5,1)
+41.63173937	=NORM.INV(0.99,30,5)
+
+41.63173937
+
+
+1. pred.frame$X에는 신뢰구간을 구한 x축 범위 입니다.
+2. pc는 기댓값의 신뢰구간을 pred.frame$X를 넣어서 구한값들입니다.
+3. pp는 새로운값의 신뢰구간을 pred.frame$X를 넣어서 구한값들입니다.
+결국 pred.frame$X와 pc, pp의 case는 동일하게 됩니다.
+4. plot으로 산점도를 그릴때 pred.frame$X와 pc, pp 범위와 차이가 난다면 matlines로 신뢰대를 그릴때 이상한 곳에 그려질수도 있으니 plot의 ylim으로 pc나 pp의 범위를 지정해주면 뭔가 잘못된 부분을 확인할 수 있을것 같습니다.
+
+신뢰대 그림이 WW 형태를 띤다면 다른 변수가 적용된것으로 추측됩니다.
+
+c(1,45)는 pp나 pc를 구해도 2개의 케이스 밖에 안나오기 때문에 직선으로 보여집니다.
+1:45는 45개의 케이스로 구해진 추정값이 됩니다.
+
+pc의 추정식은 교재 24페이지 (1.20)과 pp의 추정식은 25페이지 (1.22)를 참고 하시면됩니다.
+
+X축의 값 p.x=data.frame(price=c(1:45))
+각각의 값을 추정회귀식으로 신뢰구간(lwr,upr)을 구한 후
+matlines에서는 lwr과 upr을 smooth 하게 그려준게 아닐까 생각합니다.

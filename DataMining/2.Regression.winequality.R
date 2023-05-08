@@ -19,9 +19,9 @@ yhat = ifelse(p > cutoff, 1, 0)
 # Evaluation
 tab = table(wine$quality, yhat, dnn=c("Observed","Predicted"))
 print(tab)              # confusion matrix
-sum(diag(tab))/sum(tab) # accuracy
-tab[2,2]/sum(tab[2,])   # sensitivity
-tab[1,1]/sum(tab[1,])   # specificity
+sum(diag(tab))/sum(tab) # accuracy(정분류)
+tab[2,2]/sum(tab[2,])   # sensitivity(민감도)
+tab[1,1]/sum(tab[1,])   # specificity(특이도)
 
 
 ### END

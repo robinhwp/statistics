@@ -1,6 +1,6 @@
 
 # importing data
-prod =  read.csv("./data/2.Regression.Productivity.RproductivityREG.csv")
+prod =  read.csv("./data/productivityREG.csv")
 prod$quarter = factor(prod$quarter)
 prod$department = factor(prod$department)
 prod$day = factor(prod$day)
@@ -11,7 +11,7 @@ fit.all = lm(productivity~., data=prod)
 fit.step = step(fit.all, direction = "both")
 fit.step$anova
 summary(fit.step)
-
+ 
 # Making predictions
 pred.reg = predict(fit.step, newdata=prod, type="response")
 print(pred.reg)
