@@ -5,11 +5,12 @@ output: html_notebook
 
 ## 1.0 파이썬과 R 정리
 
-```
+```         
     파이썬 interactive 실행
     Ctrl+Shift+P -> jupyter: Create interactive window 선택
     os.chdir('D:\\robin\git\statistics\MultivariateDataAnalysis') 실행해야 디렉토리가 맞음
 ```
+
 ### 서론
 
 파이썬도 RStudio에서 지원해주는것 같기는 한데 예전에 사용할때 vscode에서 단계별로 실행한 기억이 있는데 다시해보니 느낌에 차이가 나는듯 해서 R Studio를 파이썬도 스터디 용도로 사용해본다.
@@ -18,13 +19,10 @@ output: html_notebook
 
 ### 파이썬 패키지 설치
 
--   cmd창에서 실행해야한다.
-    > | \> python –m pip install –upgrade pip
-    > | \> pip3 install mglearn
-    > | \> pip3 install graphviz
-
+-   cmd창에서 실행해야한다. \> \| \> python --m pip install --upgrade pip \> \| \> pip3 install mglearn \> \| \> pip3 install graphviz
 
 #### import libraries
+
 ```{python eval=F}
 # 'generic import' of math module
 import math 
@@ -44,6 +42,7 @@ bmi = pd.read_csv('data/auto.csv')
 ```
 
 #### comment
+
 ```{python eval=F}
 # comments in line
 '''
@@ -55,8 +54,8 @@ Edouard Duchesnay, Tommy Löfstedt. Statistics and Machine Learning in Python,
 help('modules') # 설치된 모듈 목록 보기
 ```
 
-
 #### basic operations
+
 ```{python eval=F}
 # number
 r1 = 10**3 # 1000
@@ -78,8 +77,8 @@ r5 = 10 // 4 # floor division 2
 FALSE | !FALSE & TRUE # False or not False and True
 ```
 
-
 #### Data type
+
 ```{python eval=F}
 
 # determine the type of an object 
@@ -105,19 +104,16 @@ bool({}) # empty dictionary
 ```
 
 #### Tuples, lists and dictionaries
-The 3 basic data types in Python are :  
-__- Tuples – List - Dictionary__ 
 
-**Tuples**: Tuples are immutable python objects which are enclosed with paranthesis. Immutability implies 
-that objects cannot be added or removed to tuples. Hence we cannot
-add or remove elements from tuples. However a tuple can be removed using the del() commands  
+The 3 basic data types in Python are :\
+**- Tuples -- List - Dictionary**
 
-**List**: List are a sequence of disimilar objects enclosed within square brackets. Objects
-can be added to lists using append() and deleted using remove()  
+**Tuples**: Tuples are immutable python objects which are enclosed with paranthesis. Immutability implies that objects cannot be added or removed to tuples. Hence we cannot add or remove elements from tuples. However a tuple can be removed using the del() commands
 
-**Dictionary**: Dictionaries are a name(key)-value pair enclosed within curly braces. The name- value 
-pairs are separated using a ':'. The keys must be unique in the dictionary
-The length of tuples, lists and dictionaries can be obtained with the len()
+**List**: List are a sequence of disimilar objects enclosed within square brackets. Objects can be added to lists using append() and deleted using remove()
+
+**Dictionary**: Dictionaries are a name(key)-value pair enclosed within curly braces. The name- value pairs are separated using a ':'. The keys must be unique in the dictionary The length of tuples, lists and dictionaries can be obtained with the len()
+
 ```{python eval=F}
 # Tuples are enclosed in paranthesis
 mytuple=(1,3,7,6,"test")
@@ -135,6 +131,7 @@ print("Length of dictionary =",len(mydict))
 ```
 
 ##### Lists
+
 ```{python}
 # empty list 
 empty = [] 
@@ -164,6 +161,7 @@ weekdays.sort(key=len) # sort by a key
 ```
 
 ##### Tuples
+
 ```{python eval=F}
 # create a tuple 
 digits = (0, 1, 'two') # create a tuple directly 
@@ -176,7 +174,8 @@ digits.index(1) # returns the index of the first instance of that value (1)
 ```
 
 ##### Dictionaries
-```{python eval=F} 
+
+```{python eval=F}
 # create a dictionary (two ways) 
 family = {'dad':'homer', 'mom':'marge', 'size':6} 
 family = dict(dad='homer', mom='marge', size=6)
@@ -192,7 +191,9 @@ family.items() # returns list of tuples:
 'marge' in family # returns False (only checks keys)
 
 ```
+
 #### Set : 집합 - list 와 달리 중복과 순서가 없음
+
 ```{python eval=F}
 # create a set 
 languages = {'python', 'r', 'java'} # create a set directly 
@@ -216,6 +217,7 @@ print(s1.difference(s2)) # 차집합
 ```
 
 #### Conditional statements (조건문)
+
 ```{python eval=F}
 x = 3 
 # if statement 
@@ -236,6 +238,7 @@ else:
 ```
 
 #### Loops (반복문)
+
 ```{python eval=F}
 # range returns a list of integers 
 range(0, 3) # returns [0, 1, 2]: includes first value but excludes second value 
@@ -257,6 +260,7 @@ while count < 5:
 ```
 
 #### Functions
+
 ```{python eval=F}
 # define a function with no arguments and no return values 
 def print_text(): 
@@ -291,9 +295,10 @@ min_max_num = min_max(nums) # min_max_num = (1, 3)
 
 ```
 
-#### Functions – lambda
-• Lambda operations all you to create small anonymous function which
-computes something
+#### Functions -- lambda
+
+• Lambda operations all you to create small anonymous function which computes something
+
 ```{python eval=F}
 # operations on list
 a = [5,2,3,1,7]
@@ -304,9 +309,11 @@ add_fct(a,b)
 # Add all elements of lists a and b 
 print(list(map(add_fct, a,b))) # [6, 7, 7, 7, 15]
 ```
+
 Ref: Practical machine learning with R and Python:3rd ed., Tinniam V Ganesh
 
-#### Object oriented programming(OOP) 
+#### Object oriented programming(OOP)
+
 ```{python}
 import math
 # Inheritance + Encapsulation 
@@ -329,7 +336,8 @@ a.area()
 
 ```
 
-#### Read text file using pandas 
+#### Read text file using pandas
+
 ```{python eval=F}
 # 데이터가 없어서 실행할 수 없음
 
@@ -356,8 +364,8 @@ plt.scatter(heig, weig)
 plt.show()
 ```
 
+#### Read Excel file using pandas
 
-#### Read Excel file using pandas 
 ```{python eval=F}
 # 실행되지 않음 
 import os
@@ -371,10 +379,9 @@ beer.head()
 ```
 
 #### Numpy
-NumPy is one of the most fundamental package for scientific computing 
-with Python. Numpy includes the support for handling large, multidimensional
-arrays and matrices, along with a large collection of highlevel
-mathematical functions to operate on these arrays.
+
+NumPy is one of the most fundamental package for scientific computing with Python. Numpy includes the support for handling large, multidimensional arrays and matrices, along with a large collection of highlevel mathematical functions to operate on these arrays.
+
 ```{python}
 import numpy as np
 #Create a 1d numpy array
@@ -382,13 +389,8 @@ data1 = [6, 7.5, 8, 0, 1]
 arr1 = np.array(data1)
 print(arr1)
 ```
-Python의 기본 자료구조
-- list / tuple / dictionary / set
-: The Python languge was not initially 
-designed for numerical computing
-: 1995 matrix-sig group
-: 2006 numpy
 
+Python의 기본 자료구조 - list / tuple / dictionary / set : The Python languge was not initially designed for numerical computing : 1995 matrix-sig group : 2006 numpy
 
 ```{python}
 # Create numpy array in a single line

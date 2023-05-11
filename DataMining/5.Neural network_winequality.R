@@ -1,5 +1,5 @@
  library(neuralnet)
- wine = read.csv("winequalityCLASS.csv", header=TRUE)
+ wine = read.csv("./data/winequalityCLASS.csv", header=TRUE)
  # Set a critical value
  cutoff = 0.5 
  # Standardization
@@ -18,6 +18,7 @@
  # Confusion matrix
  tab = table(gdat$quality, yhat.nn, dnn=c("Observed","Predicted"))
  print(tab) 
- sum(diag(tab))/nrow(gdat) # accuracy
- tab[2,2]/sum(tab[2,])   # sensitivity
- tab[1,1]/sum(tab[1,])   # specificity
+ sum(diag(tab))/nrow(gdat) # accuracy (정확도)
+ tab[2,2]/sum(tab[2,])   # sensitivity (민감도)
+ tab[1,1]/sum(tab[1,])   # specificity (특이도)
+ 

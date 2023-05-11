@@ -6,7 +6,7 @@
 #install.packages('ROCR')
 
 # Importing data
-wine = read.csv("winequalityCLASS.csv", header=TRUE)
+wine = read.csv("./data/winequalityCLASS.csv", header=TRUE)
 
 # Determining a cutoff
 cutoff = 0.5 
@@ -154,10 +154,10 @@ tab[1,1]/sum(tab[1,])   # specificity
 
 
 ### ROC and AUC 
-
+# install.packages("ROCR")
 library(ROCR)
 
-# Making predictions
+# Making predictions (예측값을 가져와서 종합해 주는 함수 )
 pred.reg  = prediction(p.test.reg, wine.test$quality);  perf.reg = performance(pred.reg,"tpr","fpr")
 pred.tree = prediction(p.test.tree, wine.test$quality); perf.tree = performance(pred.tree,"tpr","fpr")
 pred.nn   = prediction(p.test.nn, wine.test$quality);   perf.nn = performance(pred.nn,"tpr","fpr")
@@ -167,6 +167,7 @@ pred.rf   = prediction(p.test.rf, wine.test$quality);   perf.rf = performance(pr
 
 
 # Drawing ROCs
+par(mfrow=c(1,1))
 plot(perf.reg,  lty=1, col=1, xlim=c(0,1), ylim=c(0,1),xlab="1-Specificity", ylab="Sensitivity", main="ROC Curve")
 plot(perf.tree, lty=2, col=2, add=TRUE)
 plot(perf.nn,   lty=3, col=3, add=TRUE)

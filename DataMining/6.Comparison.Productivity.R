@@ -3,7 +3,7 @@
 ####################################
 
 # Importing data
-prod = read.csv("productivityREG.csv", header=TRUE)
+prod = read.csv("./data/productivityREG.csv", header=TRUE)
 
 # Factorizing predictor variables
 prod$quarter = factor(prod$quarter)
@@ -13,6 +13,7 @@ prod$team = factor(prod$team)
 
 # Partitioning data into train and test sets
 set.seed(1234)
+# 전체행중에 0.7을 곱해서 사이즈로 추출
 train.index = sample(1:nrow(prod), size=0.7*nrow(prod))
 prod.train = prod[ train.index,] #train data
 prod.test  = prod[-train.index,] #test data

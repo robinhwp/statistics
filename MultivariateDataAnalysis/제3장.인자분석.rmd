@@ -1,0 +1,101 @@
+# 제3장. 인자분석
+## 인자분석 예 1
+### (1) 자료 읽기 및 요약통계량
+
+```{r}
+med_data <- read.csv("./data/medfactor.csv")
+head(med_data, 3)
+summary(med_data)
+```
+
+
+```{r}
+# install.packages("psych")
+library(psych)
+cortest.bartlett(med_data)
+```
+
+
+```{r}  
+KMO(med_data)
+```
+### (2) 초기 인자분석 실행하기
+
+```{r}
+# install.packages("GPArotation")
+library(GPArotation)
+med_factor = principal(med_data, rotate="none")
+names(med_factor)
+```
+
+```{r}
+med_factor$values
+plot(med_factor$values, type="b", pch=19) # 스크리 그림
+```
+
+- med_factor$values : 고유값
+
+#### ① varimax 인자회전 
+```{r warning=FALSE}
+med_varimax = principal(med_data, nfactors = 3, rotate = "varimax", # 직교회전
+                        scores=T, method = "regression")
+print(med_varimax)
+```
+
+```{r}
+head(med_varimax$scores)
+```
+#### ② oblimin 회전 결과 
+```{r}
+med_oblimin = principal(med_data, nfactors = 3, rotate="oblimin",
+                        scores = T, method = "regression")
+print(med_oblimin)
+```
+
+```{r}
+head(med_oblimin$scores)
+```
+
+#### ③ 행렬도 
+```{r}
+biplot(med_varimax)
+```
+
+## 인자분석 예 2
+최우추정법을 이용한 인자분석을 실행해 보자.  
+본 예제는 R의 state.x77를 이용하여 분석해 보도록 한다.  
+state 패키지의 factanal() 함수를 통해 
+최우추정법(Maximum likeli-hood method)를 이용하여 
+인자모형을 추정해 보자.
+
+### (1) 자료 및 요약통계량 
+
+```{r}
+head(state.x77)
+state = state.x77
+summary(state)
+```
+
+- state.x77 : 1970년대 미국 50개 주의 인구, 수입, 문맹, 생활수준기대, 
+  살인, 고등교육수준, 날씨, 지역면적에 대한 정보
+
+```{r}
+library(stats)
+state_fact0 = factanal(state, factors = 4)
+sosq = function(v) { sum(v^2)}
+loadings = as.matrix(state_fact0$loadings)
+eigen_value = apply(loadings, 2, sosq)
+round(eigen_value, 3)
+#round(apply(state_fact0$loadings^2, 2, sum), 3)
+```
+
+```{r}
+state_fact = factanal(state, factors = 3, rotation = "none")
+state_fact1 = factanal(state, factors = 3, rotation = "varimax")
+state_fact2 = factanal(state, factors = 3, rotation = "promax")
+names(state_fact)
+```
+
+```{r}
+state_fact1
+```

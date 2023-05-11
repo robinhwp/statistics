@@ -1,0 +1,156 @@
+---
+title: '제4장.군집분석'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## R 군집분석 사례(1)
+
+### 데이터 읽기
+```{r}
+beer=read.csv("./data/beerbrand.csv", header=T, row.names=1)
+head(beer)
+summary(beer)
+```
+### (3) 자료 표준화
+```{r}
+# z-표준화
+zbeer=scale(beer)
+round(apply(zbeer, 2, mean), 3)
+round(apply(zbeer, 2, sd), 3)
+```
+
+
+```{r}
+# 0-1 변환(1)
+library(caret)
+z01_beer=preProcess(beer, method = 'range')
+z01_model=preProcess(beer, method='range')
+z01_beer= predict(z01_model, beer)
+summary(z01_beer)
+```
+
+```{r}
+# 0-1 변환(2)
+maxX = apply(beer, 2, max)
+minX = apply(beer, 2, min)
+z01X = scale(beer, center = minX, scale = maxX-minX)
+summary(z01X)
+```
+
+### (3) 거리행렬 계산하기
+```{r}
+zbeer_euc = dist(zbeer)
+zbeer_man = dist(zbeer, "manhattan")
+zbeer_euc[1]
+zbeer_man[1]
+```
+
+### (4) 계층적 군집분석 - 최단연결법
+```{r}
+hc_s = hclust(zbeer_euc, method='single')
+hc_s
+plot(hc_s, hang=-1)
+```
+
+
+### (5) 계층적 군집분석 - 최장연결법
+```{r}
+hc_c = hclust(zbeer_euc, method='complete')
+hc_c
+plot(hc_c, hang=-1)
+```
+
+### (6) 계층적 군집분석 - 중심연결법
+```{r}
+hc_cen = hclust(zbeer_euc, method="centroid")
+hc_cen
+plot(hc_cen, hang=-1)
+```
+
+### (7) 계층적 군집분석 - 와드의 방법
+```{r}
+hc_w = hclust(zbeer_euc, method="ward.D")
+hc_w
+plot(hc_w, hang=-1)
+```
+
+### (8) 소속 군집 알기
+```{r}
+hc_cen24 = cutree(hc_cen, 2:4)
+hc_cen24
+```
+
+## R 군집분석 사례 분석(2)
+### (1) 데이터 정보 확인 ( USArrests )
+```{r}
+head(USArrests)
+summary(USArrests)
+```
+
+### (2) 계층적 군집분석 실행하기 - 평균연결법
+```{r}
+zUSArrests=scale(USArrests)
+hc_a=hclust(dist(zUSArrests), method = "average")
+hc_a
+plot(hc_a, hang=-1)
+```
+
+```{r}
+# hang=-1이 없을때 덴트리그램의 차이
+plot(hc_a)
+```
+
+### (3) 소속 군집 알기
+```{r}
+hcmember = cutree(hc_a, k=5)
+hcmember
+```
+
+### (4) 각 군집별 중심점 찾기
+```{r}
+data_combined=cbind(USArrests, hcmember)
+aggregate(.~hcmember, data_combined, mean) # 굉장히 편리한 방법이라고 강조
+```
+
+- 1번 군집의 경우, Murder의 범죄체포수가 가장 많은 군집
+- 5번 군집의 경우 모든 변수에서 범죄체포수가 가장 적은 군집
+
+
+## k-평균 군집분석 사례 
+### (1) 데이터 설명
+### (2) 데이터 읽기
+```{r}
+beer.data = read.table('./data/beerbrand.csv', header=T, sep=",")
+head(beer.data)
+summary(beer.data)
+```
+
+### (3) 자료표준화
+```{r}
+zbeer=scale(beer.data)
+round(apply(zbeer, 2, mean), 3)
+round(apply(zbeer, 2, sd), 3)
+```
+
+
+```{r}
+# 0-1 변환(1)
+library(caret)
+z01_beer=preProcess(beer.data, method = 'range')
+z01_model=preProcess(beer.data, method='range')
+z01_beer= predict(z01_model, beer.data)
+summary(z01_beer)
+```
+
+
+```{r}
+# 0-1 변환(2)
+maxX = apply(beer.data, 2, max)
+minX = apply(beer.data, 2, min)
+z01X = scale(beer.data, center = minX, scale = maxX-minX)
+summary(z01X)
+```
+
