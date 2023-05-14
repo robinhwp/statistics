@@ -1,0 +1,99 @@
+---
+title: '제5장.다차원척도법(MDS)'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R MDS 분석예
+
+### (1) 자료 읽기
+
+```{r}
+auto = read.csv("./data/auto.csv")
+head(auto)
+```
+### (2) 표준화 변수 만들기
+```{r}
+X=auto[,-1] # 맨 마지막 price 열을 제외시킨다.
+autoName = auto[,1]
+# z-standardization
+zX = scale(X, center = TRUE, scale = TRUE) # 변수 표준화화
+# 0-1 transformation
+maxX = apply(X, 2, max) # MARGIN : 1: 행, 2: 열
+minX = apply(X, 2, min)
+# z01X = (X - minX) / (maxX - minX)
+z01X = scale(X, center = minX, scale = maxX - minX)
+```
+
+### (3) 거리행렬 만들기
+```{r}
+# 유클리드 거리 행렬을 만드는 내용
+z01X_dist = dist(z01X, method='euclidean')
+z01X_dist = as.matrix(z01X_dist) # 행렬로 변환한다.
+colnames(z01X_dist) = autoName
+rownames(z01X_dist) = autoName
+# z01X_dist 는 행렬이 rownamer과 colname이 autoName으로 만들어 졌다.
+```
+
+### (4) cmdscale 실행 
+```{r}
+mds1 = cmdscale(z01X_dist, k=2)
+plot(mds1[,1], mds1[,2], type='n', xlab='', ylab='', main='cmdscale(Auto)')
+text(mds1[,1], mds1[,2], rownames(z01X_dist), cex=0.9)
+abline(h=0, v=0, lty=2)
+```
+
+### (5)smacof mds 실행 예
+```{r message=FALSE}
+# install.packages("smacof")
+library(smacof)
+mds2 = mds(z01X_dist, ndim=2)
+names(mds2)
+plot(mds2$conf[,1], mds2$conf[,2], type='n', xlab='', ylab='', main='smacof(Auto)')
+text(mds2$conf[,1], mds2$conf[,2], rownames(z01X_dist), cex=0.9) # cex : character size
+abline(h=0, v=0, lty=2)
+mds2$stress
+```
+
+- 스트레스 값이 0.02588283로서 적합도가 좋음.
+
+### (6) 스크리 그림 그리기
+```{r}
+mds2_1 = mds(z01X_dist, ndim=1)
+mds2_2 = mds(z01X_dist, ndim=2)
+mds2_3 = mds(z01X_dist, ndim=3)
+mds2_4 = mds(z01X_dist, ndim=4)
+stress = c(mds2_1$stress, mds2_2$stress, mds2_3$stress, mds2_4$stress)
+plot(stress, type="l")
+points(stress, cex=0.9)
+```
+
+- 스크리 그림에서 2-차원 MDS가 적합함을 알 수 있음.
+
+## R 비메트릭 MDS 분석
+
+### (1) 행렬자료 읽기
+```{r}
+source("./data/nreadMatrix.r")
+datam = scan("./data/country1968.txt")
+country_name = scan("./data/countryname.txt", what="")
+cdata = readMatrix(datam, nrows=12, cname=country_name)
+```
+
+### (2) 비메트릭 MDS iosMDS 함수 실행
+```{r}
+library(MASS)
+nmds=isoMDS(cdata, k=2)
+names(nmds)
+nmds
+x = nmds$points[,1]
+y = nmds$points[,2]
+plot(x,y,xlab="", ylab="", main="isoMDS", type="n")
+text(x,y,labels=row.names(cdata), cex=0.9)
+abline(h=0, v=0, lty=2)
+```
+
+

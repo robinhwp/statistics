@@ -123,7 +123,7 @@ aggregate(.~hcmember, data_combined, mean) # 굉장히 편리한 방법이라고
 ### (1) 데이터 설명
 ### (2) 데이터 읽기
 ```{r}
-beer.data = read.table('./data/beerbrand.csv', header=T, sep=",")
+beer.data = read.table('./data/beerbrand.csv', header=T, sep=",", row.names=1)
 head(beer.data)
 summary(beer.data)
 ```

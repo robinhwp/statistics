@@ -1,0 +1,181 @@
+---
+title: '다변량분석(5월14일 출석수업과제)'
+output: html_document
+date: "2023-05-14"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### 출석수업
+2023년 5월 14일(일) 다변량분석 출석 수업 과제물은 다음과 같습니다.
+R과 파이썬을 각각 이용하여 작성하시오 (결과+분석)
+- 교재 연습문제 1장(p.38)  4번 
+- 교재 연습문제 2장(p.78)  4번 
+- 교재 연습문제 4장(p.176)  5번 
+  (Gender = 'Male' 인 데이터와 Gender = 'Female' 인 데이터를 각각 추출하여 
+   5번을 실행하기 바람) 
+- 데이터는 exdata.zip 에 있음 
+
+### 기한 : 5월 29일 (월) 17:30 까지 
+참고 : 한글이나 MS 워드를 이용하여 작성 저장한 후, pdf 로 새로 저장하여 pdf 파일로 제출하기 바랍니다.   
+
+### 1-4
+
+#### (1)
+```{r}
+# 산점도 행렬
+pairs(longley)
+# 별그림
+stars(longley)
+# 얼굴그림 : install.packages("aplpack")
+library(aplpack)
+faces(longley)
+```
+- 산점도 행렬을 보면 GNP.deflator, GNP, Population, Year, Employed 변수끼리의 상관관계가 뚜렷하게 보나타납니다.  
+  연도(Year)에 따라 인구(Population) 변수가 상관관계가 가장 뚜렷해 보이고 소득관련(GNP, GNP.deflator) 변수도 상관관계도 높아 보입니다.  
+  하지만 실업자(Unemployed) 수와 군인(Armed.Forces) 변수는 상관관계가 약해보입니다.
+
+- 별그림을 보면 대부분의 변수들이 연도에 따라 증가된것으로 보여지고 1951년에 군인(Armed.Forces)이 많이 들어났고, 1958년도에는 실업자(Unemployed) 수가 많이 늘어난것으로 벼여집니다. 전반적으로 군인과 실업자 수를 제외하고는 연도가 증가함에 따라 모두 같이 증가한것으로 보여집니다.
+
+- 얼굴그림은 연도별로 출력된 내용으로는 특정 변수가 어떤 변화가 있었는지 파악이 어려울것 같고 연도가 증가함에 따라 전반적으로 얼굴의 모양이 좋아지는 것을 봐서 모든 변수들의 항목이 좋아진 것으로 보여집니다.
+
+#### (2)
+```{r}
+# longley 데이터를 longley_0514.csv로 저장
+write.csv(longley, "./exdata/longley_0514.csv")
+```
+
+#### (3)
+```{python}
+# python block
+import pandas as pd
+# 첫행을 컬럼명으로, 첫열을 row 이름으로 사용하여 csv 파일 읽기기
+longley = pd.read_csv("./exdata/longley_0514.csv", header = 0, index_col=0)
+longley.head()
+
+# 산점도 행렬(seaborn 사용)
+import seaborn as sns
+sns.pairplot(longley)
+```
+
+- R에서의 산점도 행렬은 단색으로 그려지고 변수명은 해당 변수의 행렬이 일치하는 곳에 출력하지만 파이썬에서는 왼쪽과 아래에 변수명이 출력됩니다. 그리고 변수명의 행렬이 일치하는 곳에는 히스토그램이 출력되고 산점도와 히스토그램 색상이 파란색으로 출력이 됩니다.
+- 파이썬에서도 변수들 간의 산점도는 R과 동일한 분포로 출력되고 있습니다.
+
+
+### 2-4
+#### (1) R을 이용한 주성분분석
+##### ① 자료읽기 및 요약통계량
+```{r}
+# 자료읽기 - 처음 줄은 열 이름, "state" 열은 행 이름
+ex2_4 = read.csv("./data/ex2-4.csv", header = T, row.names = "state")
+head(ex2_4)
+# 자료의 요약정보보
+summary(ex2_4)
+```
+##### ② 상관계수행렬 및 산점도행렬 보기
+```{r}
+# 상관계수 출력 - 소수점 이하 2자리 표시
+round(cor(ex2_4), 2)
+# 산점도 표시
+plot(ex2_4, pch=19)
+```
+
+- 살인(Murder)와 폭행(Assault)은 양의 상관관계가 높고, 도시인구비율(UrbanPop)은 다른 변수들과의 낮은 상관관계로 보아 도시인구 비율과 관련없이 살인, 폭행, 강간이 발생하는 것으로 보여집니다.  
+- 강간(Rape)은 살인(Murder)과 어느정도 관계가 있어 보입니다.
+
+##### ③ 주성분분석 실행하기
+```{r}
+# 주성분분석 - 공분산행렬 이용(cor=F), 각 케이스의 주성분점수 포함(score=T)
+(ex2_4_pca = princomp(ex2_4, cor=F, score=T))
+# 주성분분석 요약정보
+summary(ex2_4_pca)
+```
+
+- 주성분분석 결과를 summary() 함수를 이용해 보면 첫번째 주성분이 96.55% 설명력을 가지는 것을 알 수 있다.
+
+##### ④ 스크리 그림 및 주성분 계수
+```{r}
+# 스크리 그림 그리기
+screeplot(ex2_4_pca, type='lines', pch=19)
+# loadings 표시 - 소수점 이하 3자리 반올림 표시
+round(ex2_4_pca$loadings[, c(1)], 3)
+```
+
+- 스크리 그림에서 유효한 주성분은 1개로 판단하여 하나의 주성분의 계수를 나타냈다.
+  - $PC_1 = 0.042 \times Murder + 0.995 \times Assault + 0.046 \times UrbanPop + 0.075 \times Rape$  
+
+#### (2) 파이썬을 이용한 주성분 분석
+##### ①  자료 읽기  및 기술통계량
+```{python}
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# 자료읽기
+ex2_4 = pd.read_csv("./exdata/ex2-4.csv", header = 0, index_col = 0)
+ex2_4.head()
+```
+
+```{python}
+# 변수이름 확인하기
+ex2_4.columns
+```
+
+```{python}
+# 기술통계량 구하기 - 소수점 이하 2자리 반올림 표시
+round(ex2_4.describe(), 2)
+```
+
+
+##### ② 상관계수행렬 및 산점도행렬 보기
+```{python}
+# 상관계수 행렬
+ex2_4.corr()
+```
+
+
+```{python}
+# 산점도 행렬(seaborn 사용)
+import seaborn as sns
+sns.pairplot(ex2_4)
+```
+
+##### ③ 주성분분석 실행하기
+```{python}
+from sklearn.decomposition import PCA
+# 주성분분석 - 주성분 수를 3으로 함.
+pca = PCA(n_components=4)
+pca_ex2_4 = pca.fit_transform(ex2_4)
+
+# 주성분 분산
+pca.explained_variance_
+```
+
+```{python}
+# 주성분 표준편차
+np.sqrt(pca.explained_variance_)
+```
+```{python}
+# 주성분분산비율
+pca.explained_variance_ratio_
+```
+
+```{python}
+# 주성분계수 - 소숫점 이하 3자리 표시
+np.round(pca.components_, 3)
+```
+```{python eval=FALSE, include=FALSE}
+# 스크리 그림 그리기
+plt.scatter(range(1, 4+1), pca.explained_variance_ratio_)
+plt.title('Scree plot')
+plt.xlabel('Number of components')
+plt.ylabel('Explained variance ratio')
+plt.grid()
+plt.show()
+```
+
+
+
+##### ④ 스크리 그림 및 주성분 계수
