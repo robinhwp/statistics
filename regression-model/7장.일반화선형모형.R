@@ -105,4 +105,15 @@ y <- cbind(glider_g$cases, glider_g$count-glider_g$cases)
 logit_mg <- glm(y~glider_g$p_size_med, family=binomial(link=logit)) 
 summary(logit_mg) 
 
+
+
+par(mfrow=c(1,1))
+π <- function(x){exp(x)/(1+exp(x))}
+x <- seq(-5, 5, .05)
+plot(x, π(x), type='l', ylab="π(x)")
+par(new=TRUE)
+plot(x, π(-x), type='l',ylab="π(x)", col="red" )
+text(-2, π(2), "beta1<0")
+text(2, π(2), "beta1>0")
+
  

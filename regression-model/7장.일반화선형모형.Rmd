@@ -22,3 +22,37 @@ summary(logit_m1)
   | 감마분포 | 역수함수 | Gamma(link="inverse") |
   | 준이항분포 | 로짓함수 | quasibionmial(link="logit") |
   | 준포아송분포 | 로그함수 | quasipossion(link="log") |  
+  
+# 13강. 일반화선형모형(2)
+
+## 로지스틱 회귀모형 해석
+
+### 로지스틱 회귀모형 : 이항자료  
+```{r echo=TRUE}
+glider = read.csv("./data/sugar_glider_binomial.csv")
+head(glider, 3)
+logit_m2 = glm(occurr~p_size_km, family = binomial(link=logit), data = glider)
+summary(logit_m2)
+```
+
+- 반응변수 y=occurr, 1=yes, 0=no 이므로 이항분포를 가정
+- 로지스틱 회귀모형 : 
+  - $\eta = \operatorname{logit}(\pi) = \log ({\pi \over 1 - \pi}) = \beta_0 + \beta_1 x_1$
+  - $\pi = E(Y|x)=Pr(y=1|x)$ 
+
+```{r}
+summary(logit_m2)
+```
+
+- $\eta=\log({\hat{\pi} \over 1 - \hat{\pi}}) = \hat{\beta_0} + \hat{\beta_1} x_1 = -2.528298  + 0.021727 \times x_1$
+
+### 로지스틱 회귀의 선형 근사적 해석
+x의 변화에 따른 $\pi(x)$의 순간 변화량의 크기, 즉 x값에서의 작은 변화가 성공률 $\pi(x)$에 미치는 영향의 크기 
+
+
+
+## 프로빗 모형
+
+## 로그선형모형 - 개수형자료 
+
+## 로그선형모형 - 율(rate) 분석

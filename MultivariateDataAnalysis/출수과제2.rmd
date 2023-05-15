@@ -1,0 +1,28 @@
+
+
+## 4-5
+
+#### ① 자료읽기 및 기술통계량 확인
+```{r}
+#customerID 는 row.name으로 사용하고 첫번째 행은 열이름으로 사용
+mall = read.csv("./exdata/mall_customer.csv", header = T, row.names = 1)
+head(mall)
+# 기술통계량 확인
+summary(mall)
+```
+
+#### ② Gender  가변수 변환
+```{r}
+mall$Male = ifelse(mall$Gender == 'Male', 1, 0)
+mall$Female = ifelse(mall$Gender == 'Female', 1, 0)
+# 가변수를 만들고 젠더를 제외한 데이터를 생성한다.
+dmall = data.frame(mall[,-1])
+```
+
+#### ③ 자료를 표준화 하기
+```{r}
+zmall = scale(dmall)
+```
+
+
+### (1) 

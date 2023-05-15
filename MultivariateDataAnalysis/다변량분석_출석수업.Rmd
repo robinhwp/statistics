@@ -21,9 +21,9 @@ R과 파이썬을 각각 이용하여 작성하시오 (결과+분석)
 ### 기한 : 5월 29일 (월) 17:30 까지 
 참고 : 한글이나 MS 워드를 이용하여 작성 저장한 후, pdf 로 새로 저장하여 pdf 파일로 제출하기 바랍니다.   
 
-### 1-4
+## 1-4
 
-#### (1)
+### (1)
 ```{r}
 # 산점도 행렬
 pairs(longley)
@@ -41,13 +41,13 @@ faces(longley)
 
 - 얼굴그림은 연도별로 출력된 내용으로는 특정 변수가 어떤 변화가 있었는지 파악이 어려울것 같고 연도가 증가함에 따라 전반적으로 얼굴의 모양이 좋아지는 것을 봐서 모든 변수들의 항목이 좋아진 것으로 보여집니다.
 
-#### (2)
+### (2)
 ```{r}
 # longley 데이터를 longley_0514.csv로 저장
 write.csv(longley, "./exdata/longley_0514.csv")
 ```
 
-#### (3)
+### (3)
 ```{python}
 # python block
 import pandas as pd
@@ -63,10 +63,15 @@ sns.pairplot(longley)
 - R에서의 산점도 행렬은 단색으로 그려지고 변수명은 해당 변수의 행렬이 일치하는 곳에 출력하지만 파이썬에서는 왼쪽과 아래에 변수명이 출력됩니다. 그리고 변수명의 행렬이 일치하는 곳에는 히스토그램이 출력되고 산점도와 히스토그램 색상이 파란색으로 출력이 됩니다.
 - 파이썬에서도 변수들 간의 산점도는 R과 동일한 분포로 출력되고 있습니다.
 
+---  
 
-### 2-4
-#### (1) R을 이용한 주성분분석
-##### ① 자료읽기 및 요약통계량
+---  
+
+## 2-4
+
+### (1) R을 이용한 주성분분석
+
+#### ① 자료읽기 및 요약통계량
 ```{r}
 # 자료읽기 - 처음 줄은 열 이름, "state" 열은 행 이름
 ex2_4 = read.csv("./data/ex2-4.csv", header = T, row.names = "state")
@@ -74,8 +79,9 @@ head(ex2_4)
 # 자료의 요약정보보
 summary(ex2_4)
 ```
+
+```{r eval=FALSE, include=FALSE}
 ##### ② 상관계수행렬 및 산점도행렬 보기
-```{r}
 # 상관계수 출력 - 소수점 이하 2자리 표시
 round(cor(ex2_4), 2)
 # 산점도 표시
@@ -85,7 +91,7 @@ plot(ex2_4, pch=19)
 - 살인(Murder)와 폭행(Assault)은 양의 상관관계가 높고, 도시인구비율(UrbanPop)은 다른 변수들과의 낮은 상관관계로 보아 도시인구 비율과 관련없이 살인, 폭행, 강간이 발생하는 것으로 보여집니다.  
 - 강간(Rape)은 살인(Murder)과 어느정도 관계가 있어 보입니다.
 
-##### ③ 주성분분석 실행하기
+#### ③ 주성분분석 실행하기
 ```{r}
 # 주성분분석 - 공분산행렬 이용(cor=F), 각 케이스의 주성분점수 포함(score=T)
 (ex2_4_pca = princomp(ex2_4, cor=F, score=T))
@@ -93,21 +99,36 @@ plot(ex2_4, pch=19)
 summary(ex2_4_pca)
 ```
 
-- 주성분분석 결과를 summary() 함수를 이용해 보면 첫번째 주성분이 96.55% 설명력을 가지는 것을 알 수 있다.
+- 주성분분석 결과를 summary() 함수를 이용해 보면 첫번째 주성분이 96.55% 설명력을 가지는 것을 알 수 있습니다.
 
-##### ④ 스크리 그림 및 주성분 계수
+#### ④ 스크리 그림 및 주성분 계수
 ```{r}
+par(mfrow=c(1,2))
 # 스크리 그림 그리기
-screeplot(ex2_4_pca, type='lines', pch=19)
+screeplot(ex2_4_pca, type='lines', pch=19, main='Scree plot')
+# 누적분산 그리기
+ex2_4_var = ex2_4_pca$sdev^2
+ex2_4_var_ratio = ex2_4_var / sum(ex2_4_var)
+plot(cumsum(ex2_4_var_ratio), type='b', pch=19, xlab='Component', ylab='Cumulative Proporation', main="Variance Explained")
 # loadings 표시 - 소수점 이하 3자리 반올림 표시
 round(ex2_4_pca$loadings[, c(1)], 3)
 ```
+```{r eval=FALSE, include=FALSE}
+# 행렬도
+biplot(ex2_4_pca, cex=0.7, col=c('red', 'blue'))
+title('Biplot')
+```
 
-- 스크리 그림에서 유효한 주성분은 1개로 판단하여 하나의 주성분의 계수를 나타냈다.
+- 스크리 그림에서 유효한 주성분은 1개로 판단됩니다.  
+  하나의 주성분의 계수는 다음과 같습니다.
   - $PC_1 = 0.042 \times Murder + 0.995 \times Assault + 0.046 \times UrbanPop + 0.075 \times Rape$  
 
-#### (2) 파이썬을 이용한 주성분 분석
-##### ①  자료 읽기  및 기술통계량
+---
+
+### (2) 파이썬을 이용한 주성분 분석
+
+#### ①  자료 읽기  및 기술통계량
+
 ```{python}
 import numpy as np
 import pandas as pd
@@ -129,7 +150,7 @@ round(ex2_4.describe(), 2)
 ```
 
 
-##### ② 상관계수행렬 및 산점도행렬 보기
+#### ② 상관계수행렬 및 산점도행렬 보기
 ```{python}
 # 상관계수 행렬
 ex2_4.corr()
@@ -142,7 +163,7 @@ import seaborn as sns
 sns.pairplot(ex2_4)
 ```
 
-##### ③ 주성분분석 실행하기
+#### ③ 주성분분석 실행하기
 ```{python}
 from sklearn.decomposition import PCA
 # 주성분분석 - 주성분 수를 3으로 함.
@@ -157,25 +178,59 @@ pca.explained_variance_
 # 주성분 표준편차
 np.sqrt(pca.explained_variance_)
 ```
+- 주성분 표준편차를 R과 비교해보면 파이썬에서 더 큰값으로 구해진 것을 볼 수 있습니다.
 ```{python}
 # 주성분분산비율
 pca.explained_variance_ratio_
 ```
+- R에서의 주성분의 분산비는 거의 비슷한 값으로 보여지기 때문에 전반적으로 R보다 파이썬에서 분산이 더 크게 구해진다는 것을 알 수 있습니다. 
+- 하지만 동일하게 첫번째 주성분이 96.55%의 설명력을 가지는 것을 알 수 있습니다.
+
+#### ④ 스크리 그림 및 주성분 계수
+
+```{python}
+# 이전의 화면을 지운다.
+plt.clf()
+```
+
+
+```{python}
+plt.figure()
+
+# 화면분할 1행 2열에서 첫번째
+plt.subplot(121)
+plt.scatter(range(1,pca.n_components_+1), pca.explained_variance_ )
+plt.plot(range(1,pca.n_components_+1), pca.explained_variance_)
+plt.title('Scree plot')
+plt.xlabel('Number of components')
+plt.ylabel('Variances')
+plt.grid()
+
+# 화면분할 2행 2열에서 2번째
+plt.subplot(122)
+plt.scatter(range(1,pca.n_components_+1), np.cumsum(pca.explained_variance_ratio_))
+plt.plot(range(1,pca.n_components_+1), np.cumsum(pca.explained_variance_ratio_))
+plt.title('Variance Explained')
+plt.xlabel('Number of components')
+plt.ylabel('Cumulative Proporation')
+plt.grid()
+# 그래프의 위치 조정
+plt.subplots_adjust(top=0.92, bottom=0.08, left=0.10, right=0.95, hspace=0.25, wspace=0.35)
+plt.show()
+
+
+```
 
 ```{python}
 # 주성분계수 - 소숫점 이하 3자리 표시
-np.round(pca.components_, 3)
-```
-```{python eval=FALSE, include=FALSE}
-# 스크리 그림 그리기
-plt.scatter(range(1, 4+1), pca.explained_variance_ratio_)
-plt.title('Scree plot')
-plt.xlabel('Number of components')
-plt.ylabel('Explained variance ratio')
-plt.grid()
-plt.show()
+np.round(pca.components_[0,], 3)
 ```
 
+- 파이썬으로 출력한 스크리 그림에서도 유효한 주성분은 1개로 판단됩니다.  
+  하나의 주성분의 계수는 다음과 같이 R에서 구한것과 동일합니다.
+  - $PC_1 = 0.042 \times Murder + 0.995 \times Assault + 0.046 \times UrbanPop + 0.075 \times Rape$  
+  
+---   
 
+---   
 
-##### ④ 스크리 그림 및 주성분 계수
