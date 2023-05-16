@@ -2,27 +2,68 @@
 
 ## 4-5
 
-#### ① 자료읽기 및 기술통계량 확인
+### 공통 자료 읽기
 ```{r}
 #customerID 는 row.name으로 사용하고 첫번째 행은 열이름으로 사용
 mall = read.csv("./exdata/mall_customer.csv", header = T, row.names = 1)
 head(mall)
-# 기술통계량 확인
-summary(mall)
 ```
-
-#### ② Gender  가변수 변환
+### 남성그룹 데이터 분석
 ```{r}
-mall$Male = ifelse(mall$Gender == 'Male', 1, 0)
-mall$Female = ifelse(mall$Gender == 'Female', 1, 0)
-# 가변수를 만들고 젠더를 제외한 데이터를 생성한다.
-dmall = data.frame(mall[,-1])
+# Gender가 "Male"인 데이터만 추출하여 분석
+mallm = mall[mall$Gender=="Male",2:4]
+head(mallm)
+summary(mallm)
 ```
 
-#### ③ 자료를 표준화 하기
+#### (1)  
 ```{r}
-zmall = scale(dmall)
+# 변수 표준화
+zmallm = scale(mallm, center = T, scale = T)
+head(zmallm)
 ```
 
 
-### (1) 
+
+
+#### (2)
+```{r}
+# 유클리디안 거리 구하기
+zmallm_euc = dist(zmallm, method = "euclidean")
+# 와드의 방법으로 군집화
+hcm_w = hclust(zmallm_euc, method = "ward.D")
+# Dendrogram 출력
+plot(hcm_w)
+abline(h=12, lty=3, col="red")
+```
+
+- 와드방법으로 군집화 후 height를 보면 12보다 작은 경우에 SSE값이 급격한 변화가 있는 것으로 보여지기 때문에 4개의 군집으로 분리하는게 적절하다고  판단됨.
+
+
+#### (3) 
+```{r}
+# 최장연결법으로 군집화
+hcm_c = hclust(zmallm_euc, method = "complete")
+# 덴드로그램 출력
+plot(hcm_c, hang=-1)
+abline(h=2.9, lty=3, col="red")
+```
+
+- 최장거리 방법으로 군집화 후 height를 보면 2.9보다 작은 경우에 SSE값이 급격한 변화가 있는 것으로 보여지기 때문에 6개의 군집으로 분리하는게 적절하다고  판단됨.
+
+#### (4) 
+
+- 와드의 방법으로 군집화한 덴드로그램을 보면 Height가 좀 더 낮은 비율에서 군집이 더 많이 나눠지는 것으로 보여지고 최장연결법으로 군집화한 덴드로그램에서는 Height가 중심부분 부터 군집이 더 빠르게 나눠지는 것으로 보여진다.
+
+#### (5)
+
+kmcm = kmeans(zmallm, centers = 6)
+kmcm
+
+# 소속 군집 산점도
+plot(zmallm, col=kmcm$cluster, pch=16)
+
+pairs(zmallm, col=kmcm$cluster, pch=16, cex.labels = 1.5)
+
+
+### (2) 여성그룹 데이터 분석
