@@ -1,0 +1,149 @@
+---
+title: ''
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 데이터마이닝 출석수업 과제
+## 1 
+
+## 2 
+```{r}
+# 와인 데이터 파일 읽기
+wine = read.csv("./data/winequalityCLASS.csv", header=TRUE)
+```
+
+
+### 2-①
+```{r}
+# binomial(link = "logit")이 기본값으로 생략할 수 있다.
+fit_alcohol = glm(quality ~ alcohol, family = binomial, data = wine)
+summary(fit_alcohol)
+```
+- 로지스틱 회귀모형은 다음과 같다.
+  - $\ln({p \over 1-p}) = -11.870549 + 1.171183 * alcohol$
+- alcohol이 1단위 증가할 때마다 오즈비는 1.17배가 증가된다.
+- AIC는 1385.5이다.
+
+```{r}
+p = predict(fit_alcohol, newdata=wine, type="response")
+cutoff = 0.5
+yhat = ifelse(p>cutoff, 1, 0)
+tab = table(wine$quality, yhat, dnn=c("Observed", "Predicted"))
+print(tab)
+```
+```{r}
+paste0("정분류 : ", round( sum(diag(tab)) /sum(tab)*100, 1), "%")
+paste0("민감도 : ", round(tab[2,2]/sum(tab[2,])*100, 1), "%")
+paste0("특이도 : ", round(tab[1,1]/sum(tab[1,])*100, 1), "%")
+```
+
+
+### 2-②
+
+```{r}
+fit_sulphates = glm(quality ~ sulphates, family = binomial, data = wine)
+summary(fit_sulphates)
+```
+- 로지스틱 회귀모형은 다음과 같다.
+  - $\ln({p \over 1-p}) = -4.5135 + 7.4757 * sulphates$
+- sulphates이 1단위 증가할 때마다 오즈비는 7.48배가 증가된다.
+- AIC는 1478.6이다.
+
+```{r}
+p = predict(fit_sulphates, newdata=wine, type="response")
+cutoff = 0.5
+yhat = ifelse(p>cutoff, 1, 0)
+tab = table(wine$quality, yhat, dnn=c("Observed", "Predicted"))
+print(tab)
+```
+```{r}
+paste0("정분류 : ", round( sum(diag(tab)) /sum(tab)*100, 1), "%")
+paste0("민감도 : ", round(tab[2,2]/sum(tab[2,])*100, 1), "%")
+paste0("특이도 : ", round(tab[1,1]/sum(tab[1,])*100, 1), "%")
+```
+
+### 2-③
+#### 단계적 선택법으로 변수 선택
+```{r}
+# Fitting a logistic regression model
+fit.all = glm(quality ~ ., family = binomial, data = wine)
+fit.step = step(fit.all, direction="both") # stepwise vaiable selection
+fit.step$anova
+summary(fit.step)
+```
+
+- 다단계적 선택법으로 변수를 선택하기 위해 step 함수를 이용하여 입력변수들을 선택한 결과 density, residsugar, fixed 입력변수가 제외되고 나머지 변수들이 선택되었고 회귀식은 아래와 같.
+  - $\begin{aligned}\ln({p \over 1-p}) &= -3.598 - 2.626*volatile - 1.304*citric - 8.134*chlorides + 0.025*freeSD \\& - 0.015*totalSD - 2.029*pH + 5.609*sulphates + 0.933*alcohol \end{aligned}$
+- AIC값은 1245.5이다.
+
+```{r}
+# Making predictions
+p = predict(fit.step, newdata=wine, type="response") # prediction
+cutoff = 0.5 #cutoff
+yhat = ifelse(p > cutoff, 1, 0)
+# Evaluation
+tab = table(wine$quality, yhat, dnn=c("Observed","Predicted"))
+print(tab)              # confusion matrix
+paste0("정분류 : ", round( sum(diag(tab)) /sum(tab)*100, 1), "%")
+paste0("민감도 : ", round(tab[2,2]/sum(tab[2,])*100, 1), "%")
+paste0("특이도 : ", round(tab[1,1]/sum(tab[1,])*100, 1), "%")
+
+```
+
+- 적합한 모형에서 얻은 예측값과 관측값으로 만든 정오분류표를 확인해보면 예측정확도는 75.1%, 오분류율은 24.9%이고 민감도는 76.7%, 특이도는 73.2%이다.
+
+## 2-①②③
+
+- ①②③ 3가지 모형의  적합도를 AIC값으로 비교해 보면 ③번 모형이 1245.5로 가장 낮은 값을 갖는것으로 보아 가장 잘 적합된 모형이다.
+- 예측정확도도 확인해 보면 ①번 모형의 예측정확도는 71.2%이고 ②번 모형은 64.5% ③번 모형은 75.1%로 ③번 모형의 예측정확도가 가장 높게 나타나는 것을 알 수 있다.
+- 
+
+
+```{r}
+Y1 = matrix(c(0, 2, 5, 0, 4, 6, 2, 0, 1), 3,3, byrow = TRUE)
+Y2 = matrix(c(2, 0, 0, 3, 7, 0, 4, 1, 2), 3,3, byrow = TRUE)
+
+# Y=1, Y=2의  원래 데이터 생성
+df = data.frame()
+for(j in 1:3)
+  for(i in 1:3)
+  {
+    if(Y1[j,i]>0)
+    {
+      for(k in 1:Y1[j,i])
+        df = rbind(df, c(j, i, 1))
+    }
+  }
+
+for(j in 1:3)
+  for(i in 1:3)
+  {
+    if(Y2[j,i]>0)
+    {
+      for(k in 1:Y2[j,i])
+        df = rbind(df, c(j, i, 2))
+    }
+  }
+names(df) = c("X1", "X2", "Y")
+
+df$X1 = factor(df$X1)
+df$X2 = factor(df$X2)
+df$Y = factor(df$Y)
+print(df)
+```
+
+
+```{r}
+library(rpart)
+#stopping rule 1
+mycontrol = rpart.control(maxdepth = 1)
+df_fit = rpart(Y~., control=mycontrol, data = df)
+print(df_fit)
+```
+

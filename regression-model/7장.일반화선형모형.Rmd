@@ -49,6 +49,28 @@ summary(logit_m2)
 ### 로지스틱 회귀의 선형 근사적 해석
 x의 변화에 따른 $\pi(x)$의 순간 변화량의 크기, 즉 x값에서의 작은 변화가 성공률 $\pi(x)$에 미치는 영향의 크기 
 
+```{r}
+exp(coef(logit_m2))
+exp(confint(logit_m2, parm="p_size_km", level=0.95))
+```
+
+- x =150에서 $\pi(x)$ 추정값 구하기
+
+```{r}
+x = 150
+predict(logit_m2, list(p_size_km=x), type="response")
+```
+- x = 150에서 $\pi(x)$의 $(1-\alpha)100$%위 신뢰구간 구하기
+```{r}
+pred = predict(logit_m2, list(p_size_km=x), type="link")
+# vcov(logit_m2) : 추정치의 분산-공분산 행렬값을 주는 함수
+# coef : 회귀계수 출력
+intv=sqrt(vcov(logit_m2)[1,1] + x^2 *vcov(logit_m2)[2,2]+2*x*vcov(logit_m2)[2,1])
+paste("π(x) lwr =", round(pred-1.96*intv, 3), ", π(x) upr =", round(pred+1.96*intv, 3))
+
+paste("x=150km 일때 π(x)의 95% 신뢰구간은 (", round(exp(pred-1.96*intv)/(1+exp(pred-1.96*intv)), 3), ",",
+      round(exp(pred+1.96*intv)/(1+exp(pred+1.96*intv)), 3), ")")
+```
 
 
 ## 프로빗 모형

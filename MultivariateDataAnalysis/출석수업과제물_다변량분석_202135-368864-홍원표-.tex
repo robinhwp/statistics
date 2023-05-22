@@ -1,0 +1,1417 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+
+출석수업 과제물(평가결과물) 표지(온라인제출용)
+
+\hypertarget{uxad50uxacfcuxbaa9uxba85-uxb2e4uxbcc0uxb7c9uxbd84uxc11d}{%
+\subsubsection{교과목명 :
+다변량분석}\label{uxad50uxacfcuxbaa9uxba85-uxb2e4uxbcc0uxb7c9uxbd84uxc11d}}
+
+\hypertarget{uxd559-uxbc88-202135-368864}{%
+\subsubsection{학 번 :
+202135-368864}\label{uxd559-uxbc88-202135-368864}}
+
+\hypertarget{uxc131-uxba85-uxd64d-uxc6d0-uxd45c}{%
+\subsubsection{성 명 : 홍 원
+표}\label{uxc131-uxba85-uxd64d-uxc6d0-uxd45c}}
+
+\hypertarget{uxac15-uxc758-uxc2e4-uxc11cuxc6b85uxc6d414uxc77c-zoom-uxc9c0uxc5eduxb300uxd559-uxd638}{%
+\subsubsection{강 의 실 : 서울(5월14일 Zoom) 지역대학
+호}\label{uxac15-uxc758-uxc2e4-uxc11cuxc6b85uxc6d414uxc77c-zoom-uxc9c0uxc5eduxb300uxd559-uxd638}}
+
+\hypertarget{uxc5f0-uxb77d-uxcc98-010-5343-4341}{%
+\subsubsection{연 락 처 :
+010-5343-4341}\label{uxc5f0-uxb77d-uxcc98-010-5343-4341}}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{section}{%
+\subsection{1-4}\label{section}}
+
+\hypertarget{section-1}{%
+\subsubsection{(1)}\label{section-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 산점도 행렬}
+\FunctionTok{pairs}\NormalTok{(longley)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{출석수업과제물_다변량분석_202135-368864-홍원표-_files/figure-latex/unnamed-chunk-1-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 별그림}
+\FunctionTok{stars}\NormalTok{(longley)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{출석수업과제물_다변량분석_202135-368864-홍원표-_files/figure-latex/unnamed-chunk-1-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 얼굴그림 : install.packages("aplpack")}
+\FunctionTok{library}\NormalTok{(aplpack)}
+\FunctionTok{faces}\NormalTok{(longley)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{출석수업과제물_다변량분석_202135-368864-홍원표-_files/figure-latex/unnamed-chunk-1-3.pdf}
+
+\begin{verbatim}
+## effect of variables:
+##  modified item       Var           
+##  "height of face   " "GNP.deflator"
+##  "width of face    " "GNP"         
+##  "structure of face" "Unemployed"  
+##  "height of mouth  " "Armed.Forces"
+##  "width of mouth   " "Population"  
+##  "smiling          " "Year"        
+##  "height of eyes   " "Employed"    
+##  "width of eyes    " "GNP.deflator"
+##  "height of hair   " "GNP"         
+##  "width of hair   "  "Unemployed"  
+##  "style of hair   "  "Armed.Forces"
+##  "height of nose  "  "Population"  
+##  "width of nose   "  "Year"        
+##  "width of ear    "  "Employed"    
+##  "height of ear   "  "GNP.deflator"
+\end{verbatim}
+
+\begin{itemize}
+\item
+  산점도 행렬을 보면 GNP.deflator, GNP, Population, Year, Employed
+  변수끼리의 상관관계가 뚜렷하게 보나타납니다.\\
+  연도(Year)에 따라 인구(Population) 변수의 상관관계가 가장 뚜렷해
+  보이고 소득관련(GNP, GNP.deflator) 변수도 상관관계도 높아 보입니다.\\
+  하지만 실업자(Unemployed) 수와 군인(Armed.Forces) 변수는 상관관계가
+  약해보입니다.
+\item
+  별그림을 보면 대부분의 변수들이 연도에 따라 증가된것으로 보여지고
+  1951년에 군인(Armed.Forces)이 많이 들어났고, 1958년도에는
+  실업자(Unemployed) 수가 많이 늘어난것으로 벼여집니다. 전반적으로
+  군인과 실업자 수를 제외하고는 연도가 증가함에 따라 모두 같이
+  증가한것으로 보여집니다.
+\item
+  얼굴그림은 연도별로 출력된 내용으로는 특정 변수가 어떤 변화가 있었는지
+  파악이 어려울것 같고 연도가 증가함에 따라 전반적으로 얼굴의 모양이
+  좋아지는 것을 봐서 모든 변수들의 항목이 좋아진 것으로 보여집니다.
+\end{itemize}
+
+\hypertarget{section-2}{%
+\subsubsection{(2)}\label{section-2}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# longley 데이터를 longley\_0514.csv로 저장}
+\FunctionTok{write.csv}\NormalTok{(longley, }\StringTok{"./exdata/longley\_0514.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{section-3}{%
+\subsubsection{(3)}\label{section-3}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# python block}
+\ImportTok{import}\NormalTok{ pandas }\ImportTok{as}\NormalTok{ pd}
+\CommentTok{\# 첫행을 컬럼명으로, 첫열을 row 이름으로 사용하여 csv 파일 읽기기}
+\NormalTok{longley }\OperatorTok{=}\NormalTok{ pd.read\_csv(}\StringTok{"./exdata/longley\_0514.csv"}\NormalTok{, header }\OperatorTok{=} \DecValTok{0}\NormalTok{, index\_col}\OperatorTok{=}\DecValTok{0}\NormalTok{)}
+\NormalTok{longley.head()}
+
+\CommentTok{\# 산점도 행렬(seaborn 사용)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       GNP.deflator      GNP  Unemployed  ...  Population  Year  Employed
+## 1947          83.0  234.289       235.6  ...     107.608  1947    60.323
+## 1948          88.5  259.426       232.5  ...     108.632  1948    61.122
+## 1949          88.2  258.054       368.2  ...     109.773  1949    60.171
+## 1950          89.5  284.599       335.1  ...     110.929  1950    61.187
+## 1951          96.2  328.975       209.9  ...     112.075  1951    63.221
+## 
+## [5 rows x 7 columns]
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ seaborn }\ImportTok{as}\NormalTok{ sns}
+\NormalTok{sns.pairplot(longley)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{출석수업과제물_다변량분석_202135-368864-홍원표-_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  R에서의 산점도 행렬은 단색으로 그려지고 변수명은 해당 변수의 행렬이
+  일치하는 곳에 출력하지만 파이썬에서는 왼쪽과 아래에 변수명이
+  출력됩니다. 그리고 변수명의 행렬이 일치하는 곳에는 히스토그램이
+  출력되고 산점도와 히스토그램 색상이 파란색으로 출력이 됩니다.
+\item
+  파이썬에서도 변수들 간의 산점도는 R과 동일한 분포로 출력되고 있습니다.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{section-4}{%
+\subsection{2-4}\label{section-4}}
+
+\hypertarget{ruxc744-uxc774uxc6a9uxd55c-uxc8fcuxc131uxbd84uxbd84uxc11d}{%
+\subsubsection{(1) R을 이용한
+주성분분석}\label{ruxc744-uxc774uxc6a9uxd55c-uxc8fcuxc131uxbd84uxbd84uxc11d}}
+
+\hypertarget{uxc790uxb8ccuxc77duxae30-uxbc0f-uxc694uxc57duxd1b5uxacc4uxb7c9}{%
+\paragraph{① 자료읽기 및
+요약통계량}\label{uxc790uxb8ccuxc77duxae30-uxbc0f-uxc694uxc57duxd1b5uxacc4uxb7c9}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 자료읽기 {-} 처음 줄은 열 이름, "state" 열은 행 이름}
+\NormalTok{ex2\_4 }\OtherTok{=} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"./data/ex2{-}4.csv"}\NormalTok{, }\AttributeTok{header =}\NormalTok{ T, }\AttributeTok{row.names =} \StringTok{"state"}\NormalTok{)}
+\FunctionTok{head}\NormalTok{(ex2\_4)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            Murder Assault UrbanPop Rape
+## Alabama      13.2     236       58 21.2
+## Alaska       10.0     263       48 44.5
+## Arizona       8.1     294       80 31.0
+## Arkansas      8.8     190       50 19.5
+## California    9.0     276       91 40.6
+## Colorado      7.9     204       78 38.7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 자료의 요약정보보}
+\FunctionTok{summary}\NormalTok{(ex2\_4)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      Murder          Assault         UrbanPop          Rape      
+##  Min.   : 0.800   Min.   : 45.0   Min.   :32.00   Min.   : 7.30  
+##  1st Qu.: 4.075   1st Qu.:109.0   1st Qu.:54.50   1st Qu.:15.07  
+##  Median : 7.250   Median :159.0   Median :66.00   Median :20.10  
+##  Mean   : 7.788   Mean   :170.8   Mean   :65.54   Mean   :21.23  
+##  3rd Qu.:11.250   3rd Qu.:249.0   3rd Qu.:77.75   3rd Qu.:26.18  
+##  Max.   :17.400   Max.   :337.0   Max.   :91.00   Max.   :46.00
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  살인(Murder)와 폭행(Assault)은 양의 상관관계가 높고,
+  도시인구비율(UrbanPop)은 다른 변수들과의 낮은 상관관계로 보아 도시인구
+  비율과 관련없이 살인, 폭행, 강간이 발생하는 것으로 보여집니다.\\
+\item
+  강간(Rape)은 살인(Murder)과 어느정도 관계가 있어 보입니다.
+\end{itemize}
+
+\hypertarget{uxc8fcuxc131uxbd84uxbd84uxc11d-uxc2e4uxd589uxd558uxae30}{%
+\paragraph{③ 주성분분석
+실행하기}\label{uxc8fcuxc131uxbd84uxbd84uxc11d-uxc2e4uxd589uxd558uxae30}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 주성분분석 {-} 공분산행렬 이용(cor=F), 각 케이스의 주성분점수 포함(score=T)}
+\NormalTok{(}\AttributeTok{ex2\_4\_pca =} \FunctionTok{princomp}\NormalTok{(ex2\_4, }\AttributeTok{cor=}\NormalTok{F, }\AttributeTok{score=}\NormalTok{T))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Call:
+## princomp(x = ex2_4, cor = F, scores = T)
+## 
+## Standard deviations:
+##    Comp.1    Comp.2    Comp.3    Comp.4 
+## 82.890847 14.069560  6.424204  2.457837 
+## 
+##  4  variables and  50 observations.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 주성분분석 요약정보}
+\FunctionTok{summary}\NormalTok{(ex2\_4\_pca)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Importance of components:
+##                            Comp.1      Comp.2      Comp.3       Comp.4
+## Standard deviation     82.8908472 14.06956001 6.424204055 2.4578367034
+## Proportion of Variance  0.9655342  0.02781734 0.005799535 0.0008489079
+## Cumulative Proportion   0.9655342  0.99335156 0.999151092 1.0000000000
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  주성분분석 결과를 summary() 함수를 이용해 보면 첫번째 주성분이 96.55\%
+  설명력을 가지는 것을 알 수 있습니다.
+\end{itemize}
+
+\hypertarget{uxc2a4uxd06cuxb9ac-uxadf8uxb9bc-uxbc0f-uxc8fcuxc131uxbd84-uxacc4uxc218}{%
+\paragraph{④ 스크리 그림 및 주성분
+계수}\label{uxc2a4uxd06cuxb9ac-uxadf8uxb9bc-uxbc0f-uxc8fcuxc131uxbd84-uxacc4uxc218}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\CommentTok{\# 스크리 그림 그리기}
+\FunctionTok{screeplot}\NormalTok{(ex2\_4\_pca, }\AttributeTok{type=}\StringTok{\textquotesingle{}lines\textquotesingle{}}\NormalTok{, }\AttributeTok{pch=}\DecValTok{19}\NormalTok{, }\AttributeTok{main=}\StringTok{\textquotesingle{}Scree plot\textquotesingle{}}\NormalTok{)}
+\CommentTok{\# 누적분산 그리기}
+\NormalTok{ex2\_4\_var }\OtherTok{=}\NormalTok{ ex2\_4\_pca}\SpecialCharTok{$}\NormalTok{sdev}\SpecialCharTok{\^{}}\DecValTok{2}
+\NormalTok{ex2\_4\_var\_ratio }\OtherTok{=}\NormalTok{ ex2\_4\_var }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(ex2\_4\_var)}
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{cumsum}\NormalTok{(ex2\_4\_var\_ratio), }\AttributeTok{type=}\StringTok{\textquotesingle{}b\textquotesingle{}}\NormalTok{, }\AttributeTok{pch=}\DecValTok{19}\NormalTok{, }\AttributeTok{xlab=}\StringTok{\textquotesingle{}Component\textquotesingle{}}\NormalTok{, }\AttributeTok{ylab=}\StringTok{\textquotesingle{}Cumulative Proporation\textquotesingle{}}\NormalTok{, }\AttributeTok{main=}\StringTok{"Variance Explained"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{출석수업과제물_다변량분석_202135-368864-홍원표-_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# loadings 표시 {-} 소수점 이하 3자리 반올림 표시}
+\FunctionTok{round}\NormalTok{(ex2\_4\_pca}\SpecialCharTok{$}\NormalTok{loadings[, }\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{)], }\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Murder  Assault UrbanPop     Rape 
+##    0.042    0.995    0.046    0.075
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  스크리 그림에서 유효한 주성분은 1개로 판단됩니다.\\
+  하나의 주성분의 계수는 다음과 같습니다.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(PC_1 = 0.042 \times Murder + 0.995 \times Assault + 0.046 \times UrbanPop + 0.075 \times Rape\)
+  \end{itemize}
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{uxd30cuxc774uxc36cuxc744-uxc774uxc6a9uxd55c-uxc8fcuxc131uxbd84-uxbd84uxc11d}{%
+\subsubsection{(2) 파이썬을 이용한 주성분
+분석}\label{uxd30cuxc774uxc36cuxc744-uxc774uxc6a9uxd55c-uxc8fcuxc131uxbd84-uxbd84uxc11d}}
+
+\hypertarget{uxc790uxb8cc-uxc77duxae30-uxbc0f-uxae30uxc220uxd1b5uxacc4uxb7c9}{%
+\paragraph{① 자료 읽기 및
+기술통계량}\label{uxc790uxb8cc-uxc77duxae30-uxbc0f-uxae30uxc220uxd1b5uxacc4uxb7c9}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\ImportTok{import}\NormalTok{ pandas }\ImportTok{as}\NormalTok{ pd}
+\ImportTok{import}\NormalTok{ matplotlib.pyplot }\ImportTok{as}\NormalTok{ plt}
+
+\CommentTok{\# 자료읽기}
+\NormalTok{ex2\_4 }\OperatorTok{=}\NormalTok{ pd.read\_csv(}\StringTok{"./exdata/ex2{-}4.csv"}\NormalTok{, header }\OperatorTok{=} \DecValTok{0}\NormalTok{, index\_col }\OperatorTok{=} \DecValTok{0}\NormalTok{)}
+\NormalTok{ex2\_4.head()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             Murder  Assault  UrbanPop  Rape
+## state                                      
+## Alabama       13.2      236        58  21.2
+## Alaska        10.0      263        48  44.5
+## Arizona        8.1      294        80  31.0
+## Arkansas       8.8      190        50  19.5
+## California     9.0      276        91  40.6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 변수이름 확인하기}
+\NormalTok{ex2\_4.columns}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Index(['Murder', 'Assault', 'UrbanPop', 'Rape'], dtype='object')
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 기술통계량 구하기 {-} 소수점 이하 2자리 반올림 표시}
+\BuiltInTok{round}\NormalTok{(ex2\_4.describe(), }\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        Murder  Assault  UrbanPop   Rape
+## count   50.00    50.00     50.00  50.00
+## mean     7.79   170.76     65.54  21.23
+## std      4.36    83.34     14.47   9.37
+## min      0.80    45.00     32.00   7.30
+## 25%      4.08   109.00     54.50  15.08
+## 50%      7.25   159.00     66.00  20.10
+## 75%     11.25   249.00     77.75  26.18
+## max     17.40   337.00     91.00  46.00
+\end{verbatim}
+
+\hypertarget{uxc0c1uxad00uxacc4uxc218uxd589uxb82c-uxbc0f-uxc0b0uxc810uxb3c4uxd589uxb82c-uxbcf4uxae30}{%
+\paragraph{② 상관계수행렬 및 산점도행렬
+보기}\label{uxc0c1uxad00uxacc4uxc218uxd589uxb82c-uxbc0f-uxc0b0uxc810uxb3c4uxd589uxb82c-uxbcf4uxae30}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 상관계수 행렬}
+\NormalTok{ex2\_4.corr()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             Murder   Assault  UrbanPop      Rape
+## Murder    1.000000  0.801873  0.069573  0.563579
+## Assault   0.801873  1.000000  0.258872  0.665241
+## UrbanPop  0.069573  0.258872  1.000000  0.411341
+## Rape      0.563579  0.665241  0.411341  1.000000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 산점도 행렬(seaborn 사용)}
+\ImportTok{import}\NormalTok{ seaborn }\ImportTok{as}\NormalTok{ sns}
+\NormalTok{sns.pairplot(ex2\_4)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{출석수업과제물_다변량분석_202135-368864-홍원표-_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+\hypertarget{uxc8fcuxc131uxbd84uxbd84uxc11d-uxc2e4uxd589uxd558uxae30-1}{%
+\paragraph{③ 주성분분석
+실행하기}\label{uxc8fcuxc131uxbd84uxbd84uxc11d-uxc2e4uxd589uxd558uxae30-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.decomposition }\ImportTok{import}\NormalTok{ PCA}
+\CommentTok{\# 주성분분석 {-} 주성분 수를 3으로 함.}
+\NormalTok{pca }\OperatorTok{=}\NormalTok{ PCA(n\_components}\OperatorTok{=}\DecValTok{4}\NormalTok{)}
+\NormalTok{pca\_ex2\_4 }\OperatorTok{=}\NormalTok{ pca.fit\_transform(ex2\_4)}
+
+\CommentTok{\# 주성분 분산}
+\NormalTok{pca.explained\_variance\_}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## array([7.01111485e+03, 2.01992366e+02, 4.21126508e+01, 6.16424618e+00])
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 주성분 표준편차}
+\NormalTok{np.sqrt(pca.explained\_variance\_)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## array([83.73240025, 14.21240185,  6.48942607,  2.48279   ])
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  주성분 표준편차를 R과 비교해보면 파이썬에서 더 큰값으로 구해진 것을 볼
+  수 있습니다.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 주성분분산비율}
+\NormalTok{pca.explained\_variance\_ratio\_}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## array([9.65534221e-01, 2.78173366e-02, 5.79953492e-03, 8.48907879e-04])
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  R에서의 주성분의 분산비는 거의 비슷한 값으로 보여지기 때문에
+  전반적으로 R보다 파이썬에서 분산이 더 크게 구해진다는 것을 알 수
+  있습니다.
+\item
+  하지만 동일하게 첫번째 주성분이 96.55\%의 설명력을 가지는 것을 알 수
+  있습니다.
+\end{itemize}
+
+\hypertarget{uxc2a4uxd06cuxb9ac-uxadf8uxb9bc-uxbc0f-uxc8fcuxc131uxbd84-uxacc4uxc218-1}{%
+\paragraph{④ 스크리 그림 및 주성분
+계수}\label{uxc2a4uxd06cuxb9ac-uxadf8uxb9bc-uxbc0f-uxc8fcuxc131uxbd84-uxacc4uxc218-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 이전의 화면을 지운다.}
+\NormalTok{plt.clf()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plt.figure()}
+
+\CommentTok{\# 화면분할 1행 2열에서 첫번째}
+\NormalTok{plt.subplot(}\DecValTok{121}\NormalTok{)}
+\NormalTok{plt.scatter(}\BuiltInTok{range}\NormalTok{(}\DecValTok{1}\NormalTok{,pca.n\_components\_}\OperatorTok{+}\DecValTok{1}\NormalTok{), pca.explained\_variance\_ )}
+\NormalTok{plt.plot(}\BuiltInTok{range}\NormalTok{(}\DecValTok{1}\NormalTok{,pca.n\_components\_}\OperatorTok{+}\DecValTok{1}\NormalTok{), pca.explained\_variance\_)}
+\NormalTok{plt.title(}\StringTok{\textquotesingle{}Scree plot\textquotesingle{}}\NormalTok{)}
+\NormalTok{plt.xlabel(}\StringTok{\textquotesingle{}Number of components\textquotesingle{}}\NormalTok{)}
+\NormalTok{plt.ylabel(}\StringTok{\textquotesingle{}Variances\textquotesingle{}}\NormalTok{)}
+\NormalTok{plt.grid()}
+
+\CommentTok{\# 화면분할 2행 2열에서 2번째}
+\NormalTok{plt.subplot(}\DecValTok{122}\NormalTok{)}
+\NormalTok{plt.scatter(}\BuiltInTok{range}\NormalTok{(}\DecValTok{1}\NormalTok{,pca.n\_components\_}\OperatorTok{+}\DecValTok{1}\NormalTok{), np.cumsum(pca.explained\_variance\_ratio\_))}
+\NormalTok{plt.plot(}\BuiltInTok{range}\NormalTok{(}\DecValTok{1}\NormalTok{,pca.n\_components\_}\OperatorTok{+}\DecValTok{1}\NormalTok{), np.cumsum(pca.explained\_variance\_ratio\_))}
+\NormalTok{plt.title(}\StringTok{\textquotesingle{}Variance Explained\textquotesingle{}}\NormalTok{)}
+\NormalTok{plt.xlabel(}\StringTok{\textquotesingle{}Number of components\textquotesingle{}}\NormalTok{)}
+\NormalTok{plt.ylabel(}\StringTok{\textquotesingle{}Cumulative Proporation\textquotesingle{}}\NormalTok{)}
+\NormalTok{plt.grid()}
+\CommentTok{\# 그래프의 위치 조정}
+\NormalTok{plt.subplots\_adjust(top}\OperatorTok{=}\FloatTok{0.92}\NormalTok{, bottom}\OperatorTok{=}\FloatTok{0.08}\NormalTok{, left}\OperatorTok{=}\FloatTok{0.10}\NormalTok{, right}\OperatorTok{=}\FloatTok{0.95}\NormalTok{, hspace}\OperatorTok{=}\FloatTok{0.25}\NormalTok{, wspace}\OperatorTok{=}\FloatTok{0.35}\NormalTok{)}
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{출석수업과제물_다변량분석_202135-368864-홍원표-_files/figure-latex/unnamed-chunk-18-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 주성분계수 {-} 소숫점 이하 3자리 표시}
+\NormalTok{np.}\BuiltInTok{round}\NormalTok{(pca.components\_[}\DecValTok{0}\NormalTok{,], }\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## array([0.042, 0.995, 0.046, 0.075])
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  파이썬으로 출력한 스크리 그림에서도 유효한 주성분은 1개로
+  판단됩니다.\\
+  하나의 주성분의 계수는 다음과 같이 R에서 구한것과 동일합니다.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(PC_1 = 0.042 \times Murder + 0.995 \times Assault + 0.046 \times UrbanPop + 0.075 \times Rape\)
+  \end{itemize}
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{ruxbd84uxc11d}{%
+\subsection{4-5 R분석}\label{ruxbd84uxc11d}}
+
+\hypertarget{uxacf5uxd1b5-uxc790uxb8cc-uxc77duxae30}{%
+\subsubsection{공통 자료
+읽기}\label{uxacf5uxd1b5-uxc790uxb8cc-uxc77duxae30}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#customerID 는 row.name으로 사용하고 첫번째 행은 열이름으로 사용}
+\NormalTok{mall }\OtherTok{=} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"./exdata/mall\_customer.csv"}\NormalTok{, }\AttributeTok{header =}\NormalTok{ T, }\AttributeTok{row.names =} \DecValTok{1}\NormalTok{)}
+\FunctionTok{head}\NormalTok{(mall)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Gender Age Income Spending_Score
+## 1   Male  19     15             39
+## 2   Male  21     15             81
+## 3 Female  20     16              6
+## 4 Female  23     16             77
+## 5 Female  31     17             40
+## 6 Female  22     17             76
+\end{verbatim}
+
+\hypertarget{uxb0a8uxc131uxadf8uxb8f9-uxb370uxc774uxd130-uxbd84uxc11d}{%
+\subsubsection{남성그룹 데이터
+분석}\label{uxb0a8uxc131uxadf8uxb8f9-uxb370uxc774uxd130-uxbd84uxc11d}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Gender가 "Male"인 데이터만 추출하여 분석}
+\NormalTok{mallm }\OtherTok{=}\NormalTok{ mall[mall}\SpecialCharTok{$}\NormalTok{Gender}\SpecialCharTok{==}\StringTok{"Male"}\NormalTok{,}\DecValTok{2}\SpecialCharTok{:}\DecValTok{4}\NormalTok{]}
+\FunctionTok{head}\NormalTok{(mallm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Age Income Spending_Score
+## 1   19     15             39
+## 2   21     15             81
+## 9   64     19              3
+## 11  67     19             14
+## 15  37     20             13
+## 16  22     20             79
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(mallm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       Age            Income       Spending_Score 
+##  Min.   :18.00   Min.   : 15.00   Min.   : 1.00  
+##  1st Qu.:27.75   1st Qu.: 45.50   1st Qu.:24.50  
+##  Median :37.00   Median : 62.50   Median :50.00  
+##  Mean   :39.81   Mean   : 62.23   Mean   :48.51  
+##  3rd Qu.:50.50   3rd Qu.: 78.00   3rd Qu.:70.00  
+##  Max.   :70.00   Max.   :137.00   Max.   :97.00
+\end{verbatim}
+
+\hypertarget{section-5}{%
+\paragraph{(1)}\label{section-5}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 변수 표준화}
+\NormalTok{zmallm }\OtherTok{=} \FunctionTok{scale}\NormalTok{(mallm, }\AttributeTok{center =}\NormalTok{ T, }\AttributeTok{scale =}\NormalTok{ T)}
+\FunctionTok{head}\NormalTok{(zmallm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           Age    Income Spending_Score
+## 1  -1.3410938 -1.772904     -0.3409486
+## 2  -1.2121848 -1.772904      1.1646021
+## 9   1.5593603 -1.622744     -1.6314206
+## 11  1.7527239 -1.622744     -1.2371097
+## 15 -0.1809122 -1.585205     -1.2729561
+## 16 -1.1477302 -1.585205      1.0929092
+\end{verbatim}
+
+\hypertarget{section-6}{%
+\paragraph{(2)}\label{section-6}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 유클리디안 거리 구하기}
+\NormalTok{zmallm\_euc }\OtherTok{=} \FunctionTok{dist}\NormalTok{(zmallm, }\AttributeTok{method =} \StringTok{"euclidean"}\NormalTok{)}
+\CommentTok{\# 와드의 방법으로 군집화}
+\NormalTok{hcm\_w }\OtherTok{=} \FunctionTok{hclust}\NormalTok{(zmallm\_euc, }\AttributeTok{method =} \StringTok{"ward.D"}\NormalTok{)}
+\CommentTok{\# Dendrogram 출력}
+\FunctionTok{plot}\NormalTok{(hcm\_w)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h=}\DecValTok{12}\NormalTok{, }\AttributeTok{lty=}\DecValTok{3}\NormalTok{, }\AttributeTok{col=}\StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{출석수업과제물_다변량분석_202135-368864-홍원표-_files/figure-latex/unnamed-chunk-23-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  와드방법으로 군집화 후 height를 보면 12보다 작은 경우에 SSE값이 급격한
+  변화가 있는 것으로 보여지기 때문에 4개의 군집으로 분리하는게
+  적절하다고 판단됨.
+\end{itemize}
+
+\hypertarget{section-7}{%
+\paragraph{(3)}\label{section-7}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 최장연결법으로 군집화}
+\NormalTok{hcm\_c }\OtherTok{=} \FunctionTok{hclust}\NormalTok{(zmallm\_euc, }\AttributeTok{method =} \StringTok{"complete"}\NormalTok{)}
+\CommentTok{\# 덴드로그램 출력}
+\FunctionTok{plot}\NormalTok{(hcm\_c, }\AttributeTok{hang=}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h=}\FloatTok{2.9}\NormalTok{, }\AttributeTok{lty=}\DecValTok{3}\NormalTok{, }\AttributeTok{col=}\StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{출석수업과제물_다변량분석_202135-368864-홍원표-_files/figure-latex/unnamed-chunk-24-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  최장거리 방법으로 군집화 후 height를 보면 2.9보다 작은 경우에 SSE값이
+  급격한 변화가 있는 것으로 보여지기 때문에 6개의 군집으로 분리하는게
+  적절하다고 판단됨.
+\end{itemize}
+
+\hypertarget{section-8}{%
+\paragraph{(4)}\label{section-8}}
+
+\begin{itemize}
+\tightlist
+\item
+  와드의 방법으로 군집화한 덴드로그램을 보면 Height가 좀 더 낮은
+  비율에서 군집이 더 많이 나눠지는 것으로 보여지고 최장연결법으로
+  군집화한 덴드로그램에서는 Height가 중심부분 부터 군집이 더 빠르게
+  나눠지는 것으로 보여진다.
+\end{itemize}
+
+\hypertarget{section-9}{%
+\paragraph{(5)}\label{section-9}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# K{-}Means 군집화화}
+\NormalTok{kmcm }\OtherTok{=} \FunctionTok{kmeans}\NormalTok{(zmallm, }\AttributeTok{centers =} \DecValTok{6}\NormalTok{)}
+\NormalTok{kmcm}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## K-means clustering with 6 clusters of sizes 10, 18, 13, 19, 8, 20
+## 
+## Cluster means:
+##           Age     Income Spending_Score
+## 1 -0.99303934 -1.4087674      0.9065077
+## 2 -0.42082628  0.9341351      1.2243462
+## 3 -0.94445053 -0.2597599      0.1609017
+## 4  1.25744172 -0.2969957      0.0250625
+## 5  0.78590589 -1.3646581     -1.1206087
+## 6 -0.01977582  0.8605153     -1.2353174
+## 
+## Clustering vector:
+##   1   2   9  11  15  16  18  19  21  22  24  26  28  31  33  34  42  43  52  54 
+##   1   1   5   5   5   1   1   5   5   1   1   1   1   5   5   1   1   5   3   4 
+##  56  58  60  61  62  65  66  69  71  75  76  78  81  82  83  86  92  93  96  99 
+##   4   4   4   4   3   4   3   3   4   4   3   3   4   3   4   4   3   4   3   4 
+## 100 103 104 105 108 109 110 111 114 121 124 127 128 129 130 131 132 135 138 139 
+##   3   4   3   4   4   4   4   4   3   3   2   6   2   6   2   6   2   6   2   6 
+## 142 145 146 147 150 151 152 157 159 163 165 167 170 171 172 173 174 177 178 179 
+##   2   6   2   6   2   6   2   6   6   6   6   6   2   6   2   6   2   6   2   6 
+## 180 183 186 188 193 198 199 200 
+##   2   6   2   2   6   2   6   2 
+## 
+## Within cluster sum of squares by cluster:
+## [1]  4.760517 12.639085  4.363444  7.798242  6.324466 21.549255
+##  (between_SS / total_SS =  78.0 %)
+## 
+## Available components:
+## 
+## [1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss"
+## [6] "betweenss"    "size"         "iter"         "ifault"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 소속 군집 산점도}
+\FunctionTok{plot}\NormalTok{(zmallm, }\AttributeTok{col=}\NormalTok{kmcm}\SpecialCharTok{$}\NormalTok{cluster, }\AttributeTok{pch=}\DecValTok{16}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{출석수업과제물_다변량분석_202135-368864-홍원표-_files/figure-latex/unnamed-chunk-26-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  K-평군 군집분석으로 처음 2개의 변수인 Age와 Income으로 생성된 군집
+  데이터 그림으로 `kmcm\$cluster' 는 군집의 번호를 의미한다.
+\item
+  pch=16은 산점도의 점을 색상으로 채우는 옵션이다.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# K{-}평균 군집 데이터의 모든 변수에 대한 산점도 행렬을 그려본다.}
+\FunctionTok{pairs}\NormalTok{(zmallm, }\AttributeTok{col=}\NormalTok{kmcm}\SpecialCharTok{$}\NormalTok{cluster, }\AttributeTok{pch=}\DecValTok{16}\NormalTok{, }\AttributeTok{cex.labels =} \FloatTok{1.5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{출석수업과제물_다변량분석_202135-368864-홍원표-_files/figure-latex/unnamed-chunk-27-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  cex.labels = 1.5는 산점도의 대각선에 출력될 변수명의 크기를 조절한다.
+\item
+  Income의 상단의 그래프를 보면 나이가 많아 질수록 수입은 수입이
+  일정하게 줄어드는것을 볼 수 있다.
+\item
+  나이가 평균이하에서 소비점수도 높게 나타나는 경우도 많아짐을 알 수
+  있다.
+\end{itemize}
+
+\hypertarget{uxc5ecuxc131uxadf8uxb8f9-uxb370uxc774uxd130-uxbd84uxc11d}{%
+\subsubsection{여성그룹 데이터
+분석}\label{uxc5ecuxc131uxadf8uxb8f9-uxb370uxc774uxd130-uxbd84uxc11d}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Gender가 "Female"인 데이터만 추출하여 분석}
+\NormalTok{mallf }\OtherTok{=}\NormalTok{ mall[mall}\SpecialCharTok{$}\NormalTok{Gender}\SpecialCharTok{==}\StringTok{"Female"}\NormalTok{,}\DecValTok{2}\SpecialCharTok{:}\DecValTok{4}\NormalTok{]}
+\FunctionTok{head}\NormalTok{(mallf)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Age Income Spending_Score
+## 3  20     16              6
+## 4  23     16             77
+## 5  31     17             40
+## 6  22     17             76
+## 7  35     18              6
+## 8  23     18             94
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(mallf)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       Age           Income       Spending_Score 
+##  Min.   :18.0   Min.   : 16.00   Min.   : 5.00  
+##  1st Qu.:29.0   1st Qu.: 39.75   1st Qu.:35.00  
+##  Median :35.0   Median : 60.00   Median :50.00  
+##  Mean   :38.1   Mean   : 59.25   Mean   :51.53  
+##  3rd Qu.:47.5   3rd Qu.: 77.25   3rd Qu.:73.00  
+##  Max.   :68.0   Max.   :126.00   Max.   :99.00
+\end{verbatim}
+
+\hypertarget{section-10}{%
+\paragraph{(1)}\label{section-10}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 변수 표준화 : 0{-}1 변환을을 이용}
+\NormalTok{maxX }\OtherTok{=} \FunctionTok{apply}\NormalTok{(mallf, }\DecValTok{2}\NormalTok{, max)}
+\NormalTok{minX }\OtherTok{=} \FunctionTok{apply}\NormalTok{(mallf, }\DecValTok{2}\NormalTok{, min)}
+\NormalTok{z01mallf}\OtherTok{=}\FunctionTok{scale}\NormalTok{(mallf, }\AttributeTok{center=}\NormalTok{minX, }\AttributeTok{scale=}\NormalTok{maxX }\SpecialCharTok{{-}}\NormalTok{ minX)}
+\FunctionTok{summary}\NormalTok{(z01mallf)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       Age            Income       Spending_Score  
+##  Min.   :0.000   Min.   :0.0000   Min.   :0.0000  
+##  1st Qu.:0.220   1st Qu.:0.2159   1st Qu.:0.3191  
+##  Median :0.340   Median :0.4000   Median :0.4787  
+##  Mean   :0.402   Mean   :0.3932   Mean   :0.4950  
+##  3rd Qu.:0.590   3rd Qu.:0.5568   3rd Qu.:0.7234  
+##  Max.   :1.000   Max.   :1.0000   Max.   :1.0000
+\end{verbatim}
+
+\hypertarget{section-11}{%
+\paragraph{(2)}\label{section-11}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 유클리디안 거리 구하기}
+\NormalTok{zmallf\_euc }\OtherTok{=} \FunctionTok{dist}\NormalTok{(z01mallf, }\AttributeTok{method =} \StringTok{"euclidean"}\NormalTok{)}
+\CommentTok{\# 와드의 방법으로 군집화}
+\NormalTok{hcf\_w }\OtherTok{=} \FunctionTok{hclust}\NormalTok{(zmallf\_euc, }\AttributeTok{method =} \StringTok{"ward.D"}\NormalTok{)}
+\CommentTok{\# Dendrogram 출력}
+\FunctionTok{plot}\NormalTok{(hcf\_w)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h=}\FloatTok{2.1}\NormalTok{, }\AttributeTok{lty=}\DecValTok{3}\NormalTok{, }\AttributeTok{col=}\StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{출석수업과제물_다변량분석_202135-368864-홍원표-_files/figure-latex/unnamed-chunk-30-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  와드방법으로 군집화 후 Height를 보면 2.1보다 작은 경우에 SSE값이
+  급격한 변화가 있는 것으로 보여지기 때문에 6개의 군집으로 분리하는게
+  적절하다고 판단됨.
+\end{itemize}
+
+\hypertarget{section-12}{%
+\paragraph{(3)}\label{section-12}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 최장연결법으로 군집화}
+\NormalTok{hcf\_c }\OtherTok{=} \FunctionTok{hclust}\NormalTok{(zmallf\_euc, }\AttributeTok{method =} \StringTok{"complete"}\NormalTok{)}
+\CommentTok{\# 덴드로그램 출력}
+\FunctionTok{plot}\NormalTok{(hcf\_c, }\AttributeTok{hang=}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h=}\FloatTok{0.6}\NormalTok{, }\AttributeTok{lty=}\DecValTok{3}\NormalTok{, }\AttributeTok{col=}\StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{출석수업과제물_다변량분석_202135-368864-홍원표-_files/figure-latex/unnamed-chunk-31-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  최장거리 방법으로 군집화 후 height를 보면 0.6보다 작은 경우에 SSE값이
+  급격한 변화가 있는 것으로 보여지기 때문에 7개의 군집으로 분리하는게
+  적절하다고 판단됨.
+\end{itemize}
+
+\hypertarget{section-13}{%
+\paragraph{(4)}\label{section-13}}
+
+\begin{itemize}
+\tightlist
+\item
+  와드의 방법으로 군집화한 덴드로그램을 보면 Height가 좀 더 낮은
+  비율에서 군집이 더 많이 나눠지는 것으로 보여지고 최장연결법으로
+  군집화한 덴드로그램에서는 Height가 중심부분 부터 군집이 더 빠르게
+  나눠지는 것으로 보여진다.
+\end{itemize}
+
+\hypertarget{section-14}{%
+\paragraph{(5)}\label{section-14}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# K{-}Means 군집화화}
+\NormalTok{kmcf }\OtherTok{=} \FunctionTok{kmeans}\NormalTok{(z01mallf, }\AttributeTok{centers =} \DecValTok{6}\NormalTok{)}
+\NormalTok{kmcf}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## K-means clustering with 6 clusters of sizes 8, 21, 31, 17, 22, 13
+## 
+## Cluster means:
+##         Age    Income Spending_Score
+## 1 0.9325000 0.3318182      0.4627660
+## 2 0.2838095 0.6367965      0.8156028
+## 3 0.1548387 0.2328446      0.6132464
+## 4 0.4505882 0.6695187      0.1921151
+## 5 0.5918182 0.3710744      0.4617988
+## 6 0.4707692 0.0958042      0.1669394
+## 
+## Clustering vector:
+##   3   4   5   6   7   8  10  12  13  14  17  20  23  25  27  29  30  32  35  36 
+##   6   3   6   3   6   3   3   3   6   3   6   3   6   6   6   6   3   3   6   3 
+##  37  38  39  40  41  44  45  46  47  48  49  50  51  53  55  57  59  63  64  67 
+##   6   3   6   3   1   3   6   3   5   3   3   3   5   3   5   5   3   1   5   5 
+##  68  70  72  73  74  77  79  80  84  85  87  88  89  90  91  94  95  97  98 101 
+##   1   3   5   1   1   5   3   5   5   3   5   3   3   5   1   5   3   5   3   3 
+## 102 106 107 112 113 115 116 117 118 119 120 122 123 125 126 133 134 136 137 140 
+##   5   3   1   3   5   3   3   1   5   5   5   5   5   4   2   4   2   2   4   2 
+## 141 143 144 148 149 153 154 155 156 158 160 161 162 164 166 168 169 175 176 181 
+##   4   4   2   2   4   4   2   4   2   2   2   5   2   2   2   2   4   4   2   4 
+## 182 184 185 187 189 190 191 192 194 195 196 197 
+##   2   2   4   4   4   2   4   2   2   4   2   4 
+## 
+## Within cluster sum of squares by cluster:
+## [1] 0.1153437 0.5458396 2.0297857 1.1863899 0.5271843 0.7582243
+##  (between_SS / total_SS =  75.0 %)
+## 
+## Available components:
+## 
+## [1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss"
+## [6] "betweenss"    "size"         "iter"         "ifault"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 소속 군집 산점도}
+\FunctionTok{plot}\NormalTok{(z01mallf, }\AttributeTok{col=}\NormalTok{kmcf}\SpecialCharTok{$}\NormalTok{cluster, }\AttributeTok{pch=}\DecValTok{16}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{출석수업과제물_다변량분석_202135-368864-홍원표-_files/figure-latex/unnamed-chunk-33-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  K-평군 군집분석으로 처음 2개의 변수인 Age와 Income으로 생성된 군집
+  데이터 그림으로 `kmcf\$cluster' 는 군집의 번호를 의미한다.
+\item
+  pch=16은 산점도의 점을 색상으로 채우는 옵션이다.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# K{-}평균 군집 데이터의 모든 변수에 대한 산점도 행렬을 그려본다.}
+\FunctionTok{pairs}\NormalTok{(z01mallf, }\AttributeTok{col=}\NormalTok{kmcf}\SpecialCharTok{$}\NormalTok{cluster, }\AttributeTok{pch=}\DecValTok{16}\NormalTok{, }\AttributeTok{cex.labels =} \FloatTok{1.5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{출석수업과제물_다변량분석_202135-368864-홍원표-_files/figure-latex/unnamed-chunk-34-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  cex.labels = 1.5는 산점도의 대각선에 출력될 변수명의 크기를 조절한다.
+\end{itemize}
+
+\hypertarget{python-uxbd84uxc11d}{%
+\subsection{4-5 Python 분석}\label{python-uxbd84uxc11d}}
+
+\hypertarget{uxacf5uxd1b5-uxc790uxb8cc-uxc77duxae30-1}{%
+\subsubsection{공통 자료
+읽기}\label{uxacf5uxd1b5-uxc790uxb8cc-uxc77duxae30-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 주요 패키지 로드}
+\ImportTok{import}\NormalTok{ pandas }\ImportTok{as}\NormalTok{ pd}
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\ImportTok{import}\NormalTok{ matplotlib.pyplot }\ImportTok{as}\NormalTok{ plt}
+
+\CommentTok{\# 데이터 읽기}
+\NormalTok{mall }\OperatorTok{=}\NormalTok{ pd.read\_csv(}\StringTok{"./exdata/mall\_customer.csv"}\NormalTok{, header}\OperatorTok{=}\DecValTok{0}\NormalTok{, index\_col }\OperatorTok{=} \StringTok{"CustomerID"}\NormalTok{)}
+\NormalTok{mall.head}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## <bound method NDFrame.head of             Gender  Age  Income  Spending_Score
+## CustomerID                                     
+## 1             Male   19      15              39
+## 2             Male   21      15              81
+## 3           Female   20      16               6
+## 4           Female   23      16              77
+## 5           Female   31      17              40
+## ...            ...  ...     ...             ...
+## 196         Female   35     120              79
+## 197         Female   45     126              28
+## 198           Male   32     126              74
+## 199           Male   32     137              18
+## 200           Male   30     137              83
+## 
+## [200 rows x 4 columns]>
+\end{verbatim}
+
+\hypertarget{uxb0a8uxc131uxadf8uxb8f9-uxb370uxc774uxd130-uxbd84uxc11d-1}{%
+\subsubsection{남성그룹 데이터
+분석}\label{uxb0a8uxc131uxadf8uxb8f9-uxb370uxc774uxd130-uxbd84uxc11d-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 테이블에서 남성의 데이터 행으로만 구성되고 "Age", "Income", "Spending\_Score" 열로 구성된 데이터 추출}
+\NormalTok{Mallm }\OperatorTok{=}\NormalTok{ mall[mall[}\StringTok{\textquotesingle{}Gender\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \StringTok{\textquotesingle{}Male\textquotesingle{}}\NormalTok{][[}\StringTok{"Age"}\NormalTok{, }\StringTok{"Income"}\NormalTok{, }\StringTok{"Spending\_Score"}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{section-15}{%
+\paragraph{(1)}\label{section-15}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 데이터 표준화 패키지 로드}
+\ImportTok{from}\NormalTok{ sklearn.preprocessing }\ImportTok{import}\NormalTok{ StandardScaler}
+\CommentTok{\# 표준화 실행}
+\NormalTok{zMallm }\OperatorTok{=}\NormalTok{ StandardScaler().fit\_transform(Mallm)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{section-16}{%
+\paragraph{(2)}\label{section-16}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 군집분석 패키지 불러오기}
+\ImportTok{import}\NormalTok{ scipy.cluster.hierarchy }\ImportTok{as}\NormalTok{ sch}
+\NormalTok{wMallmlink }\OperatorTok{=}\NormalTok{ sch.linkage(zMallm, }\StringTok{\textquotesingle{}ward\textquotesingle{}}\NormalTok{)}
+
+\NormalTok{plt.figure(figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{7}\NormalTok{,}\DecValTok{5}\NormalTok{))}
+\NormalTok{dend }\OperatorTok{=}\NormalTok{ sch.dendrogram(wMallmlink, leaf\_rotation}\OperatorTok{=}\DecValTok{80}\NormalTok{, leaf\_font\_size}\OperatorTok{=}\DecValTok{10}\NormalTok{, labels}\OperatorTok{=}\NormalTok{Mallm.index)}
+\NormalTok{plt.title(}\StringTok{"Dendrogram of Ward\textquotesingle{}s linkage"}\NormalTok{)}
+\CommentTok{\# 덴드로그램에 라인 그리기기}
+\NormalTok{ax }\OperatorTok{=}\NormalTok{ plt.gca() }
+\NormalTok{bounds }\OperatorTok{=}\NormalTok{ ax.get\_xbound() }
+\NormalTok{ax.plot(bounds, [}\DecValTok{6}\NormalTok{, }\DecValTok{6}\NormalTok{], }\StringTok{\textquotesingle{}{-}{-}\textquotesingle{}}\NormalTok{, c}\OperatorTok{=}\StringTok{\textquotesingle{}r\textquotesingle{}}\NormalTok{)}
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{출석수업과제물_다변량분석_202135-368864-홍원표-_files/figure-latex/unnamed-chunk-38-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  와드방법으로 군집화 후 height를 보면 6보다 작은 경우에 SSE값이 급격한
+  변화가 있는 것으로 보여지기 때문에 4개의 군집으로 분리하는게
+  적절하다고 판단됩니다.
+\end{itemize}
+
+\hypertarget{section-17}{%
+\paragraph{(3)}\label{section-17}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sMallmlink}\OperatorTok{=}\NormalTok{sch.linkage(zMallm, }\StringTok{\textquotesingle{}complete\textquotesingle{}}\NormalTok{)}
+\NormalTok{plt.figure(figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{7}\NormalTok{,}\DecValTok{5}\NormalTok{))}
+\NormalTok{dend}\OperatorTok{=}\NormalTok{sch.dendrogram(sMallmlink, leaf\_rotation}\OperatorTok{=}\DecValTok{80}\NormalTok{, leaf\_font\_size}\OperatorTok{=}\DecValTok{10}\NormalTok{, labels}\OperatorTok{=}\NormalTok{Mallm.index)}
+\NormalTok{plt.title(}\StringTok{"Dendrogram of Complete linkage"}\NormalTok{)}
+\NormalTok{ax }\OperatorTok{=}\NormalTok{ plt.gca() }
+\NormalTok{bounds }\OperatorTok{=}\NormalTok{ ax.get\_xbound() }
+\NormalTok{ax.plot(bounds, [}\DecValTok{3}\NormalTok{, }\DecValTok{3}\NormalTok{], }\StringTok{\textquotesingle{}{-}{-}\textquotesingle{}}\NormalTok{, c}\OperatorTok{=}\StringTok{\textquotesingle{}k\textquotesingle{}}\NormalTok{)}
+\NormalTok{plt.show() }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{출석수업과제물_다변량분석_202135-368864-홍원표-_files/figure-latex/unnamed-chunk-39-3.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  최장거리 방법으로 군집화 후 height를 보면 3보다 작은 경우에 SSE값이
+  급격한 변화가 있는 것으로 보여지기 때문에 6개의 군집으로 분리하는게
+  적절하다고 판단됩니다.
+\end{itemize}
+
+\hypertarget{section-18}{%
+\paragraph{(4)}\label{section-18}}
+
+\begin{itemize}
+\tightlist
+\item
+  와드의 방법으로 군집화한 덴드로그램을 보면 Height가 좀 더 낮은
+  비율에서 군집이 더 많이 나눠지는 것으로 보여지고 최장연결법으로
+  군집화한 덴드로그램에서는 Height가 중심부분 부터 군집이 더 빠르게
+  나눠지는 것으로 보여진다.
+\end{itemize}
+
+\hypertarget{section-19}{%
+\paragraph{(5)}\label{section-19}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.cluster }\ImportTok{import}\NormalTok{ KMeans}
+\CommentTok{\# K{-}means 군집분석}
+\NormalTok{kmc }\OperatorTok{=}\NormalTok{ KMeans(n\_clusters}\OperatorTok{=}\DecValTok{6}\NormalTok{)}
+\NormalTok{kmc.fit(zMallm)}
+\CommentTok{\# 군집중심알기}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## KMeans(n_clusters=6)
+## 
+## C:\Users\robin\MINICO~1\lib\site-packages\sklearn\cluster\_kmeans.py:870: FutureWarning: The default value of `n_init` will change from 10 to 'auto' in 1.4. Set the value of `n_init` explicitly to suppress the warning
+##   warnings.warn(
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{kmc.cluster\_centers\_}
+\CommentTok{\# 소속 군집 알기}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## array([[-0.99873015, -1.41684067,  0.91170263],
+##        [-0.42323791,  0.93948832,  1.23136254],
+##        [ 0.79040969, -1.37247859, -1.12703061],
+##        [-0.01988915,  0.86544664, -1.2423966 ],
+##        [ 1.26464774, -0.29869773,  0.02520612],
+##        [-0.9498629 , -0.26124848,  0.16182373]])
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{kmc.labels\_}
+\CommentTok{\# 첫번째 변수와 2번째 변수로 소속 군집 산점도를 그려본다.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## array([0, 0, 2, 2, 2, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 2, 5, 4, 4, 4,
+##        4, 4, 5, 4, 5, 5, 4, 4, 5, 5, 4, 5, 4, 4, 5, 4, 5, 4, 5, 4, 5, 4,
+##        4, 4, 4, 4, 5, 5, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3,
+##        1, 3, 3, 3, 3, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 1, 3, 1, 3, 1])
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plt.figure(figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{5}\NormalTok{,}\DecValTok{5}\NormalTok{))}
+\NormalTok{plt.scatter(Mallm[}\StringTok{"Age"}\NormalTok{], Mallm[}\StringTok{"Income"}\NormalTok{], c}\OperatorTok{=}\NormalTok{kmc.labels\_)}
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{출석수업과제물_다변량분석_202135-368864-홍원표-_files/figure-latex/unnamed-chunk-40-5.pdf}
+
+\hypertarget{uxc5ecuxc131uxadf8uxb8f9-uxb370uxc774uxd130-uxbd84uxc11d-1}{%
+\subsubsection{여성그룹 데이터
+분석}\label{uxc5ecuxc131uxadf8uxb8f9-uxb370uxc774uxd130-uxbd84uxc11d-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 테이블에서 여성의 데이터 행으로만 구성되고 "Age", "Income", "Spending\_Score" 열로 구성된 데이터 추출}
+\NormalTok{Mallf }\OperatorTok{=}\NormalTok{ mall[mall[}\StringTok{\textquotesingle{}Gender\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \StringTok{\textquotesingle{}Female\textquotesingle{}}\NormalTok{][[}\StringTok{"Age"}\NormalTok{, }\StringTok{"Income"}\NormalTok{, }\StringTok{"Spending\_Score"}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{section-20}{%
+\paragraph{(1)}\label{section-20}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 데이터 표준화 패키지 로드}
+\ImportTok{from}\NormalTok{ sklearn.preprocessing }\ImportTok{import}\NormalTok{ StandardScaler}
+\CommentTok{\# 표준화 실행}
+\NormalTok{zMallf }\OperatorTok{=}\NormalTok{ StandardScaler().fit\_transform(Mallf)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{section-21}{%
+\paragraph{(2)}\label{section-21}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 군집분석 패키지 불러오기}
+\ImportTok{import}\NormalTok{ scipy.cluster.hierarchy }\ImportTok{as}\NormalTok{ sch}
+\NormalTok{wMallflink }\OperatorTok{=}\NormalTok{ sch.linkage(zMallf, }\StringTok{\textquotesingle{}ward\textquotesingle{}}\NormalTok{)}
+
+\NormalTok{plt.figure(figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{7}\NormalTok{,}\DecValTok{5}\NormalTok{))}
+\NormalTok{dend }\OperatorTok{=}\NormalTok{ sch.dendrogram(wMallflink, leaf\_rotation}\OperatorTok{=}\DecValTok{80}\NormalTok{, leaf\_font\_size}\OperatorTok{=}\DecValTok{10}\NormalTok{, labels}\OperatorTok{=}\NormalTok{Mallf.index)}
+\NormalTok{plt.title(}\StringTok{"Dendrogram of Ward\textquotesingle{}s linkage"}\NormalTok{)}
+\CommentTok{\# 덴드로그램에 라인 그리기기}
+\NormalTok{ax }\OperatorTok{=}\NormalTok{ plt.gca() }
+\NormalTok{bounds }\OperatorTok{=}\NormalTok{ ax.get\_xbound() }
+\NormalTok{ax.plot(bounds, [}\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{], }\StringTok{\textquotesingle{}{-}{-}\textquotesingle{}}\NormalTok{, c}\OperatorTok{=}\StringTok{\textquotesingle{}r\textquotesingle{}}\NormalTok{)}
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{출석수업과제물_다변량분석_202135-368864-홍원표-_files/figure-latex/unnamed-chunk-43-7.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  와드방법으로 군집화 후 height를 보면 4보다 작은 경우에 SSE값이 급격한
+  변화가 있는 것으로 보여지기 때문에 6개의 군집으로 분리하는게
+  적절하다고 판단됩니다.
+\end{itemize}
+
+\hypertarget{section-22}{%
+\paragraph{(3)}\label{section-22}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sMallflink}\OperatorTok{=}\NormalTok{sch.linkage(zMallf, }\StringTok{\textquotesingle{}complete\textquotesingle{}}\NormalTok{)}
+\NormalTok{plt.figure(figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{7}\NormalTok{,}\DecValTok{5}\NormalTok{))}
+\NormalTok{dend}\OperatorTok{=}\NormalTok{sch.dendrogram(sMallflink, leaf\_rotation}\OperatorTok{=}\DecValTok{80}\NormalTok{, leaf\_font\_size}\OperatorTok{=}\DecValTok{10}\NormalTok{, labels}\OperatorTok{=}\NormalTok{Mallf.index)}
+\NormalTok{plt.title(}\StringTok{"Dendrogram of Complete linkage"}\NormalTok{)}
+\NormalTok{ax }\OperatorTok{=}\NormalTok{ plt.gca() }
+\NormalTok{bounds }\OperatorTok{=}\NormalTok{ ax.get\_xbound() }
+\NormalTok{ax.plot(bounds, [}\FloatTok{3.7}\NormalTok{, }\FloatTok{3.7}\NormalTok{], }\StringTok{\textquotesingle{}{-}{-}\textquotesingle{}}\NormalTok{, c}\OperatorTok{=}\StringTok{\textquotesingle{}k\textquotesingle{}}\NormalTok{)}
+\NormalTok{ax.text(bounds[}\DecValTok{1}\NormalTok{], }\FloatTok{3.7}\NormalTok{, }\StringTok{\textquotesingle{}5\textquotesingle{}}\NormalTok{, va}\OperatorTok{=}\StringTok{\textquotesingle{}center\textquotesingle{}}\NormalTok{, fontdict}\OperatorTok{=}\NormalTok{\{}\StringTok{\textquotesingle{}size\textquotesingle{}}\NormalTok{: }\DecValTok{15}\NormalTok{\})}
+\NormalTok{ax.plot(bounds, [}\FloatTok{2.5}\NormalTok{, }\FloatTok{2.5}\NormalTok{], }\StringTok{\textquotesingle{}{-}{-}\textquotesingle{}}\NormalTok{, c}\OperatorTok{=}\StringTok{\textquotesingle{}k\textquotesingle{}}\NormalTok{)}
+\NormalTok{ax.text(bounds[}\DecValTok{1}\NormalTok{], }\FloatTok{2.5}\NormalTok{, }\StringTok{\textquotesingle{}7\textquotesingle{}}\NormalTok{, va}\OperatorTok{=}\StringTok{\textquotesingle{}center\textquotesingle{}}\NormalTok{, fontdict}\OperatorTok{=}\NormalTok{\{}\StringTok{\textquotesingle{}size\textquotesingle{}}\NormalTok{: }\DecValTok{15}\NormalTok{\})}
+
+
+\NormalTok{plt.show() }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{출석수업과제물_다변량분석_202135-368864-홍원표-_files/figure-latex/unnamed-chunk-44-9.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  최장거리 방법으로 군집화하여 덴드로그램을 보면 2.5에서 7개의 군집으로
+  분리하는게 좋을지 4.7에서 5개의 군집으로 분리해야할지 모르겠지만
+  덴드로 그램의 색상을 보면 5개의 군집으로 분리하는게 더 좋아 보이는것
+  같다.
+\end{itemize}
+
+\hypertarget{section-23}{%
+\paragraph{(4)}\label{section-23}}
+
+\begin{itemize}
+\tightlist
+\item
+  와드의 방법으로 군집화한 덴드로그램을 보면 Height가 좀 더 낮은
+  비율에서 군집이 더 많이 나눠지는 것으로 보여지고 최장연결법으로
+  군집화한 덴드로그램에서는 Height가 중심부분 부터 군집이 더 빠르게
+  나눠지는 것으로 보여진다.
+\end{itemize}
+
+\hypertarget{section-24}{%
+\paragraph{(5)}\label{section-24}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.cluster }\ImportTok{import}\NormalTok{ KMeans}
+\CommentTok{\# K{-}means 군집분석}
+\NormalTok{kmc }\OperatorTok{=}\NormalTok{ KMeans(n\_clusters}\OperatorTok{=}\DecValTok{6}\NormalTok{)}
+\NormalTok{kmc.fit(zMallf)}
+
+\CommentTok{\# 군집중심알기}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## KMeans(n_clusters=6)
+## 
+## C:\Users\robin\MINICO~1\lib\site-packages\sklearn\cluster\_kmeans.py:870: FutureWarning: The default value of `n_init` will change from 10 to 'auto' in 1.4. Set the value of `n_init` explicitly to suppress the warning
+##   warnings.warn(
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{kmc.cluster\_centers\_}
+\CommentTok{\# 소속 군집 알기}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## array([[-0.8054178 , -0.07298547, -0.18356213],
+##        [ 0.27330616, -1.26321   , -1.2843925 ],
+##        [-0.46933289,  1.03483425,  1.25545945],
+##        [ 0.45183635,  1.31434524, -1.28645233],
+##        [ 1.27551966, -0.19382587, -0.1068539 ],
+##        [-1.00390496, -1.29588563,  1.20846472]])
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{kmc.labels\_}
+\CommentTok{\# 첫번째 변수와 2번째 변수로 소속 군집 산점도를 그려본다.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## array([1, 5, 1, 5, 1, 5, 5, 5, 1, 5, 1, 5, 1, 1, 1, 1, 5, 5, 1, 5, 1, 5,
+##        1, 5, 4, 0, 1, 5, 4, 0, 0, 0, 4, 0, 4, 4, 0, 4, 4, 4, 4, 0, 4, 4,
+##        4, 4, 0, 4, 4, 0, 4, 0, 0, 4, 4, 0, 0, 4, 0, 0, 4, 0, 4, 0, 0, 0,
+##        0, 4, 4, 4, 4, 0, 0, 0, 2, 0, 2, 2, 3, 2, 3, 0, 2, 2, 3, 3, 2, 3,
+##        2, 2, 2, 4, 2, 2, 2, 2, 3, 3, 2, 3, 2, 2, 3, 3, 3, 2, 3, 2, 2, 3,
+##        2, 3])
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plt.figure(figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{5}\NormalTok{,}\DecValTok{5}\NormalTok{))}
+\NormalTok{plt.scatter(Mallf[}\StringTok{"Age"}\NormalTok{], Mallf[}\StringTok{"Income"}\NormalTok{], c}\OperatorTok{=}\NormalTok{kmc.labels\_)}
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{출석수업과제물_다변량분석_202135-368864-홍원표-_files/figure-latex/unnamed-chunk-45-11.pdf}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+이 문서는 RStudio에서 R script와 Python script를 포함한 R markdown
+문서로 생성하였습니다.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+-- 2023년 05월 14일 다변량분석 출석수업 과제물 끝 --
+
+\end{document}

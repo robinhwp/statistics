@@ -43,10 +43,11 @@ np.round(pca.components_, 3)
 ##### ④ 스크리 그림 및 주성분 계수
 # 스크리 그림 그리기
 import matplotlib.pyplot as plt
-plt.scatter(range(1, 4+1), pca.explained_variance_ratio_)
+plt.clf()
+plt.scatter(range(1,pca.n_components_+1), pca.explained_variance_)
+plt.plot(range(1,pca.n_components_+1), pca.explained_variance_)
 plt.title('Scree plot')
 plt.xlabel('Number of components')
 plt.ylabel('Explained variance ratio')
 plt.grid()
 plt.show()
-
