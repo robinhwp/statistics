@@ -1,0 +1,452 @@
+---
+title: "Multivariate Data Analysis - chapter 01"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(python = reticulate::eng_python)
+```
+
+## 1 기술통계량 및 분할 표
+
+### R - 기술통계량 및 분할표
+
+#### (1) 기술통계량 구하기
+
+```{r message=FALSE, warning=FALSE}
+# read csv file
+survey = read.csv("./data/survey.csv")
+head(survey,3)
+
+# mean age
+mean(survey$age)
+
+#standard devietion
+sd(survey$age)
+
+# factor 변수로 변환
+survey$sex = factor(survey$sex, levels=c(1,2), labels=c("Male", "Female"))
+survey$marriage = factor(survey$marriage, levels=c(1:3), labels = c("Unmarried", "Married", "Divorced"))
+survey$job = factor(survey$job, levels = c(1:8), labels = c("a", "b", "c", "d", "e", "f", "g", "others"))
+survey$edu = ordered(survey$edu, levels=c(1:5), labels=c('none', 'elem', 'med', 'high', 'college'))
+summary(survey[,-1])
+```
+
+#### (2) 그룹별 기술통계량 구하기
+
+```{r}
+# (나이, 성별) 그룹별 평균
+tapply(survey$age, survey$sex, mean)
+
+
+# (나이, 성별) 그룹별 표준편차 : with를 사용하여 객체 이름 기본 적용
+with(survey, tapply(age, sex, sd))
+
+# (나이, 결혼) 그룹별 평균 : with를 사용하여 객체 이름 기본 적용
+with(survey, tapply(age, marriage, mean))
+
+# (나이, 결혼) 그룹별 표준편차 : with를 사용하여 객체 이름 기본 적용
+with(survey, tapply(age, marriage, sd))
+
+# 성별과 결혼변수를 그룹화하여 분할표 작성
+sex_marriage = with(survey, list(sex, marriage))
+table(sex_marriage)
+
+# 성별과 결혼변수의 두 그룹별로 age 평균을 구한다.
+with(survey, tapply(age, sex_marriage, mean))
+
+# 성별과 결혼변수의 두 그룹별로 age 표준편차를 구한다.
+with(survey, tapply(age, sex_marriage, sd))
+
+```
+
+#### (3) 빈도표 및 분할표 구하기
+
+```{r}
+# 성별에 대한 빈도표
+table(survey$sex)
+# 교육수준에 대한 빈도표
+table(survey$edu)
+# 성별에 따른 교육수준에 대한 분할표
+(sex_edu = table(survey$sex, survey$edu))
+
+# sex_edu 두 변수에 따른 독립성 검정
+summary(sex_edu)
+# p- value 0.6307으로 유의수준 0.05에서 독립이라는 귀무가설을 기각하지 못한다.
+```
+
+### 파이썬 - 기술통계량 및 분할표
+
+#### (1) 기술통계량 구하기
+
+```{python}
+import numpy as np
+import pandas as pd
+# 데이터 읽기
+survey = pd.read_csv("./data/survey.csv")
+survey.head(3)
+
+# 평균구하기
+survey["age"].mean()
+# 표준편차 구하기
+survey["age"].std()
+
+# 범주형 변수로 변환하기 전에 수치를 문자열로 변경
+survey["sex"].replace({1:"Male", 2:"Female"}, inplace=True)
+survey["job"].replace({1:"a", 2:"b", 3:"c", 4:"d", 5:"e", 6:"f", 7:"g", 8:"others"}, inplace=True)
+survey["edu"].replace({1:"none", 2:"elem", 3:"med", 4:"high", 5:"college"}, inplace=True)
+survey["marriage"].replace({1:"Unmarried", 2:"Married", 3:"Divorced"}, inplace=True)
+
+# 범주형변수로 변환하기
+survey["sex"]=survey["sex"].astype("category")
+survey["job"]=survey["job"].astype("category")
+survey["edu"]=survey["edu"].astype("category")
+survey.marriage = survey.marriage.astype("category")
+# 연속적인 변수의 기술통계량 구하기
+survey.iloc[:, 1:].describe()
+
+```
+
+#### (2) 그룹별 기술통계량 구하기
+
+```{python}
+# sex를 그룹으로 age의 기술통계량 구하기
+agestat_by_sex = survey.groupby("sex").age.describe()
+agestat_by_sex
+agestat_by_sex["mean"]
+agestat_by_sex["std"]
+
+# marriage를 그룹으로 age의 기술통계량 구하기
+agestat_by_marriage = survey.groupby("marriage").age.describe()
+agestat_by_marriage
+agestat_by_marriage["mean"]
+agestat_by_marriage["std"]
+
+# (sex, marriage)를 그룹으로 age의 기술통계량 구하기
+agestat_by_sex_marriage = survey.groupby(["sex", "marriage"]).age.describe()
+agestat_by_sex_marriage
+agestat_by_sex_marriage["count"]
+agestat_by_sex_marriage["mean"]
+agestat_by_sex_marriage["std"]
+```
+
+#### (3) 빈도표 및 분할표
+
+```{python}
+# 변수 sex의 빈도표 구하기
+sex_freq = pd.crosstab(index=survey.sex, columns='count')
+sex_freq
+
+# 변수 edu의 빈도표 구하기
+edu_freq = pd.crosstab(index=survey.edu, columns='count')
+edu_freq
+
+# (sex, edu)의 분할표 구하기
+sex_edu_table = pd.crosstab(index=survey.sex, columns=survey.edu)
+sex_edu_table
+
+# (sex, edu)의 분할표 - 카이제곱 검정
+from scipy.stats import chi2_contingency
+chi2_contingency(sex_edu_table)
+
+
+
+
+
+```
+
+## 2 단변량 그래프
+
+막대그림, 원그림, 겹침막대그림, 히스토그램, 줄기-잎 그림, 상자그림.
+
+### R - 단변량 그래프
+
+#### (1) 막대그림림
+
+```{r}
+edu_tb = table(survey$edu)
+rownames(edu_tb)=c("무학", "초졸", "중졸", "고졸", "대졸")
+barplot(edu_tb)
+title("교육정도 막대그림")
+```
+
+#### (2) 원그림
+
+> 원그림은 R에서는 dev.new()/ dev.off()를 통해서 새로운 그래프창에서 그린 후 창을 닫을 수 있다.
+
+```{r}
+# dev.new() # 새로운 그래프 창을 연다.
+pie(edu_tb, main="교육정도 원그림")
+# dev.off() # 열려진 그래프를 닫는다.
+```
+
+#### (3) 겹침막대그림
+
+```{r}
+sex_edu = list(survey$sex, survey$edu)
+sex_edu_tb = table(sex_edu)
+sex_edu_tb
+
+barplot(sex_edu_tb, legend.text=TRUE, args.legend = list(x = 6, y = 21), col=c(2,4), main="Stacked barplot")
+```
+
+> 범례가 잘 맞지않아 옵션으로 조정해 주었다. args.legend = list(x="topleft")와 같이 사용해도 된다.
+
+#### (4) 히스토그램
+
+```{r}
+hist(survey$salary)
+```
+
+#### (5) 줄기-잎 그림
+
+```{r}
+stem(survey$salary)
+stem(survey$salary, scale = 2)
+```
+
+> scale이 커지면 줄기로 표현하는 갯수가 늘어난다.
+
+#### (6) 상자그림
+
+```{r}
+boxplot(salary~sex, data=survey)
+title("Boxplot of Salary")
+```
+
+### 파이썬 - 단변량 그래프
+
+```{python}
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# 데이터 읽기
+survey = pd.read_csv("./data/survey.csv")
+# 빈도수 구하기
+edu_freq = pd.crosstab(index = survey.edu, columns='count')
+edu_freq
+# 케이스 라벨 지정하기
+edu_freq.index = ["none", "elementary", "middle", "high", "college"]
+```
+
+#### (1) 막대그림
+
+```{python}
+plt.figure()
+plt.bar(edu_freq.index, edu_freq["count"])
+plt.show()
+```
+
+> R 스튜디오에서 그래프가 이상하게 출력되어 윗줄에 plt.figure(), 아랫줄에 plt.show()를 추가
+
+#### (2) 원그림 그리기
+
+```{python}
+plt.figure()
+plt.pie(edu_freq["count"], labels=edu_freq.index)
+plt.show()
+```
+
+#### (3) 겹친막대그림 그리기
+
+```{python}
+# (edu, sex) 분할표 구하기
+edu_sex_tb = pd.crosstab(index=survey.edu, columns=survey.sex)
+edu_sex_tb
+# replace rows name and columns name
+edu_sex_tb.index = ["none", "elementary", "middle", "high", "college"]
+edu_sex_tb.columns = ["Male", "Female"]
+edu_sex_tb
+
+# draw stacked bar plot
+plt.figure()
+edu_sex_tb.plot.bar(stacked=True)
+plt.show()
+```
+
+#### (4) histogram
+
+```{python}
+plt.figure()
+plt.hist(survey["salary"])
+plt.show()
+```
+
+#### (5) 줄기-잎 그림
+
+```{python}
+import stemgraphic
+plt.figure()
+stemgraphic.stem_graphic(survey.salary, scale=50)
+plt.show()
+```
+
+#### (6) 상자 그림
+
+```{python}
+import seaborn as sns
+plt.figure()
+sns.boxplot(x="sex", y="salary", data=survey)
+plt.show()
+```
+
+## 3 이변량 그래프
+
+### R - 이변량 그래프
+
+#### (1) 라인그래프 - lines
+
+```{r}
+# plot using lines
+plot(co2)
+lines(smooth(co2), col=4)
+write.csv(co2, file = "./data/r_co2.csv")
+```
+
+#### (2) 곡선 라인 그래프 - plot
+
+```{r}
+# plot of mathematical functions
+x = seq(0, 20, 0.1)
+y = exp(-x/10)*cos(2*x)
+plot(x,y,type="l")
+```
+
+#### (3) bivariate box plot
+
+```{r}
+library(HSAUR2)
+library(MVA)
+data("USairpollution")
+head(USairpollution)
+x = USairpollution[,c(3,4)]
+bvbox(x, xlab="maru", ylab="popul", pch=19 )
+title("Bivariate Boxplot")
+# identify(x)
+rownames(x)[c(7,9,14,30)]
+```
+
+#### (4) bubble plot
+
+```{r}
+plot(wind~temp, data = USairpollution, pch=9)
+with(USairpollution, symbols(temp, wind, circle = SO2, inches = 0.5, add = T))
+title("Bubble plot")
+     
+```
+
+### 파이썬 - 이변량 그래프
+
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+# read data 
+co2 = pd.read_csv("./data/r_co2.csv")
+co2.head(2)
+# set column names
+co2.columns = ["seq", "x"]
+co2.head(2)
+```
+
+#### (1) 라인그래프-1
+
+```{python}
+plt.figure()
+plt.plot(co2.seq, co2.x)
+plt.show()
+```
+
+#### (2) 곡선 라인 그래프
+
+```{python}
+x = np.arange(0, 20, 0.1)
+y = np.exp(-x/10)*np.cos(2*x)
+plt.figure()
+plt.plot(x,y)
+plt.show()
+```
+
+#### (3) bivariate box plot 
+
+#### (4) bubble plot
+
+```{python}
+USairpollution = pd.read_csv("./data/USairpollution.csv")
+USairpollution.head()
+
+# SO2 변수값 * 5
+USairpollution["SO2"]=USairpollution["SO2"]*5
+# bubble chart
+plt.figure()
+plt.scatter('temp', 'wind', s='SO2', alpha=0.9, data=USairpollution)
+plt.xlabel("temp", size = 6)
+plt.ylabel("wind", size = 6)
+plt.title("Bubble plot")
+plt.show()
+```
+
+## 4 다차원 그래프
+
+### R - 다차원 그래프
+
+#### (1) 산점도
+
+```{r}
+social = read.table("./data/social.txt", header=T)
+head(social, 3)
+pairs(social)
+round(cor(social, use="complete.obs"), 3)
+```
+
+#### (2) 별그림
+
+```{r}
+social2 = social[,-1]
+year = social[,1]
+rownames(social2) = year
+head(social2, 3)
+stars(social2)
+```
+
+#### (3) 얼굴그림
+
+```{r}
+library(aplpack)
+faces(social2, face.type = 0)
+```
+
+### 파이썬 - 다차원 그래프
+
+```{python}
+import pandas as pd
+social = pd.read_csv("./data/social.csv")
+social.shape
+social.head(3)
+social.tail(3)
+```
+
+#### (1) 산점도
+
+```{python}
+import seaborn as sns
+plt.figure()
+sns.pairplot(social)
+# plt.show() <- chunk에서 출력이 안되지만 knit 하면 출력된다.
+
+# 상관계수행렬 구하기 - 소수점 이하 3자리 반올림
+round(social.corr(), 3)
+```
+
+#### (2) 산점도 행렬2
+
+```{python}
+iris = sns.load_dataset("iris")
+iris.head()
+plt.figure()
+sns.pairplot(iris, hue='species', height=2.5)
+
+```

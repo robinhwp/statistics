@@ -1,6 +1,34 @@
 # 제2장 실습
 
-library(readxl); library(zoo); library(rlang)
+# 프로그램 2-1 : GDP 시계열 읽기  
+library(readxl); library(zoo)
+gdp=read_excel("./data/데이터.xlsx", sheet="GDP")
+data_q = seq(as.Date("1960-01-01"), as.Date("2022-04-01"), "quarter")
+# data_q : "1960-01-01" "1960-04-01"  ... "2022-01-01" "2022-04-01"
+# 쿼터가 시작되는 날짜를 순서대로 생성되었다.
+gdp_zoo = zoo(gdp[,2:3], order.by = data_q )
+# data_q에 들어있는 날짜와 매치해서 데이터 정리
+head(gdp_zoo)
+
+
+# 프로그램 2-2 : GDP 시계열도표 작성
+plot(gdp_zoo/1000, screens = 1, col = c(2,1), ylab = "GDP(조 원)", xlab="")
+legend("topleft", col=c(2,1), lty=1, c("계정조정계열", "원계열"), bty="n")
+# lty = 1 레전드 라인 타입, bty="n" : 레전드 박스에 라인 없음
+
+# 프로그램 2-3 : GDP의 차분과 이동평균
+gdp = read_excel("./data/데이터.xlsx", sheet="GDP")
+gdp_ts = ts(gdp[,2:3]/1000, start=1960, frequency = 4)
+dlgdp_1 = diff(log(gdp_ts[,2]))
+dlgdp_4 = diff(log(gdp_ts[,2]),4)
+dlgdp=cbind(dlgdp_1, dlgdp_4)
+spectrum(na.omit(dlgdp), spans=c(3,3), col=c("red", "steelblue"), main="", lty=c(20,1), lwd=1.5)
+legend("topright", col=c("steelblue", "red"), lty=c(1,20), lwd=1.5, c("1차차분", "4차차분"), bty="n")
+       
+       
+library(readxl) # 엑셀파일 읽는 함수
+library(zoo)    # 시계열 함수
+library(rlang)  # 
 industrial=read_excel("./data/전산업생산지수.xlsx",sheet = "data" )
 date_q = seq(as.Date("2000-01-01"), as.Date("2022-12-01"), "month")
 industrial_zoo = zoo(industrial[,2:3], date_q)
