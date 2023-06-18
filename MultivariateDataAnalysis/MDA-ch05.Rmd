@@ -1,0 +1,223 @@
+---
+title: "Multivariate Data Analysis - chapter 05"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(python = reticulate::eng_python)
+```
+
+# 5.다차원척도법(MDS)
+
+## 1. MDS란?
+
+-   MDS(Multi Dimensional Scaling):\
+    개체들을 대상으로 특성(변수)들을 측정해 그 특성을 이용하여 개체들 사이의 유사성(similarity)/비유사성(dissimilarity)을 측정한 후에 개체들을 다차원 공간상에 점으로 표현하는 방법
+
+    -   일반적으로 개체들을 2-차원 또는 3차원 공간상에 점으로 표현하는데, 개체들의 공간상의 위치에 따라 개체들 사이의 관계를 파악함.
+
+    -   유사한 개체들 사이의 군집화 문제에 널리 이용됨.
+
+    -   경제/사회적으로 서울과 가장 가까운 도시는 어디이고, 가장 먼 도시는 어디이며, 11개 도시들 중에서 유사성이 가장 높은 두 도시는 어디인가 등에 대한 정보를 구할 수 있음.
+
+## 2. MDS 분석과정
+
+### 제1단계 : 자료수집
+
+-   n개의 개체들을 대상으로 p개의 특성(변수)을 측정
+
+### 제2단계: 유사성/비유사성 측정
+
+-   관측한 변수들을 이용하여 개체들 사이의 유사성/비유사성을 측정
+
+    -   유사성: 측정한 값이 클수록 두 개체의 사이의 관계가 가깝다는 것을 의미하는 것으로 대표적인 유사성 측정방법으로 `상관계수`가 있음
+
+    -   비유사성: 측정된 값이 클수록 두 개체 사이의 관계가 멀고, 작을 수록 두 개체의 사이의 관계가 가깝다는 것을 의미하며, 대표적인 비유사성 측정방법으로는 유클리디안 거리(Euclidean distance)가 이용됨.
+
+### 제3단계: 2-차원/3차원 공간상에 개체 표현
+
+-   개체들 사이의 유사성/비유사성 자료를 구한 후에는 이 자료를 이용하여 개체들을 2-차원/3-차원 공간상에 점으로 표현
+
+### 제4단계 : 최적표현의 결정
+
+-   개체들을 2-차원 공간상에 표현하고자 하는 경우에는 개체들 사이의 원래의 비유사성 정도를 가장 잘 표현하는 개체들의 위치를 구해야함.
+
+-   이 경우 반복과정을 통하여 최적 위치를 구해 나가는데, 영의 스트레스(Young's Stress) 또는 S-스트레스(S-Stress)를 이용하여 표현된 최적위치의 적합성을 측정함. 스트레스 또는 S-스트레스는 2-차원상에 표현된 개체들의 상호 위치관계가 원래 개체들 사이의 상호 간에 구해진 비유사성 정도에 어느 정도 적합한 가를 측정하는 기준이 됨.
+
+## 3. 비유사성(거리)의 측정
+
+### 구간척도/비율척도 자료의 비유사성
+
+-   구간척도 또는 비율척도로 측정된 자료를 이용한 개체들 사이의 비유사성 측정은 거리(distance) 측정방법을 이용
+
+-   일반적으로 이용되고 있는 유클리디안(Euclidean) 거리, 체비셰프(Chebyshev) 거리, 맨해튼(Manhattan) 거리 등과 같은 방법을 이용하여 구함
+
+-   거리에서 측정단위에 의한 영향력을 없애기 위해서 변숫값들을 표준화한 후에 거리를 측정하는 것이 일반적임.
+
+### 이항자료의 비유사성 측정
+
+-   이항자료란 각 개체를 대상으로 특성이 '있다/없다'를 측정한 자료로 특성이 있으면 1, 없으면 0으로 기록. p개의 변수(특성)에 대한 두 개체의 관측자료는 [표 5-1]과 같음
+
+    | 개체 \\ 변수 | $X_1$ | $X_2$ | $X_3$ | ... | $X_p$ |
+    |--------------|-------|-------|-------|:---:|-------|
+    | 1            | 1     | 1     | 0     | ... | 0     |
+    | 2            | 0     | 1     | 1     | ... | 1     |
+
+    : [표 5-1]
+
+-   2 x 2 분할표 작성
+
+    | 구분      | [개체2] 1 | [개체2] 0 | 합      |
+    |-----------|-----------|-----------|---------|
+    | [개체1] 1 | a         | b         | a + b   |
+    | [개체2] 0 | c         | d         | c + d   |
+    | 합        | a+c       | b+d       | a+b+c+d |
+
+    : [표 5-2]
+
+    a: [개체1]과 [개체2] 모두 1인 쌍의 수\
+    b: [개체1]은 1이고 [개체2]는 0인 쌍의 수\
+    c: [개체1]은 0이고 [개체2]는 1인 쌍의 수\
+    d: [개체1]과 [개체2] 모두 0인 쌍의 수
+
+-   분할표를 이용하여 이항자료에 대한 거리측정
+
+    -   유클리디안 거리: $\delta_{12} = \sqrt{b+c}$
+
+    -   유클리디안 제곱거리: $\delta_{12} = (b+c)$
+
+    -   크기차이(size difference): $\delta_{12} = {(b-c)^2 \over (a+b+c+d)^2}$
+
+    -   pattern difference: $\delta_{12} = {bc\over (a+b+c+d)^2}$
+
+    -   variance : $\delta_{12} = {b+c \over 4(a+b+c+d)}$
+
+## 4. MDS 분석
+
+### 메트릭 MDS
+
+-   n개의 개체가 있을 때 n x n 거리행렬 D를 구함. 여기서 $\delta_{ij}$ 는 개체 i와 개체 j 사이의 거리를 의미함.
+
+-   거리행렬 D를 이용하여 n개의 개체들을 보다 낮은 차원인 k-차원에 점으로 표현
+
+### 표현기준 : 주어진 거리행렬을 k-차원 공간의 점으로 표현
+
+스트레스(Stress) : $S_{ij}$ 를 k-차원 공간상에서의 개체 i와 개체 j의 거리라고 하고, $\hat{S}_{ij}$ 를 측정모형에서 구한 $S_{ij}$ 의 적합값이라고 할 때 형상화의 적절성을 판단하는 최적화 기준을 스트레스라고 함. 스트레스는 부적합도기준(badness of fit criterion)으로 사용됨. $$\begin{aligned}Stress &= \sqrt{ \sum_{i<j} (d_{ij}-\delta_{ij})^2 \over \sum_{i<j} d_{ij}^2} \\ &d_{ij}: 좌표상의 상대적 거리 \\ &\delta_{ij}: 원래의 거리 \end{aligned}$$
+
+### 스트레스의 해석
+
+-   스트레스는 표현공간의 차원이 클수록 작아짐. 극단적으로 k = p이면 스트레스틑 0
+
+-   표현공간의 차원이 클수록 결과의 해석이 복잡해지는 문제가 있음
+
+-   따라서 일반적으로 표현공간의 차원을 2-차원 또는 3-차원 공간으로 제한함
+
+    -   표현결과의 신뢰도를 측정하기 위하여 크루스칼(Kruskal)은 스트레스의 크기와 형상화된 표현결과의 적절성에 대하여 [표 5-3]과 같은 관계를 제시
+
+        |   스트레스   |   적합도 수준   |
+        |:------------:|:---------------:|
+        |  0.20 이상   |   나쁨(poor)    |
+        |     0.10     |   보통(fair)    |
+        |  0.05 이내   |   좋음(good)    |
+        |     0.00     | 완벽함(perfect) |
+
+        : [표 5-3]
+
+    -   위의 기준에 의할 때 스트레스의 크기가 0.1(10%) 이상인 경우에는 표현된 결과가 원래 개체들 사이의 관계를 잘 표현하고 있다고 할 수 없으므로 스트레스의 크기가 적정수준이 되도록 차원을 높일 필요가 있음.
+
+### 비메트릭 MDS
+
+-   비 메트릭 MDS는 순위 MDS(Ordinal MDS)라고도 함
+
+-   좌표상의 걸리 $d_{ij}$ 가 원래의 거리 $\delta_{ij}$ 와 같은 순위를 갖도록 배열
+
+-   실제적으론 $d_{ij}$ 의 평활추정값(smoothed fitted distance) $\hat{d}_{ij}$ [이를 disparity(격차)라고 함]가 원래의 거리 $\delta_{ij}$ 와 똑같은 순서를 갖도록 구성
+
+-   부적합도 스트레스
+
+$$
+ \begin{aligned}Stress &= \sqrt{ \sum_{i<j} (d_{ij}-\hat{d}_{ij})^2 \over \sum_{i<j} d_{ij}^2} \end{aligned}
+$$
+
+## 5. R을 이용한 MDS 분석 - 메트릭 MDS
+
+```{r}
+auto = read.csv("./data/auto.csv")
+#표준화 변수 만들기
+X = auto[,-1]
+autoName = auto[,1]
+#z-standardization
+zX = scale(X, center = TRUE, scale = TRUE)
+# 0-1 transformation
+maxX = apply(X, 2, max)
+minX = apply(X, 2, min)
+z01X = scale(X, center=minX, scale=maxX-minX)
+# 거리행렬 만들기
+z01X_dist = dist(z01X, method = 'euclidean')
+z01X_dist = as.matrix(z01X_dist)
+colnames(z01X_dist)=autoName
+rownames(z01X_dist)=autoName
+# cmdscale 실행
+mds1 = cmdscale(z01X_dist, k=2)
+plot(mds1[,1], mds1[,2], type='n', xlab='', ylab='', main='cmdscale(Auto)')
+text(mds1[,1], mds1[,2], rownames(z01X_dist), cex=0.9)
+abline(h=0, v=0, lty=2)
+```
+
+-   승용차종이 경차, 소형/중형, 대형 등으로 잘 구분되어 나타남
+
+-   'Credos'가 2000cc급의 중형차인데도 다른 차들과 떨어져 나타남.\
+    원인은 원 자료 파일에서 Credos의 연비가 20.8km/1이고 가격이 463만원으로 다른 중형차와 크게 다르게 관측됨.
+
+-   각 축의 의미 : X 축은 오른쪽에 큰 차(비싼 차) 왼쪽에 경차(싼차)가 분포되어 있으므로 크기 또는 가격을 대표. Y축은 Credos가 특이하게 위치하고 있고 차체 크기에 비하여 연비가 매우 높게 관측되었으므로 차체 크기대비 연비를 대표
+
+## 6. Python을 이용한 MDS분석
+
+```{python}
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# read data.
+auto = pd.read_csv("./data/auto.csv")
+# select variable
+X = auto.iloc[:, 1:]
+# each case name
+autoName = auto["autoName"]
+autoName = list(autoName)
+
+# z-standardized
+from sklearn.preprocessing import StandardScaler
+zX = StandardScaler().fit_transform(X)
+
+# 0-1 transformation
+from sklearn.preprocessing import MinMaxScaler
+scaler = MinMaxScaler()
+z01X = scaler.fit_transform(X)
+
+# getting distance-matrix
+from sklearn.metrics import pairwise_distances
+z01X_dist = pairwise_distances(z01X, metric='euclidean')
+z01X_dist.shape
+
+# execute MDS
+from sklearn.manifold import MDS
+cmds = MDS(n_components=2, random_state=0, dissimilarity='precomputed')
+mds1 = cmds.fit(z01X_dist)
+mds1_coords = cmds.fit_transform(z01X_dist)
+
+# draw 
+plt.figure()
+plt.scatter(mds1_coords[:,0], mds1_coords[:,1], facecolors='none', edgecolors='none')
+labels = autoName
+
+# attach labels to each case of MDS
+for label, x, y, in zip (labels, mds1_coords[:,0], mds1_coords[:,1]) :
+  plt.annotate(label, (x,y), xycoords='data')
+  
+plt.xlabel('First dimension')
+plt.ylabel('Second dimension')
+plt.title('Metric MDS')
+plt.show()
+```

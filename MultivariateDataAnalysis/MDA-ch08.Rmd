@@ -1,0 +1,174 @@
+---
+title: "Multivariate Data Analysis - chapter 08"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(python = reticulate::eng_python)
+```
+
+# 8. logistic regression
+
+```{r}
+# 산점도 그리기
+drug = read.csv("./data/drug.csv")
+head(drug)
+```
+
+```{r}
+
+plot(drug$age, drug$purchase, pch=19)
+
+library(car)
+drug$agr=recode(drug$age, "lo:29=1; 30:34=2; 35:39=3; 40:44=4; 45:49=5; 50:54=6; 55:59=7; 60:hi=8")
+head(drug)
+(purchase_table = table(drug$agr, drug$purchase))
+(percent_table=prop.table(purchase_table,1))
+(perc_1=percent_table[,2])
+(agr_1=rownames(percent_table))
+plot(agr_1, perc_1, pch=19)
+
+
+mower=read.csv("./data/mower.csv")
+head(mower)
+library(MASS)
+# mower_logit = glm(owner~., family=binomial(link=logit), data=mower)
+mower$owner[mower$owner=='yes'] = 1
+mower$owner[mower$owner=='no'] = 0
+mower$owner = as.factor(mower$owner)
+mower_logit = glm(owner~., family=binomial(link=logit), data=mower)
+summary(mower_logit)
+
+names(mower_logit)
+exp(mower_logit$coefficients)
+exp(mower_logit$coef)
+
+1-pchisq(15.323, 21)
+
+
+# 새로운 자료의 분류
+mower_predict = predict(mower_logit, newdata = mower, type='response')
+pred = ifelse(mower_predict<0.5, "no", "yes")
+head(pred)
+(cm = table(mower$owner, pred))
+(error=1-(sum(diag(cm))/sum(cm)))
+
+
+library(MASS)
+data("menarche")
+head(menarche)
+plot(Menarche/Total~Age, data=menarche, pch=19)
+
+menar_logit = glm(cbind(Menarche, Total-Menarche)~Age, family = binomial(link=logit), data=menarche)
+summary(menar_logit)
+
+plot(Menarche/Total~Age, data=menarche, pch=19)
+lines(menarche$Age, menar_logit$fitted, type='l')
+title("Menarch data with fitted logistic regression")
+
+exp(menar_logit$coef)
+
+1-pchisq(26.703, 23)
+# H0: 잘적합되었다, (유의한 모형) 0.05보다 크기 때문에 귀무가설을 채택한다.
+```
+
+## 4. 파이썬을 이용한 로지스틱 회귀분석
+
+### (1) sklearn.linear_model 패키지를 이용한 로지스틱 회귀분석
+
+```{python}
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# read data
+mower = pd.read_csv("./data/mower.csv")
+mower.head()
+
+# select variables
+Y = mower["owner"]
+X = mower[["income", "size"]]
+
+# execute logistic regression
+from sklearn.linear_model import LogisticRegression
+mower_clf = LogisticRegression()
+mower_clf.fit(X,Y)
+
+# 로지스틱 회귀모형 절편
+mower_clf.intercept_
+mower_clf.coef_
+
+# 분류 클래스
+mower_clf.classes_
+```
+
+```{python}
+# 두 그룹에 속할 확률
+mower_clf.predict_proba(X)[0:7]
+
+# 분류결과
+mower_clf.predict(X)
+
+#분류표 구하기
+from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.metrics import accuracy_score
+cm = confusion_matrix(Y, mower_clf.predict(X))
+cm
+
+# accuracy 계산하기
+pred_class = mower_clf.predict(X)
+print("Accuracy = " + str(accuracy_score(Y, pred_class)))
+
+# 세분화된 분류표
+cm_report = classification_report(Y, mower_clf.predict(X))
+print(cm_report)
+```
+
+### (2) StatsModels 패키지를 이용한 로지스틱 회귀분석
+
+```{python}
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# 데이터 읽기
+mower = pd.read_csv("./data/mower.csv")
+# 변수선택
+Y = mower["owner"]
+aX= mower[["income", "size"]]
+
+import statsmodels.api as sm
+
+# 상수 더하기
+aX = sm.add_constant(aX)
+# array 변환
+aY = Y.to_numpy()
+iy = [0]*len(aY)
+for i in range(0, len(aY)):
+  if (aY[i] == 'yes'):
+    iy[i] = 1
+  else:
+    iy[i] = 0
+
+# 로지스틱 회귀모형 적합하기
+mower_sm = sm.Logit(iy, aX)
+mower_logit = mower_sm.fit()
+mower_logit.params
+```
+
+```{python}
+# 자료의 분류
+mower_logit.predict(aX)
+mower_pred = (mower_logit.predict(aX) >= 0.5).astype(int)
+mower_pred
+
+# 분규표
+mower_logit.pred_table()
+
+#로지스틱 회귀모형 적합
+mower_logit.summary()
+```
+
+\
+\##

@@ -370,7 +370,7 @@ plt.plot(x,y)
 plt.show()
 ```
 
-#### (3) bivariate box plot 
+#### (3) bivariate box plot
 
 #### (4) bubble plot
 
@@ -448,5 +448,6 @@ iris = sns.load_dataset("iris")
 iris.head()
 plt.figure()
 sns.pairplot(iris, hue='species', height=2.5)
+plt.show()
 
 ```

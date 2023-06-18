@@ -1,0 +1,197 @@
+---
+title: "Multivariate Data Analysis - chapter 09"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(python = reticulate::eng_python)
+```
+
+# 9. 나무모형
+
+## 1. 나무모형이란?
+
+### (1) 나무모형의 소개
+
+### (2) 나무모형의 목적
+
+-   분류 - 신용카드 발금 가/부의 분류
+
+-   예측 : 이후 신용상태 예측, 또는 월간 평균 신용카드 사용액 예
+
+-   등급화 : 신용을 등급화 하여 한도액 책정
+
+-   세분화 : 설명변수를 활용하여 신규고객의 세분화
+
+-   변수선택 : 나무모형에서 사용되는 변수는 매우 유용한 변수라고 판단.
+
+-   상호작용 탐색 : 일부 변수들의 특별한 조합이 가지는 특별한 효과, 나무모형에서 찾아낸 상호작용을 모형에 포함하여 적합.
+
+### (3) 상호작용의 발견
+
+### (4) 나무모형의 장단점
+
+-   장점
+
+    -   설명변수의 형태에 관계없이 적용가능하다. 즉, 설명변수가 명목형, 순서형, 숫자형 어느 것이든 영향 받지 않고 나무모형의 방법을 적용할 수 있다. 이는 나무모형이 기타 통계모형과 구별되는 큰 장점이다.
+
+    -   이해 및 해석이 용이한 장점이 있다. 나무구조를 따라서 뿌리노드에서 최종노드까지 따라가면 이해할 수 있고 해석할 수 있다. 추가로 나무구조로부터 중요한 변수에 대한 아이디어도 얻을 수 있다.
+
+    -   상호작용을 쉽게 찾아낸다. 나무구조를 해석하다 보면 2개이상 변수 간의 상호작용이 발견되는 경우가 많다.
+
+    -   결측치의 처리가 용이하다. 매 단계 변수 1개만 사용하므로 결측치의 영향이 적으며 분할변수에 결측치가 있는 경우에는 surrogate라는 대리변수를 사용하는 처리 방법이 있다.
+
+    -   나무모형이 구축되고 나면 외부데이터에 대한 분류 및 예측이 쉽고 빠르게 이루어 진다.
+
+-   단점
+
+    -   나무구조의 단순성과 분리점의 경직성 때문에 성과 및 예측 성과가 다른 모형보다 떨어질 수도 있다. 연속형 변수인 경우 분리점 경계에 있는 값은 잘못 예측될 가능성이 커진다.
+
+    -   나무구조는 불안정적일 수 있다. 관찰치의 수가 적은 경우 데이터에 약간의 변화가 가해지면 나무구조는 변형될 수 있다. 이것은 나무모형의 분할방법이 데이터에 크게 의존하기 때문이다.
+
+## 2. 나무모형의 분할 방법
+
+### (1) CART 방법
+
+CART(Classification And Regression Trees)는 좌우 2개 가지로만 분할하는 이진분할 방법이다.
+
+$지니지수(t) = 1 - \sum_{j=1}^J p(j |t)^2$
+
+지니지수는 0과 0.5 사이의 값을 갖는 불순도(impurity)를 측정하는 하나의 지수이다. 위의 식에서 $p(j|t)$ 는 t라는 노드에서 j라는 집단
+
+### (2) CHAID 방법
+
+### (3) QUEST 방법
+
+## 3. 나무모형 크기 결정
+
+### (1) 유의성 방법 - CHAID 방법에서 사용하고 있는 방법
+
+### (2) 정지규칙 방법
+
+### (3) 정지규칙 종류
+
+-   최대깊이
+
+-   최소 데이터 수
+
+## 4. R을 이용한 나무모형 분석
+
+### (1) 데이터 읽기
+
+```{r}
+titanic = read.csv("./data/titanic.csv", header = T)
+head(titanic, 3)
+table(titanic$Survived, titanic$Class)
+table(titanic$Survived, titanic$Age)
+table(titanic$Survived, titanic$Sex)
+```
+
+```{r}
+# 타이타닉 카운트 가중치 파일 읽기
+titanic_w = read.csv("./data/titanic_count.csv", header = T)
+head(titanic_w)
+titanic = titanic_w[rep(1:nrow(titanic_w), titanic_w$Count), -5]
+summary(titanic)
+```
+
+### (2) 디폴트 정지규칙으로 CART 나무모형 실행하기
+
+```{r}
+library(rpart)
+# default tree
+cart_def = rpart(Survived~Class+Age+Sex, data=titanic)
+print(cart_def)
+```
+
+```{r}
+# Tree 그리기
+library(rpart.plot)
+prp(cart_def, type=4, extra = 2, digits = 3)
+```
+
+### (3) 정지규칙 설정하여 CART 나무모형 실행하기
+
+```{r}
+# Stopping rule 1
+my.control = rpart.control(maxdepth = 1)
+cart_fit1 = rpart(Survived~Class+Age+Sex, control=my.control, data=titanic)
+print(cart_fit1)
+```
+
+```{r}
+# Stopping rule 2
+my.control = rpart.control(maxdepth = 5, minisplit=50)
+cart_fit2 = rpart(Survived~Class+Age+Sex, control = my.control, data=titanic)
+print(cart_fit2)
+```
+
+```{r}
+summary(cart_fit2)
+```
+
+## 5. R을 이용한 회귀나무모형 분석
+
+### (1) 데이터 읽기
+
+```{r}
+library(rpart)
+data("cu.summary")
+head(cu.summary)
+summary(cu.summary)
+```
+
+### (2) 디폴트 정지규칙으로 CART 회귀나무 실행하기
+
+```{r}
+# Default tree
+cu_fit = rpart(Price~Country+Reliability+Mileage+Type, data=cu.summary)
+print(cu_fit)
+```
+
+```{r}
+# Tree 그리기
+library(rpart.plot)
+prp(cu_fit, type=4, extra = 1, digits = 4)
+```
+
+### (3) 정지규칙을 설정하여 CART 회귀나무 실행하기
+
+```{r}
+# Stopping rule
+my.control = rpart.control(maxdepth = 3, minsplit = 30)
+cu_fit2 = rpart(Price~Country+Reliability+Mileage+Type, control = my.control, data=cu.summary)
+print(cu_fit2)
+prp(cu_fit2, type=4, extra = 1, digits = 4)
+```
+
+```{r}
+summary(cu_fit2)
+```
+
+## 6. 파이썬을 이용한 나무모형 분석
+
+### (1) 파이썬을 이용한 분류나무모형 분석
+
+```{python}
+import numpy as np
+import pandas as pd
+
+# read data
+titanic = pd.read_csv("./data/titanic.csv")
+titanic.head(3)
+
+# 기술통계량 구하기
+titanic.describe()
+
+# 자료(행의수, 열의수)
+titanic.shape
+```
+
+```{python}
+# 빈도표 구하기
+pd.crosstab(titanic['Survived'], titanic['Sex'], margins = True)
+pd.crosstab(titanic['Survived'], titanic['Class'], margins = True)
+pd.crosstab(titanic['Survived'], titanic['Age'], margins = True)
+```

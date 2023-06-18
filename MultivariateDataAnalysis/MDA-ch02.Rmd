@@ -1,0 +1,134 @@
+---
+title: "Multivariate Data Analysis - chapter 02"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(python = reticulate::eng_python)
+```
+
+## 2. 주성분분석
+
+### R - 주성분분석
+
+#### (1) 자료가져오기 및 요약통계량
+
+```{r message=FALSE, warning=FALSE}
+library(HSAUR2)
+data("heptathlon")
+summary(heptathlon)
+```
+
+#### (2) 자료 변형하기
+
+변수들 중 hurdles, run200m, run800m은 작은 값일수록 좋은 점수이기 때문에 자료를 변형시켜 줌. 즉, 높은 수가 좋은 점수가 되도록 최댓값에서 빼 줌으로써 자료를 역변환
+
+```{r}
+heptathlon$hurdles = max(heptathlon$hurdles) - heptathlon$hurdles
+heptathlon$run200m = max(heptathlon$run200m) - heptathlon$run200m
+heptathlon$run800m = max(heptathlon$run800m) - heptathlon$run800m
+```
+
+#### (3) 주성분분석 실행하기
+
+```{r echo=TRUE}
+# 마지막 score 컬럼을 제외시킨다.
+hep_data = heptathlon[,-8]
+# princomp() 주성분 분석을 실햄함.
+hep_pca = princomp(hep_data, cor=T, scores=T)
+names(hep_pca)
+hep_pca
+
+```
+
+-   주성부분석 결과에서 총 7개의 주성분(변수이 수가 7개 이므로 가능한 주성분 수도 7개이다.)의 표준편차를 보여줌.
+
+#### (4) 주성분분석 결과
+
+##### ① 결과 요약(summary)
+
+```{r}
+summary(hep_pca)
+eig_val = hep_pca$sdev^2
+eig_val
+```
+
+-   첫 번째 주성분이 63.72%, 두번째 주성분이 17.06%의 분산비율을 나타내고 있으며, 2개의 주성분이 총변이 80.8%의 정보를 갖고 있음을 알 수 있다.
+
+-   각 주성분의 표준편차를 제곱하여 고윳값을 얻을 수 있음. 제1주성분의 분산이 4.46, 제2주성분이 1.19, 제3주성분이 0.52로 유효한 주성분 수는 2개.
+
+##### ② 스크리 그림과 주성분계수
+
+```{r}
+screeplot(hep_pca, type="lines", pch=19, main="Scree plot")
+hep_pca$loadings[, c(1:2)]
+```
+
+-   스크리그림에서 고윳값이 1보다 큰 주성분이 2개가 됨을 알 수 있음.
+
+-   상관계수행렬을 이용한 경우 제1,2 주성분은 다음과 같음
+
+-   $\begin{aligned} PC_1 &= 0.4528710\times hurdles + 0.3771992 \times highjump + 0.3630725 \times shot ... \\&+ 0.0754090 \times javelin + 0.3749594 \times run800m \end{aligned}$
+
+-   $\begin{aligned} PC_1 &= 0.15792058 \times hurdles + 0.24807386 \times highjump + 0.24807386 \times shot ... \\&- 0.84169212 \times javelin + 0.22448984 \times run800m \end{aligned}$
+
+    -   제1주성분 javelin(창던지기)을 제외한 모든 변수의 절댓값이 큰 값을 가지는 것으로 볼 때, 전반적인 체력정도를 나타내는 성분
+
+    -   제2주성분 javelin(창던지기)의 계수가 다른 변수에 비해 상대적으로 절댓값이 큰 것을 볼 때, 창던지기와 밀접한 관련이 있는 성분
+
+##### ③ 주성분점수 및 행렬도(biplot)
+
+```{r}
+hep_pca$scores[,c(1:2)]
+biplot(hep_pca, cex=0.7, col=c("Red", "Blue"))
+title("Biplot")
+```
+
+-   행렬도(biplot)는 각 개체의 관찰값은 주성분점수로 하고, 각 변수와 주성분과의 관계를 나타내는 주성분계수를 동시에 나타내어 이들의 관계를 나타내는 그림임.
+
+    -   행렬도에서 'highjump, run800m, hudles, longjump'가 서로 가까운곳에 위치하며 벡터의 방향 또한 비슷함. 'run200m, shot'이 가깝게 위치하고, javelin은 다른 변수들과 다른 방향에 위치하고 있음. 가까운 거리와 방향일수록 변수들의 상관성이 높아짐. 또한 각 개체가 특정 변수에 가깝게 위치할 수록 그 개체는 해당 변수와 관련이 높다고 할 수 있음.
+
+### python - 주성분분석
+
+#### (1) 데이터 읽기 및 기술통계량 구하기
+
+```{python}
+import pandas as pd
+# 데이터읽기
+heptathlon = pd.read_csv("./data/heptathlon.csv")
+# 변수이름 확인하기
+heptathlon.columns
+# 기술통계량 구하기 - 소수점 이하 2자리 반올림
+round(heptathlon.describe(), 2)
+```
+
+#### (2) 변수 변환 및 변수 표준화, 주성분분석
+
+```{python}
+import numpy as np
+# 변환 : 변수최대값 - 변수값
+heptathlon.hurdles = np.max(heptathlon.hurdles) - heptathlon.hurdles
+heptathlon.run200m = np.max(heptathlon.run200m) - heptathlon.run200m
+heptathlon.run800m = np.max(heptathlon.run800m) - heptathlon.run800m
+# 분석변수 선택하기
+feature = ['hurdles', 'highjump', 'shot', 'run200m', 'longjump', 'javelin', 'run800m']
+hep_data = heptathlon[feature]
+# 변수 표준화
+from sklearn.preprocessing import StandardScaler
+x = StandardScaler().fit_transform(hep_data)
+#주성분분석  - 주성분 수를 2개 추출
+from sklearn.decomposition import PCA
+pca = PCA(n_components=2)
+hep_pca=pca.fit_transform(x)
+
+
+pca.explained_variance_ # 주성분분산
+
+pca.explained_variance_ratio_ # 주성분분산 비율
+
+np.round(pca.components_, 3) #주성분계수
+
+hep_pca[0:5, :] # 주성분점수 
+
+```

@@ -1,0 +1,121 @@
+---
+title: "Multivariate Data Analysis - chapter 03"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(python = reticulate::eng_python)
+```
+
+## 인자분석
+
+### R - 인자분석
+
+#### (1) 초기 인자분석 실행하기
+
+```{r}
+med_data = read.csv("./data/medFactor.csv")
+library(psych)
+library(GPArotation)
+med_factor = principal(med_data, rotate="none")
+med_factor$values
+plot(med_factor$values, type="b", pch=19)
+```
+
+#### (2) 인자회전
+
+```{r}
+med_varimax = principal(med_data, nfactors = 3, rotate = "varimax", scores = T, method = "regression")
+med_varimax
+```
+
+-   "h2": 각 변수의 공통성(communality)
+
+-   "u2": 고유분산(uniqueness or specific variance) u2 = 1 - h2
+
+-   공통성은 인자부하값을 이용하여 다음과 같이 구해짐
+
+    -   lang : $0.47 = 0.66^2 + 0.22^2 + 0.16^2$
+
+    -   muscle : $0.64 = 0.11^2 + (-0.09)^2 + 0.79^2$
+
+    -   liver : $0.66 = 0.78^2 +0.13^2 + 0.17^2$
+
+-   공통성은 많은 문항(변수) 중에서 서로 연관이 있는 일부 문항들을 선택하기 위하여 인자분석을 실시하는 경우 문항선택의 기준으로 이용됨. \
+    예를 들어 문항(변수) 100개를 이용하여 인자분석을 한 결과 공통성이 0.3 이하인 것이 40개라면, 이 40개 문항은 다른 문항과 공통점이 별로 없는 것으로 판단.
+
+-   "SS loading": 각 인자에 의해 설명되는 분산의 양. 이는 인자부하값의 제곱의 합으로 다음과 같이 구해짐.
+
+    -   RC1 : $2.39=0.66^2+0.11^2+0.78^2+\cdots +(-0.07)^2$
+
+    -   RC2 : $2.13=0.12^2+(-0.09)^2+\cdots +0.65^2$
+
+    -   RC3 : $1.59=0.16^2+0.79^2+\cdots +(-0.28)^2$
+
+-   "Proportion Var" : 각 인자가 설명하는 총분산의 비율. RC1이 총분산의 22%, RC2가 19%, RC3가 14%를 설명하며, 세 인자에 의해 설명되어지는 변동은 총변동의 56%임.
+
+-   인자해석: \
+    회전된 요인에 대한 변수들의 요인 적재값을 보면 \
+    첫 번째 인자는 lung, liver, kidney, heart가 높은 값을 가지며 step은 상대적으로 높은 적재값, \
+    두 번째 인자는 stamina, stretch, blow, urine의 값이 높음. \
+    세 번째 인자는 muscle과 skeleton에서 높은값, 따라서 첫 번째 인자는 생물의학(biomedical), 두번째 인자는 인체기능(performance), 세 번째 인자는 근육골계통력(Muscular-skeletal strength)으로 특정지을 수 있음.
+
+-   인자점수 : \
+    인자점수 추정방법은 회귀분석, Bartlett, Anderson-Rubin 등. principal() 함수를 이용하여 인자점수를 계산하려면 scores=TRUE로 설정.
+
+#### (3) 인자점수 실행
+
+```{r}
+head(med_varimax$scores)
+```
+
+### Python - 인자분석
+
+#### (1) 자료읽기 및 요약통계량
+
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 데이터읽기
+med = pd.read_csv("./data/medFactor.csv")
+# 기술통계량
+med.describe()
+```
+
+#### (2) 초기 인자분석 실행
+
+```{python}
+# 초기인자분석
+from factor_analyzer import FactorAnalyzer
+fa = FactorAnalyzer(rotation=None)
+# help(FactorAnalyzer) <- 클래스 코드 보기 
+
+fa.fit(med) 
+
+ev, v = fa.get_eigenvalues() #고윳값 구하기
+
+#스크리그림 그리기
+plt.scatter(range(1, med.shape[1]+1), ev)
+plt.title('Scree plot')
+plt.xlabel('Factors')
+plt.ylabel('Eigenvalues')
+plt.grid()
+plt.show()
+```
+
+#### (3) varimax 인자회전
+
+```{python}
+# 인자수를 3으로한 인자분석 - 인자회전 varimax
+fa_varimax = FactorAnalyzer(n_factors=3, rotation='varimax', method='principal')
+fa_varimax.fit(med)
+# 인자적재계수
+fa_varimax.loadings_
+#인자분산
+fa_varimax.get_factor_variance()
+#인자고유분산 : 1-공통성
+fa_varimax.get_uniquenesses()
+```
