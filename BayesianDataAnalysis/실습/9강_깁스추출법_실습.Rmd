@@ -1,0 +1,138 @@
+---
+title: "9강 깁스추출법 실습 "
+author: "이재용"
+date: "2022.08.01"
+output:
+  html_document:
+    number_sections: yes
+    theme: cosmo
+    toc: yes
+    toc_depth: 2
+    toc_float: yes
+  github_document: 
+    toc: yes
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = FALSE, error=TRUE)
+Sys.setlocale(category = "LC_CTYPE", locale = "ko_KR.UTF-8")
+library(ggplot2)
+theme_set(theme_grey(base_family = "AppleGothic"))
+```
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(coda)
+library(ggmcmc)
+```
+
+
+# 이변량 정규분포 
+```{r}
+m = 5000 # 반복수
+mu1 = 0
+mu2 = 0
+sig1 = 1
+sig2 = 1
+rho = 0.99
+
+po.theta1 = NULL
+po.theta2 = NULL
+
+#초기값 설정 
+theta1 = -5
+theta2 = -5
+
+
+# 깁스 추출. 
+for(j in 1:m) {
+  cmean = mu1 + rho*sig1/sig2*(theta2 - mu2) 
+  csd = sig1*sqrt(1-rho^2)
+  theta1 = rnorm(1, cmean, csd)
+  cmean = mu2 + rho*sig2/sig1*(theta1 - mu1) 
+  csd = sig2*sqrt(1-rho^2)
+  theta2 = rnorm(1, cmean, csd)
+  po.theta1 = c(po.theta1, theta1)
+  po.theta2 = c(po.theta2, theta2) 
+}
+
+post = data.frame(theta1 = po.theta1, theta2=po.theta2)
+```
+
+
+```{r}
+post %>% mcmc %>% summary
+```
+```{r}
+post %>% mcmc %>% ggs %>% ggs_density()
+```
+
+```{r}
+post %>% mcmc %>% ggs %>% ggs_traceplot()
+```
+
+
+```{r}
+post.thin = post[seq(1, NROW(post), by = 20),]
+post.thin %>% mcmc %>% ggs %>% ggs_traceplot()
+```
+
+```{r}
+post %>% mcmc %>% ggs %>% ggs_autocorrelation()
+```
+
+
+
+```{r}
+post %>% mcmc %>% ggs %>% ggs_running()
+```
+
+```{r}
+mu = c(mu1, mu2)
+Sigma = matrix(c(sig1^2, rho*sig1*sig2, rho*sig1*sig2, sig2^2), nc=2)
+V = solve(Sigma)
+post %>% mutate(log.post = log(det(2*pi*Sigma) ) - 0.5*(V[1,1]*(theta1-mu1)^2 + 2*V[1,2]*(theta1-mu1)*(theta2-mu2) + V[2,2]*(theta2-mu2)^2) ) %>% select(log.post) %>% mcmc %>% ggs %>% ggs_traceplot()
+```
+
+#  절단된 정규분포
+
+```{r}
+m = 5000 # 반복수
+mu = 0
+sig = 1
+A = 3
+
+
+po.theta = NULL
+po.z = NULL
+
+#초기값 설정 
+theta = max(A+0.5*sig, mu)
+```
+
+```{r}
+
+# 깁스 추출. 
+for(j in 1:m) {
+  z = runif(1, 0, exp(-0.5*(theta - mu)^2/sig^2))
+  temp = sqrt(-2*sig^2*log(z))
+  theta = runif(1, max(A, mu-temp), mu+temp)
+  po.z = c(po.z, z)
+  po.theta = c(po.theta, theta)
+}
+
+post = data.frame(theta = po.theta, z=po.z)
+```
+
+
+
+```{r}
+post %>% mcmc %>% summary
+post %>% mcmc %>% ggs %>% ggs_density()
+post %>% mcmc %>% ggs %>% ggs_traceplot()
+post %>% mcmc %>% ggs %>% ggs_autocorrelation()
+```

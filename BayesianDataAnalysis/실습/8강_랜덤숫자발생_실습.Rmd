@@ -1,0 +1,195 @@
+---
+title: "랜덤 숫자 발생 실습"
+author: "이재용"
+date: "2022.07.31"
+output:
+  html_document:
+    number_sections: yes
+    theme: cosmo
+    toc: yes
+    toc_depth: 2
+    toc_float: yes
+  github_document: 
+    toc: yes
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = FALSE, error=TRUE)
+Sys.setlocale(category = "LC_CTYPE", locale = "ko_KR.UTF-8")
+library(ggplot2)
+theme_set(theme_grey(base_family = "AppleGothic"))
+```
+
+```{r}
+library(ggplot2)
+library(GGally) #ggpairs
+library(dplyr)
+library(Hmisc)
+library(rstan)
+library(ggmcmc)
+library(ggmosaic) #geom_mosaic
+library(psych) #describe
+library(formattable) #table을 예쁘게 
+library(reshape2)
+library(coda)
+```
+
+
+# 지수분포 
+```{r}
+n = 10000
+u = runif(n, 0,1)
+x1 = -log(1-u)
+x2 = - log(u)
+df = data.frame(x1=x1, x2=x2)
+```
+
+```{r}
+summary(df)
+hist(df)
+
+df %>% ggplot(aes(x=x1)) + geom_density()
+df %>% ggplot(aes(x=x1)) + geom_histogram(bins=50)
+```
+
+
+$x \sim Exp(1)$일 때, $y = x/\lambda \sim Exp(\lambda)~(\lambda > 0)$가 된다. $\lambda$는 rate 모수로 $E(y) = 1/\lambda$이다. 
+
+```{r}
+lambda = 5
+y = x1/lambda
+summary(y)
+hist(y)
+```
+
+
+# 코시 확률변수의 생성 
+```{r}
+n = 200000
+u = runif(n, 0,1)
+z = tan(pi*(u-0.5))
+```
+
+```{r}
+summary(z)
+quantile(z, c(0.025, 0.25, 0.5, 0.75, 0.975))
+hist(z)
+
+data.frame(z=z) %>% ggplot(aes(x=z)) + geom_histogram(bins=100)
+data.frame(z=z) %>% ggplot(aes(x=z)) + geom_density()
+```
+
+```{r}
+mu = 1
+sig = 2
+x = mu + sig*z
+```
+
+
+```{r}
+summary(x)
+quantile(x, c(0.025, 0.25, 0.5, 0.75, 0.975))
+hist(x)
+
+data.frame(x=x) %>% ggplot(aes(x=x)) + geom_histogram(bins=100)
+data.frame(x=x) %>% ggplot(aes(x=x)) + geom_density()
+```
+
+# 삼각분포 
+
+rtri1은 삼각분포 확률변수 1개를 생성하는 함수이고, rtri는 $n$개의 삼각분포 확률변수를 생성하는 함수이다. 
+```{r}
+rtri1 = function() {
+  accept=FALSE
+  while(accept==FALSE) {
+    x = runif(1, 0, 2)
+    u = runif(1, 0, 1)
+    accept_prob = ifelse(x <= 1, x, 2-x)
+    if( u <= accept_prob) {
+      accept = TRUE
+    }
+  }
+  return(x)
+}
+rtri1()
+```
+```{r}
+rtri = function(n) {
+  x = numeric(n)
+  for(i in 1:n) x[i] = rtri1()
+  
+  return(x)
+}
+```
+
+
+```{r}
+n = 1000
+x = rtri(n) 
+```
+
+
+```{r}
+summary(x)
+```
+
+```{r}
+hist(x)
+
+data.frame(x=x) %>% ggplot(aes(x=x)) + geom_histogram()
+data.frame(x=x) %>% ggplot(aes(x=x)) + geom_density()
+```
+
+
+## 정규 확률변수
+
+```{r}
+rnor1 = function() {
+  M = 2/sqrt(exp(1))
+  accept=FALSE
+  while(accept==FALSE) {
+    x = rcauchy(1, 0, 1)
+    u = runif(1, 0, 1)
+    accept_prob = (1+x^2)*exp(-x^2/2)/M
+    if( u <= accept_prob) {
+      accept = TRUE
+    }
+  }
+  return(x)
+}
+rnor1()
+```
+
+
+```{r}
+rnor = function(n) {
+  x = numeric(n)
+  for(i in 1:n) x[i] = rnor1()
+  
+  return(x)
+}
+```
+
+
+```{r}
+n = 1000
+x = rnor(n) 
+```
+
+
+
+```{r}
+summary(x)
+```
+
+```{r}
+hist(x)
+
+data.frame(x=x) %>% ggplot(aes(x=x)) + geom_histogram()
+data.frame(x=x) %>% ggplot(aes(x=x)) + geom_density()
+```
+
+

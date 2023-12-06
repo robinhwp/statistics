@@ -1,0 +1,134 @@
+---
+title: "몬테카를로 방법 실습"
+author: "이재용"
+date: "2020.01.09"
+output:
+  html_document:
+    number_sections: yes
+    theme: cosmo
+    toc: yes
+    toc_depth: 2
+    toc_float: yes
+  github_document: 
+    toc: yes
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = FALSE, error=TRUE)
+Sys.setlocale(category = "LC_CTYPE", locale = "ko_KR.UTF-8")
+library(ggplot2)
+theme_set(theme_grey(base_family = "AppleGothic"))
+```
+
+```{r}
+library(ggplot2)
+library(GGally) #ggpairs
+library(dplyr)
+library(rstan)
+library(ggmcmc)
+library(ggmosaic) #geom_mosaic
+library(psych) #describe
+library(formattable) #table을 예쁘게 
+library(reshape2)
+library(coda)
+```
+
+
+## 파이의 추정 1
+```{r}
+n = 1000
+u1 = runif(n, 0,1)
+u2 = runif(n, 0,1)
+pi.hat = 4*mean(u1^2 + u2^2 < 1)
+pi.hat.sd = 4*sd(u1^2 + u2^2 < 1)/sqrt(n)
+c(pi.hat, pi.hat.sd)
+```
+
+```{r}
+c(pi.hat - 2*pi.hat.sd, pi.hat + 2*pi.hat.sd)
+```
+
+
+## 파이의 추정 2
+```{r}
+n = 2000
+u = runif(n, 0,1)
+pi.hat2 = 4*mean(sqrt(1-u^2) )
+pi.hat2.sd = 4*sd(sqrt(1-u^2))/sqrt(n)
+c(pi.hat2, pi.hat2.sd)
+```
+
+
+```{r}
+c(pi.hat2 - 2*pi.hat2.sd, pi.hat + 2*pi.hat2.sd)
+```
+
+## 압정 사후분포 평균과 표준 편차 
+$Beta(8,4)$의 평균과 표준 편차 
+```{r}
+8/12
+sqrt( (8*4)/(12^2*13) )
+```
+
+```{r}
+m = 1000
+theta = rbeta(m, 8, 4)
+mean(theta)
+sd(theta)
+quantile(theta, c(0.025, 0.975))
+```
+
+```{r}
+α = 4.5
+β = 11.5
+m = 1000
+(ex3.theta = rbeta(m, α, β))
+
+
+α = 12.5
+β = 8.5
+m = 1000
+(ex2.theta = rbeta(m, α, β))
+
+ex3.theta.mean = mean(ex3.theta)
+ex3.theta.sd = sd(ex3.theta)
+
+ex3.mean = α / (α + β)
+ex3.sd = sqrt( (α * β) / ((α + β)^2 * (α + β + 1)))
+
+
+
+
+```
+
+```{r}
+α = 12.5
+β = 8.5
+ex2.mean = α / (α + β)
+ex2.sd = sqrt( (α * β) / ((α + β)^2 * (α + β + 1)))
+```
+
+## 정규모형 코쉬사전분포 사후 평균 
+
+```{r}
+m = 1000
+x = 5
+theta = rnorm(m, mean=x, sd=1) 
+theta.hat = mean(theta/(1+theta^2))/mean(1/(1+theta^2))
+theta.hat
+```
+
+## 삼각분포의 평균 
+```{r}
+m = 1000
+theta = runif(m, 0,2)
+w = ifelse(theta < 1, 2*theta, 2*(2-theta))
+I.hat1 = mean(theta*w)
+I.hat2 = sum(theta*w)/sum(w)
+c(I.hat1, I.hat2)
+```
+
+

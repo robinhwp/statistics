@@ -1,0 +1,155 @@
+---
+title: "7강 정규모형 실습"
+author: "이재용"
+date: "2022.07.31"
+output:
+  html_document:
+    number_sections: yes
+    theme: cosmo
+    toc: yes
+    toc_depth: 2
+    toc_float: yes
+  github_document: 
+    toc: yes
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = FALSE, error=TRUE)
+Sys.setlocale(category = "LC_CTYPE", locale = "ko_KR.UTF-8")
+library(ggplot2)
+theme_set(theme_grey(base_family = "AppleGothic"))
+```
+
+```{r}
+library(ggplot2)
+library(GGally) #ggpairs
+library(dplyr)
+library(Hmisc)
+library(rstan)
+library(coda)
+library(ggmcmc)
+library(ggmosaic) #geom_mosaic
+library(psych) #describe
+library(formattable) #table을 예쁘게 
+library(reshape2)
+```
+
+
+# 대한민국 육군 남성들의 신체 측정 결과 
+
+```{r}
+army = read.csv("army-physical.csv", header=T, sep=",")
+str(army)
+head(army)
+```
+## 1변량 자료 탐색 
+```{r}
+dim(army)
+summary(army)
+hist(army)
+army %>% select(height, weight, bust, sleeve) %>% hist
+```
+
+## 이변량 자료 탐색 
+
+```{r}
+army %>% ggpairs
+army %>% select(height, weight, bust, sleeve) %>% ggpairs
+cov(army)
+cor(army)
+```
+
+
+
+
+# 키의 평균과 분산에 관한 추론 사후표본 추출 
+```{r}
+mu0 = 170
+kappa0 = 0.5
+sigma20 = 3.5
+nu0 = 0.5
+
+m = 5000
+```
+
+```{r}
+xbar = mean(army$height)
+s = sd(army$height)
+n = length(army$height)
+```
+
+```{r}
+mu1 = (kappa0*mu0 + n*xbar)/(kappa0+n)
+kappa1 = kappa0 + n
+nu1 = nu0 + n 
+sigma21 = ( kappa0*n*(xbar-mu0)^2/kappa1 + (n-1)*s^2 + nu0*sigma20)/nu1
+```
+
+```{r}
+lambda = rgamma(n=m, shape=nu1/2, rate=nu1*sigma21/2)
+mu = rnorm(n=m, mean=mu1, sd=1/sqrt(kappa1*lambda))
+sigma = 1/sqrt(lambda)
+post = data.frame(lambda=lambda, mu=mu, sigma=sigma)
+```
+
+```{r}
+
+post %>% ggplot(aes(x=mu)) + geom_histogram()
+post %>% ggplot(aes(x=sigma)) + geom_histogram()
+```
+
+```{r}
+post %>% mcmc %>% summary
+```
+```{r}
+post %>% mcmc %>% ggs %>% ggs_histogram()
+```
+```{r}
+post %>% mcmc %>% ggs %>% ggs_density()
+```
+
+
+
+# 키의 평균과 분산에 관한 추론 2. 정규 모형과 무정보 사전 분포. 
+$$x_1, \ldots, x_n | \mu, \sigma^2 \sim N(\mu, \sigma^2)$$
+을 따르고, 사전 분포는 
+$$\pi(d\mu, d\lambda) = \frac{1}{\lambda} d\mu d\lambda$$
+이다. 
+
+
+```{r}
+xbar = mean(army$height)
+s = sd(army$height)
+n = length(army$height)
+```
+
+
+```{r}
+m = 5000
+lambda = rgamma(n=m, shape=(n-1)/2, rate=(n-1)*s^2/2)
+sigma = 1/sqrt(lambda)
+mu = rnorm(n=m, mean=xbar, sd=sigma/sqrt(n))
+post = data.frame(lambda=lambda, mu=mu, sigma=sigma)
+```
+
+```{r}
+
+post %>% ggplot(aes(x=mu)) + geom_histogram()
+post %>% ggplot(aes(x=sigma)) + geom_histogram()
+```
+
+```{r}
+post %>% mcmc %>% summary
+```
+```{r}
+post %>% mcmc %>% ggs %>% ggs_histogram()
+```
+```{r}
+post %>% mcmc %>% ggs %>% ggs_density()
+```
+
+
+

@@ -1,0 +1,111 @@
+---
+title: "R, Rstuio, R 마크다운 실습"
+author: "이재용"
+date: 
+output: 
+  html_document :
+    toc : true
+---
+
+
+## 등고선 그림 그리기 
+
+```{r}
+x <- seq(-pi, pi, len=50) 
+y <- x
+f <- outer(x, y, function(x, y) cos(y)/(1 + x^2))
+contour(x, y, f) 
+#contour(x, y, f, nlevels=15, add=TRUE)
+```
+
+
+## 이항모형 실습 
+
+파라미터 값 대입
+
+```{r}
+alpha = 1
+beta = 1
+n = 10
+x = 3
+```
+
+
+사전분포, 사후분포의  밀도함수, 가능도 계산 
+
+```{r}
+(theta = seq(from=0,to=1,length=100))
+(prior.den = dbeta(theta, alpha, beta))
+(post.den = dbeta(theta, alpha+x, beta+n-x))
+likelihood = dbinom(x, size=n, prob=theta)
+(likelihood = 100*likelihood/sum(likelihood))
+```
+
+
+밀도함수들 그리기 
+
+```{r}
+par(mfrow=c(2,2))
+plot(theta, prior.den, type="l", ylab="prior density")
+plot(theta, likelihood, type="l", ylab="likelihood")
+plot(theta, post.den, type="l", ylab="posterior density")
+par(mfrow=c(1,1))
+```
+
+한 개의 윈도우에 세 개의 함수들을 그리기 
+
+```{r}
+ymax = max(prior.den, likelihood, post.den)
+plot(theta, post.den, type="l", ylab="density", ylim=c(0,ymax))
+lines(theta, prior.den, col="magenta")
+lines(theta, likelihood, col="cyan")
+legend(0.6,2.8,  c("posterior","prior", "likelihood"), lty=c(1,1,1),
+          lwd=c(2.5,2.5),col=c("black","magenta","cyan"))
+```
+
+
+
+사후분포의 요약통계량 구하기 
+
+```{r}
+post.summary = numeric(6)
+names(post.summary) = c("post mean", "post median", "MAP", "post sd", "2.5%", "97.5%")
+post.summary["post mean"] = (alpha+x)/(alpha + beta + n)
+post.summary["post median"] = qbeta(0.5, alpha+x, beta + n-x) 
+post.summary["MAP"] = (alpha+x-1)/(alpha + beta + n-2)
+post.summary["post sd"] = sqrt( (alpha+x)*(beta+n-x)/((alpha+beta+n)^2 *(alpha+beta+n+1)))
+post.summary["2.5%"] = qbeta(0.025, alpha+x, beta + n-x) 
+post.summary["97.5%"] = qbeta(0.975, alpha+x, beta + n-x) 
+post.summary
+```
+
+요약통계량들을 그림으로 그리기 
+```{r}
+plot(theta, post.den, type="l", ylab="density", ylim=c(0, ymax))
+xpts1 = seq(f=post.summary["2.5%"], t=post.summary["97.5%"], len=100)
+xpts = c(xpts1, xpts1[100:1])
+ypts1 = dbeta(xpts1, alpha+x, beta+n-x)
+ypts = c(rep(0,100), ypts1[100:1])
+polygon(x = xpts, y = ypts, col = "cyan4", border = NA, fillOddEven=TRUE)
+lines(x=rep(post.summary["post mean"], 2), 
+	y=c(0,dbeta(post.summary["post mean"],alpha+x, beta+n-x)), col="magenta")
+lines(x=rep(post.summary["post median"], 2), 
+	y=c(0,dbeta(post.summary["post median"],alpha+x, beta+n-x)), col="magenta4")
+lines(x=rep(post.summary["MAP"], 2), 
+	y=c(0,dbeta(post.summary["MAP"],alpha+x, beta+n-x)), col="maroon")
+legend(0.5, 2.8, c("posterior mean","posterior median", "MAP", "95% credible interval"),        
+	lty=c(1,1,1, 1), lwd=c(2.5,2.5, 2.5, 5), 
+	col=c("magenta","magenta4","maroon", "cyan4"))
+```
+
+
+71.77 - 1.96*7.8
+71.77 + 1.96*7.8
+
+12.5/(12.5+8.5)
+
+sqrt(12.5*8.5/((12.5+8.5)^2*(12.5+8.5+1)))
+
+0.595 - 1.96 * 0.10469
+
+0.3898076

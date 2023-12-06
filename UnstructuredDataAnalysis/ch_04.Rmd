@@ -1,0 +1,75 @@
+---
+title: "비정형데이터분석_4장"
+author: "robinhwp"
+date: "2023-12-03"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 4장 실습
+
+```{r}
+# Bag of words
+x <- c('Kim was loved by everybody.', 'Everybody loved Kim','Kim loved everybody.')
+str_df = strsplit(x, split=" ")
+
+
+# tokenization
+sub(pattern = "ouse", replacement = "ay", x = "mouse in the house")
+gsub(pattern = "ouse", replacement = "ay", x = "mouse in the house")
+
+#2-1
+contraction_dict <- list(c("don't", "it's", "you're"), c("do not", "it is", "you are"))
+dictlen <- length(contraction_dict[[1]]) # 축약된 표현의 수 
+
+datstr <- "I don't think you're ready."
+for (stri in 1:dictlen) {
+       datstr <- gsub(pattern = contraction_dict[[1]][stri],
+         replacement = contraction_dict[[2]][stri], x = datstr) 
+  }   
+
+datstr
+
+strsplit(datstr, " ")
+
+
+
+# 2-2
+ngram_dict <- list(c("bed and breakfast", "grab and go", "New York"), c("bed_and_breakfast", "grab_and_go", "New_York"))
+
+ndictlen <- length(ngram_dict[[1]]) # 관용어구 수
+datstr <- "It's one of the best bed and breakfast in New York."
+for (stri in 1:ndictlen) {
+       datstr <- gsub(x=datstr, pattern=ngram_dict[[1]][stri],
+           replacement = ngram_dict[[2]][stri]) 
+ }       # 관용어구를 하나의 토큰으로 변환
+
+datstr
+
+strsplit(datstr, " ")
+
+# 대소문자 변환
+x <- c("Kim was a 12-year-old boy.", "It's 11 O'clock.",
+          "Everybody loved Kim.")
+tolower(x)
+toupper(x)
+
+
+# 문장 부호의 삭제
+x <- c("Kim was a 12-year-old boy!", "It's 11 O'clock.",
+          "Everybody loved KIM.")
+gsub(x, pattern = "([[:punct:]])", replacement = "")
+gsub(x, pattern = "([^[:alnum:][:blank:]'-])", replacement = "") 
+# [ ] 내 문자,숫자,어퍼스트로피,공백,줄표는  삭제하지 않음
+gsub(x, pattern = "[[:upper:]][[:lower:]'^[:upper:]]", replacement = "\\L\\1\\2", perl = TRUE)
+
+
+ gsub("(^[[:upper:]])([^[ [:upper:]]|.*])", replacement = "\\L\\1\\2", x, perl = TRUE)
+
+
+```
+
+

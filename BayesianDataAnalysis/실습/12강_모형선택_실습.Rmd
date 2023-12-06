@@ -1,0 +1,104 @@
+---
+title: "12강 모형 선택과 진단  실습"
+author: "이재용"
+date: "2022.08.01"
+output:
+  html_document:
+    number_sections: yes
+    theme: cosmo
+    toc: yes
+    toc_depth: 2
+    toc_float: yes
+  github_document: 
+    toc: yes
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = FALSE, error=TRUE)
+Sys.setlocale(category = "LC_CTYPE", locale = "ko_KR.UTF-8")
+library(ggplot2)
+theme_set(theme_grey(base_family = "AppleGothic"))
+```
+
+
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(coda)
+library(ggmcmc)
+```
+
+
+# 세 개의 모형 
+
+## 데이터 탐색 
+```{r}
+x = c(8.559, 8.343, 8.095, 8.783, 9.748, 9.671, 10.910, 9.779, 11.121, 16.768)
+df = data.frame(x =x)
+```
+
+```{r}
+summary(df)
+df %>% ggplot(aes(x=x)) + geom_histogram(bins=5) + geom_density()
+stem(x)
+```
+
+
+## 주변밀도함수 계산 
+
+$x_1, \ldots, x_n | \theta \sim N(\theta, 1), ~ \theta \sim N(0,1)$의 주변밀도함수 계산
+```{r}
+ssq = (n-1)*var(x)
+xbar = mean(x)
+log.f0 = -(n/2)*log(2*pi) - 0.5*log(n+1) - 0.5*ssq - (n*xbar^2/(2*(n+1)) )
+f0 = exp(log.f0)      
+log.f0;f0
+```
+
+$x_1, \ldots, x_n | \theta \sim Ca(\theta, 1), ~ \theta \sim N(\mu,\sigma^2)$의 주변밀도함수 계산
+```{r}
+mu = 9.7
+sig = 7.1
+m = 10000 # 몬테카를로 표본 개수 
+theta = rnorm(m, mu, sig)
+integrand =numeric(m) 
+
+for(i in 1:m) {
+  integrand[i] = exp( -n*log(pi) + sum(- log(1+(x-theta[i])^2)))
+}
+f1=mean(integrand)
+log(f1);f1
+```
+
+$x_1, \ldots, x_n | \theta \sim Exp(\theta), ~ \theta \sim Ga(\alpha,\beta) $의 주변밀도함수 계산
+```{r}
+mu = 9.7
+sig = 7.1
+alpha = mu^2/sig^2
+beta = mu/sig^2 
+
+log.f2 = alpha*log(beta) -(alpha+n)*log(beta+sum(x)) + lgamma(alpha +n) - lgamma(alpha)
+f2 = exp(log.f2)
+log.f2; f2
+```
+
+세 모형의 사후 확률 
+```{r}
+f = c(f0, f1, f2)
+f/sum(f)
+```
+
+## 중앙값의 모형 평균 추정량 
+
+
+```{r}
+7.48*10^{-6}*9.24 + 0.999*3.33 + 3.97*10^{-8}* 0.693/0.11
+```
+
+
+
+

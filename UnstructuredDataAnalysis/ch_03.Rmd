@@ -1,0 +1,120 @@
+---
+title: "ch03"
+output:
+  word_document: default
+  pdf_document: default
+date: "2023-10-08"
+--- 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## chapter 03
+
+### 텍스트 목록 읽어 오기(httr 및 XML 패키지 이용)
+```{r eval=FALSE, include=FALSE}
+```{undefined eval=FALSE, include=FALSE}
+
+webpage = GET('https://press.knou.ac.kr/goods/textBookList.do')
+
+library(XML)
+web = htmlParse(webpage)
+xpathSApply(web, '//*[@id="listForm"]/div/div[3]/div[4]', xmlValue)
+
+```
+
+
+### 웹문서 읽어오기(rvest 및 dplyr 패키지 이용)
+
+```{r}
+# install.packages("rvest")
+# install.packages("dplyr")
+
+library(rvest)
+library(dplyr)
+
+exurl = "https://ko.wikipedia.org/wiki/%EB%B9%84%EC%A0%95%ED%98%95_%EB%8D%B0%EC%9D%B4%ED%84%B0"
+html_ex = read_html(exurl, encoding = "UTF-8")
+html_ex %>% 
+  html_nodes(".mw-parser-output p") %>% 
+  html_text()
+
+html_ex %>% 
+  html_nodes("#mw-content-text p") %>% 
+  html_text()
+
+```
+
+## 웹문서 읽어오기 연습
+
+### 과제연습습
+
+```{r}
+
+library(rvest)
+library(dplyr)
+
+# 2023-10-08 06:21 
+# 업데이트 정보만 추출하였습니다.
+
+ex2url = "https://www.leagueoflegends.com/en-us/news/game-updates/"
+html_ex2 = read_html(ex2url, encoding = "en-us")
+html_ex2 %>% html_elements("div") %>% html_nodes(".style__Title-sc-1h41bzo-8") %>% html_text()
+```
+
+### 교제 연습
+```{r}
+# url : https://en.wikipedia.org/wiki/Economy_of_South_Korea
+ex2url2 = "https://en.wikipedia.org/wiki/Economy_of_South_Korea"
+html_ex2 = read_html(ex2url2, encording="UTF-8")
+html_ex2 %>%
+  html_nodes(".mw-collapsible") %>% 
+  html_table()
+
+```
+
+
+
+```{r}
+# 방송대출판문화원 
+# install.packages("httr")
+library(httr)
+webpage=GET('http://press.knou.ac.kr/goods/textBookList.do?condLscValue=001&condMscValue=003&condSscValue=007&condScyr=4')
+# install.packages("XML")
+library(XML)
+web=htmlParse(webpage)
+
+
+### 웹페이지 과목명 오른쪽마우스버튼 검사 후 Copy - Copy XPath 선택하면 아래와 같은 부분이 복사됨
+### //*[@id="listForm"]/div/div[3]/div[4]/div[3]/table/tbody/tr[5]/td[2]/div/h5/a
+      
+crsname=xpathSApply(web,'//*[@id="listForm"]/div/div[3]/div[4]/div[3]/table/tbody/tr[5]/td[2]/div/h5/a', xmlValue)
+crsname=gsub("\r","",crsname)
+crsname=gsub("\n","",crsname)
+crsname=gsub("\t","",crsname)
+crsname
+
+crsname=xpathSApply(web,'//*[@id="listForm"]/div/div[3]/div[4]/div[3]/table/tbody/tr[1]/td[2]/div/h5/a', xmlValue)
+crsname=gsub("\r","",crsname)
+crsname=gsub("\n","",crsname)
+crsname=gsub("\t","",crsname)
+crsname
+
+ls = rep("",6)
+for(i in 1:6){
+  sub = paste0('//*[@id="listForm"]/div/div[3]/div[4]/div[3]/table/tbody/tr[',i,']/td[2]/div/h5/a')
+  ls[i] = xpathSApply(web,sub,xmlValue)
+  ls[i]=gsub("\r","",ls[i])
+  ls[i]=gsub("\n","",ls[i])
+  ls[i]=gsub("\t","",ls[i])
+}
+
+```
+
+
+
+```{r}
+data("iris")
+```
+

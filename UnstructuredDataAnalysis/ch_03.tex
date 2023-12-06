@@ -1,0 +1,197 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={ch03},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{ch03}
+\author{}
+\date{\vspace{-2.5em}2023-10-08}
+
+\begin{document}
+\maketitle
+
+\hypertarget{chapter-03}{%
+\subsection{chapter 03}\label{chapter-03}}
+
+\hypertarget{uxc6f9uxbb38uxc11c-uxc77duxc5b4uxc624uxae30rvest-uxbc0f-dplyr-uxd328uxd0a4uxc9c0-uxc774uxc6a9}{%
+\subsubsection{웹문서 읽어오기(rvest 및 dplyr 패키지
+이용)}\label{uxc6f9uxbb38uxc11c-uxc77duxc5b4uxc624uxae30rvest-uxbc0f-dplyr-uxd328uxd0a4uxc9c0-uxc774uxc6a9}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# install.packages("rvest")}
+\CommentTok{\# install.packages("dplyr")}
+
+\FunctionTok{library}\NormalTok{(rvest)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: 패키지 'rvest'는 R 버전 4.3.1에서 작성되었습니다
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## 다음의 패키지를 부착합니다: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{exurl }\OtherTok{=} \StringTok{"https://ko.wikipedia.org/wiki/\%EB\%B9\%84\%EC\%A0\%95\%ED\%98\%95\_\%EB\%8D\%B0\%EC\%9D\%B4\%ED\%84\%B0"}
+\NormalTok{html\_ex }\OtherTok{=} \FunctionTok{read\_html}\NormalTok{(exurl, }\AttributeTok{encoding =} \StringTok{"UTF{-}8"}\NormalTok{)}
+\NormalTok{html\_ex }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{html\_nodes}\NormalTok{(}\StringTok{".mw{-}parser{-}output p"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{html\_text}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+## [2] "비정형 데이터 (unstructured data, unstructured information, 비정형 정보), 비구조화 데이터, 비구조적 데이터는 미리 정의된 데이터 모델이 없거나 미리 정의된 방식으로 정리되지 않은 정보를 말한다. 비정형 정보는 일반적으로 텍스트 중심으로 되어 있으나 날짜, 숫자, 사실과 같은 데이터도 포함할 수 있다. 이로써 변칙과 모호함이 발생하므로 데이터베이스의 칸 형식의 폼에 저장되거나 문서에 주석화된(의미적으로 태그된) 데이터에 비해 전통적인 프로그램을 사용하여 이해하는 것을 불가능하게 만든다.\n"
+## [3] "1998년 메릴린치는 잠재적으로 이용 가능한 모든 비즈니스 정보 중 약 80~90% 정도가 비정형 형식에서 기원한 것으로 보는 경험 법칙을 언급하였다.[1] 이 경험 법칙은 1차 연구나 양적 연구에 근간을 두지 않지만 그럼에도 일부 받아들여지고 있다.[2]"                                                                                                                                                                                                                                                       
+## [4] "비즈니스 인텔리전스에 대한 최초의 연구는 수치 데이터가 아닌 비정형 텍스트 형태의 데이터에 초점을 두었다.[1] 1958년 초에 H. P. Luhn 등의 컴퓨터 과학 연구원들은 특히 비정형 텍스트의 추출과 분류에 관심을 가졌다.[1] 그러나 세기가 바뀐 뒤에서야 비로소 기술이 연구적 관심을 따라잡을 수 있게 되었다. 2004년, SAS 인스티튜트는 더 효율적인 분석을 위하여 특이값 분해(SVD)로 초차원적 텍스트 공간을 더 작은 차원으로 줄이기 위해 사용되는 SAS 텍스트 마이너를 개발하였다.[2]"
+\end{verbatim}
+
+\hypertarget{uxc6f9uxbb38uxc11c-uxc77duxc5b4uxc624uxae30-uxc5f0uxc2b5}{%
+\subsection{웹문서 읽어오기
+연습}\label{uxc6f9uxbb38uxc11c-uxc77duxc5b4uxc624uxae30-uxc5f0uxc2b5}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(rvest)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+
+\CommentTok{\# 2023{-}10{-}08 06:21 }
+\CommentTok{\# 업데이트 정보만 추출하였습니다.}
+
+\NormalTok{ex2url }\OtherTok{=} \StringTok{"https://www.leagueoflegends.com/en{-}us/news/game{-}updates/"}
+\NormalTok{html\_ex2 }\OtherTok{=} \FunctionTok{read\_html}\NormalTok{(ex2url, }\AttributeTok{encoding =} \StringTok{"en{-}us"}\NormalTok{)}
+\NormalTok{html\_ex2 }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{html\_elements}\NormalTok{(}\StringTok{"div"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{html\_nodes}\NormalTok{(}\StringTok{".style\_\_Title{-}sc{-}1h41bzo{-}8"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{html\_text}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Teamfight Tactics patch 13.19 notes" "Patch 13.19 Notes"                  
+## [3] "Chibi Divine Sword Irelia Trailer"   "Prestige Is Coming to TFT"          
+## [5] "Horizonbound Little Legend Showcase" "Patch 13.18 notes"
+\end{verbatim}
+
+\end{document}

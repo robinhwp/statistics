@@ -1,0 +1,216 @@
+---
+title: "10강 메트로폴리스 알고리듬 실습"
+author: "이재용"
+date: "2022.08.01"
+output:
+  html_document:
+    number_sections: yes
+    theme: cosmo
+    toc: yes
+    toc_depth: 2
+    toc_float: yes
+  github_document: 
+    toc: yes
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = FALSE, error=TRUE)
+Sys.setlocale(category = "LC_CTYPE", locale = "ko_KR.UTF-8")
+library(ggplot2)
+theme_set(theme_grey(base_family = "AppleGothic"))
+```
+
+
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(coda)
+library(ggmcmc)
+```
+
+# 정규분포. 임의보행 메트로폴리스 
+
+## 정규 제안분포 
+전이핵의 표준편차 $d$를 변화시켜가면서 코드를 수행한다. 
+```{r}
+m = 1000 # mcmc 표본 갯수 설정 
+d = 4  #제안전이핵 표준편차 
+po.theta = NULL #사후표본 담을 리스트 
+theta = 10  # 초기값 
+```
+
+
+```{r}
+# 깁스 추출. 
+acc_count = 0 
+for(j in 1:m) {
+  theta_pr = rnorm(1, theta, d)
+  u = runif(1, 0, 1)
+  acc_prob = exp(0.5*(theta^2 - theta_pr^2))
+  if( u <= acc_prob ) {
+    theta = theta_pr
+    acc_count = acc_count + 1
+  }
+  po.theta = c(po.theta, theta)
+}
+cat("합격 확률은 ", acc_count/m, ".")
+post = data.frame(theta = po.theta)
+```
+
+
+```{r}
+post %>% mcmc %>% summary
+post %>% mcmc %>% ggs %>% ggs_density()
+post %>% mcmc %>% ggs %>% ggs_traceplot()
+post %>% mcmc %>% ggs %>% ggs_autocorrelation()
+```
+
+## 균등 제안분포 
+전이핵의 표준편차 $d$를 변화시켜가면서 코드를 수행한다. 임의보행 메트로폴리스 알고리듬에서 합격확률은 제안전이핵에 의존하지 않으므로 코드에 큰 변화 없이 제안 전이핵을 바꿀 수 있다. 
+```{r}
+m = 1000 # mcmc 표본 갯수 설정 
+d = 4  #제안전이핵 표준편차 
+po.theta = NULL #사후표본 담을 리스트 
+theta = 10  # 초기값 
+```
+
+
+```{r}
+# 깁스 추출. 
+acc_count = 0 
+for(j in 1:m) {
+  theta_pr = runif(1, theta-d, theta+d)
+  u = runif(1, 0, 1)
+  acc_prob = exp(0.5*(theta^2 - theta_pr^2))
+  if( u <= acc_prob ) {
+    theta = theta_pr
+    acc_count = acc_count + 1
+  }
+  po.theta = c(po.theta, theta)
+}
+cat("합격 확률은 ", acc_count/m, ".")
+post = data.frame(theta = po.theta)
+```
+
+
+```{r}
+post %>% mcmc %>% summary
+post %>% mcmc %>% ggs %>% ggs_density()
+post %>% mcmc %>% ggs %>% ggs_traceplot()
+post %>% mcmc %>% ggs %>% ggs_autocorrelation()
+```
+
+
+# 정규분포. 독립  메트로폴리스 
+
+```{r}
+m = 1000 # mcmc 표본 갯수 설정 
+mu = 1 # 제안 전이핵의 평균 
+d = 1  #제안전이핵의   표준편차 
+po.theta = NULL #사후표본 담을 리스트 
+theta = 10  # 초기값 
+```
+
+
+```{r}
+# 깁스 추출. 
+acc_count = 0
+for(j in 1:m) {
+  theta_pr = rnorm(1, mu, d)
+  u = runif(1, 0, 1)
+  acc_prob = exp(-0.5*(theta_pr^2 -theta^2) - (0.5/d^2)*((theta - mu)^2 - (theta_pr - mu)^2) ) 
+  if( u <= acc_prob ) {
+    theta = theta_pr
+    acc_count = acc_count +1
+  }
+  po.theta = c(po.theta, theta)
+}
+cat("합격 확률은 ", acc_count/m, ".")
+post = data.frame(theta = po.theta)
+```
+
+
+```{r}
+post %>% mcmc %>% summary
+post %>% mcmc %>% ggs %>% ggs_density()
+post %>% mcmc %>% ggs %>% ggs_traceplot()
+post %>% mcmc %>% ggs %>% ggs_autocorrelation()
+```
+
+
+
+
+# 코쉬에러 모형
+```{r}
+# 자료 
+n = 10
+x = rcauchy(n, location=1, scale = 2)
+
+hist(x)
+```
+
+mu.jump와 
+xi.jump 값을 를 바꾸어 가면서 코드를 수행해보자. 
+
+```{r}
+# MH 샘플러의 초기화. 
+m = 5000
+mu.jump = 5
+xi.jump = 5
+
+po.mu = NULL
+po.xi = NULL
+mu = median(x)
+sig = mad(x)
+xi = log(sig)
+
+# 사후표본 추출
+mu_acc_count = 0
+xi_acc_count = 0
+for(j in 1:m) {
+  muc = rnorm(1, mu, mu.jump)
+  u = runif(1, 0,1)
+  log.accept.mu = sum(log((1+exp(-2*xi)*(x-mu)^2)/(1+exp(-2*xi)*(x-muc)^2)))
+  if(u < exp(log.accept.mu)) {
+    mu = muc 
+    mu_acc_count = mu_acc_count +1
+  }
+  
+  xic = rnorm(1, xi, xi.jump)
+  u = runif(1, 0, 1)
+  log.accept.xi = n*(xi-xic)+sum(log((1+exp(-2*xi)*(x-mu)^2)/(1+exp(-2*xic)*(x-mu)^2)))
+  if(u < exp(log.accept.xi)) {
+    xi = xic 
+    xi_acc_count = xi_acc_count +1
+  }
+  
+  po.mu = c(po.mu, mu)
+  po.xi = c(po.xi, xi)
+}
+po.sig = exp(po.xi)
+
+acc_prob = c(mu_acc_count/m, xi_acc_count/m)
+names(acc_prob) = c("mu", "xi")
+print(acc_prob)
+
+post.df = data.frame(mu = po.mu, sig=po.sig, xi=po.xi)
+```
+mu.jump와 xi.jump는 $\mu$와 $\xi$의 제안 커널의 표준편차이다. 
+
+
+
+
+
+## coda를 이용한 결과 분석
+```{r}
+post.df %>% as.mcmc %>% summary
+post.df %>% as.mcmc %>% ggs %>% ggs_density
+post.df %>% as.mcmc %>% ggs %>% ggs_traceplot
+post.df %>% as.mcmc %>% ggs %>% ggs_autocorrelation
+```
+
+
