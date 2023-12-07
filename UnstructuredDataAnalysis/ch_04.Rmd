@@ -67,8 +67,62 @@ gsub(x, pattern = "([^[:alnum:][:blank:]'-])", replacement = "")
 gsub(x, pattern = "[[:upper:]][[:lower:]'^[:upper:]]", replacement = "\\L\\1\\2", perl = TRUE)
 
 
- gsub("(^[[:upper:]])([^[ [:upper:]]|.*])", replacement = "\\L\\1\\2", x, perl = TRUE)
+gsub("(^[[:upper:]][^[:upper:]])", replacement = "\\L\\1\\2", x, perl = TRUE)
 
+
+# 어간추출
+# install.packages("textstem")
+
+library(textstem)
+txts = c("The Williams sisters are leaving this tennis centre.")
+stem_strings(txts, language = "porter")
+
+# 원형복원
+lemmatize_strings(txts)
+
+# 불용어 삭제 
+install.packages("stopwords")
+library(stopwords)
+txt = c("He decided to quit this job.", "I do not deny it.", "Can you hear me?")
+txt = tolower(txt)
+txt = gsub(txt, pattern = "([^[:alnum:][:blank:]'-])", replacement="")
+txt = strsplit(txt, " ")
+lapply(txt, setdiff, y=stopwords())
+
+newstop <- c(stopwords(), "can") # 제거목록에 "can"추가
+newstop <- setdiff(newstop, c("no", "not"))
+               # 새로운 제거목록 newstop에서 "no", "not" 제외
+lapply(txt, setdiff, y=newstop)
+
+
+
+# 실제 데이터의 전처리
+RC <- scan("http://www.gutenberg.org/files/521/521-0.txt", what = "character",  encoding = "UTF-8", sep = "\n")
+RC_Chpt <- grep(RC, pattern="CHAPTER") #각 장 시작 위치
+RC_End <- grep(RC, pattern="END OF THE PROJECT GUTENBERG EBOOK",ignore.case=T)-1 # 본문이 끝나는 위치 정보 추출
+RC_body <- RC[(RC_Chpt[1]):RC_End]
+RC_all <- paste(RC_body, collapse = " ")# 각 행들 연결 
+RC_all <- gsub(RC_all, pattern = "'s", replacement = "")
+RC_all <- gsub(RC_all, pattern = "([^[:alnum:][:blank:]'-])", replacement = "") 
+#부호제거
+RC_all <- tolower(RC_all) # 소문자로 변환
+RC_all <- unlist(strsplit(RC_all, " ")) #리스트→벡터
+library(stopwords)
+RC_all2 = RC_all[! RC_all %in% c(stopwords(), "")]
+library(textstem)
+RC_all <- lemmatize_strings(RC_all) # 원형복원
+RC_all_table <- sort(table(RC_all), decreasing = T)
+RC_all_proptable <- sort(prop.table(table(RC_all)), decreasing=T)  # 도수분포표 및 상대도수분포표
+
+# 5장 연습 내용 추가
+library(tidytext)
+bingsent = get_sentiments("bing")
+bingpos = bingsent[bingsent$sentiment == "positive",]
+bingneg = bingsent[bingsent$sentiment == "negative", ]
+
+# bingpos 1 ~ 31 까지의 데이터 확인
+colnames(bingpos)
+bingpos$word[1:31]
 
 ```
 

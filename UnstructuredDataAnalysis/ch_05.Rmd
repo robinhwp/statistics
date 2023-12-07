@@ -1,0 +1,114 @@
+---
+title: "chapter 5"
+author: "robinhwp"
+date: "2023-12-07"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## 5장 텍스트 데이터에 대한 탐색적 자료분석
+
+### 도수분포표 활용
+```{r}
+
+# 실제 데이터의 전처리 (8강 실습 내용 반복)
+RC <- scan("http://www.gutenberg.org/files/521/521-0.txt", what = "character",  encoding = "UTF-8", sep = "\n")
+RC_Chpt <- grep(RC, pattern="CHAPTER") #각 장 시작 위치
+RC_End <- grep(RC, pattern="END OF THE PROJECT GUTENBERG EBOOK",ignore.case=T)-1  # 본문이 끝나는 위치 정보 추출
+RC_body <- RC[(RC_Chpt[1]):RC_End]
+RC_all <- paste(RC_body, collapse = " ")# 각 행들 연결 
+RC_all <- gsub(RC_all, pattern = "'s", replacement = "")
+RC_all <- gsub(RC_all, pattern = "([^[:alnum:][:blank:]'-])", replacement = "") 
+#부호제거
+RC_all <- tolower(RC_all) # 소문자로 변환
+RC_all <- unlist(strsplit(RC_all, " ")) #리스트→벡터
+
+# 불용어 제거 (8강 실습 대비 추가된 부분)
+library(stopwords)
+RC_all <- RC_all[! RC_all %in% c(stopwords(), "")]
+RC_all <- gsub(RC_all, pattern = "'", replacement = "")
+# 불용어 제거 (8강 실습 대비 추가된 부분)
+
+library(textstem)
+RC_all <- lemmatize_strings(RC_all) # 원형복원
+RC_all_table <- sort(table(RC_all), decreasing = T)
+RC_all_proptable <- sort(prop.table(table(RC_all)), decreasing=T)  # 도수분포표 및 상대도수분포표
+
+########### 9강 실습 시작 부분 ############################
+# install.packages("tidytext")
+library(tidytext)
+bingsent = get_sentiments("bing")
+bingpos = bingsent[bingsent$sentiment == "positive",]
+bingneg = bingsent[bingsent$sentiment == "negative", ]
+
+# bingpos 1 ~ 31 까지의 데이터 확인
+colnames(bingpos)
+bingpos$word[1:31]
+
+RC_all_table[names(RC_all_table) %in% bingpos$word]
+RC_all_table[names(RC_all_table) %in% bingneg$word]
+
+barplot(RC_all_table[1:32], las=2)
+
+RC_sent <- ifelse(RC_all %in% bingpos$word, 1, ifelse(RC_all %in% bingneg$word, -1, 0))
+barplot(tapply(RC_sent, (seq_along(RC_sent)-1) %/% 1000, sum))
+
+install.packages("wordcloud")
+library(wordcloud)
+wordcloud(words = names(RC_all_table), freq = RC_all_table,  max.words = 100)
+
+
+wordcolor = rep("grey", length(RC_all_table))
+wordcolor[names(RC_all_table) %in% bingpos$word] = "blue"
+wordcolor[names(RC_all_table) %in% bingneg$word] = "red"
+wordcloud(names(RC_all_table), RC_all_table,  max.words = 100, colors = wordcolor, random.order = F, ordered.colors = T)
+
+
+############ 단어 출현 위치 ################
+
+friday <- ifelse(RC_all == "friday", 1, 0)
+plot(friday, type = "h", ylim = c(0,1))
+
+fear <- ifelse(RC_all == "fear", 1, 0)
+plot(fear, type = "h", ylim = c(0,1))
+
+
+############# 원문서 RC_body의 전처리 ################
+RC_by_Chpt <- unlist(strsplit(paste(RC_body, collapse=" "), "CHAPTER"))[-1:-25]
+RC_by_Chpt <- gsub(pattern = "'s", replacement = "", x = RC_by_Chpt)
+RC_by_Chpt <- gsub(RC_by_Chpt, pattern = "([^[:alnum:][:blank:]'-])", replacement = "")
+RC_by_Chpt <- tolower(RC_by_Chpt)
+RC_by_Chpt <- strsplit(RC_by_Chpt, " ")
+RC_by_Chpt <- lapply(RC_by_Chpt, function(x) x[! x %in% c(stopwords(), "")])
+RC_by_Chpt <- lapply(RC_by_Chpt, lemmatize_strings)
+
+############## 해당 장에서는 등장하지 않았지만 다른 장에서 
+############## 한 번이라도 등장한 적이 있는 단어들까지 고려하여 테이블을 작성
+lev <- sort(unique(RC_all))
+RC_Chpt3 <- table(factor(RC_by_Chpt[[3]], levels = lev, ordered = T))
+RC_Chpt5 <- table(factor(RC_by_Chpt[[5]], levels = lev, ordered = T))
+
+############ 장별 차이 ################
+RC_Chpt5_3 <- RC_Chpt5 - RC_Chpt3
+RC_Chpt5_3 <- sort(RC_Chpt5_3)
+RC_Chpt5_3 <- RC_Chpt5_3[abs(RC_Chpt5_3)>5]
+
+barplot(RC_Chpt5_3, las = 2)
+
+######### 장별 비교 워드 클라우드 ##########
+RC_Chpt35 <- cbind(RC_Chpt3, RC_Chpt5)
+commonality.cloud(RC_Chpt35, max.words=200, random.order=FALSE)
+
+comparison.cloud(RC_Chpt35, max.words=200, random.order=FALSE)
+
+############## 산점도 비교 ###############
+RC_Chpt35 <- cbind(RC_Chpt35, RC_Chpt35[,1]-RC_Chpt35[,2])
+RC_Chpt35col <- ifelse(RC_Chpt35[,3] > 10, "red", ifelse(RC_Chpt35[,3] < -10, "blue", "grey"))
+plot(RC_Chpt35[,1], RC_Chpt35[,2], type = "n")
+text(RC_Chpt35[,1], RC_Chpt35[,2], row.names(RC_Chpt35), col = RC_Chpt35col)
+
+
+```
+
